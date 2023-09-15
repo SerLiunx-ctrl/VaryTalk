@@ -8,21 +8,23 @@ public class PageResult<T>{
 
     private Integer pageNum;
     private Integer pageSize;
-    private Integer pages;
     private Long actualSize;
+    private Integer pages;
+    private Long total;
     private List<T> rows;
 
-    public PageResult(Integer pageNum, Integer pageSize, Long actualSize, Integer pages, List<T> rows) {
+    public PageResult(Integer pageNum, Integer pageSize, Long actualSize, Integer pages, Long total, List<T> rows) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
         this.actualSize = actualSize;
         this.pages = pages;
+        this.total = total;
         this.rows = rows;
     }
 
     public static <T> PageResult<T> page(PageInfo<T> pageInfo){
         return new PageResult<>(pageInfo.getPageNum(), pageInfo.getPageSize(),
-                (long) pageInfo.getSize(), pageInfo.getPages(), pageInfo.getList());
+                (long) pageInfo.getSize(), pageInfo.getPages(), pageInfo.getTotal(),pageInfo.getList());
     }
 
     public Integer getPageNum() {
@@ -63,5 +65,13 @@ public class PageResult<T>{
 
     public void setPages(Integer pages) {
         this.pages = pages;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
     }
 }

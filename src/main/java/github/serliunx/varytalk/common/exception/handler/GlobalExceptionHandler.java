@@ -5,6 +5,7 @@ import github.serliunx.varytalk.common.exception.ServiceException;
 import github.serliunx.varytalk.common.result.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,6 +33,15 @@ public class GlobalExceptionHandler {
         //只需取第一个参数的错误文本
         String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
         return Result.fail(null, message, 400);
+    }
+
+    /**
+     * 请求参数异常处理
+     * @return 结果
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public Result doHttpMessageNotReadableException(){
+        return Result.fail(null, "请求参数有误!", 400);
     }
 
     /**
