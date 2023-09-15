@@ -2,6 +2,8 @@ package github.serliunx.varytalk.common.result;
 
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 public class Result {
     private String message;
     private int status;
@@ -48,8 +50,8 @@ public class Result {
         return fail("操作失败!");
     }
 
-    public static <T> Result pageResult(PageInfo<T> pageInfo){
-        return success(PageResult.page(pageInfo));
+    public static <T> Result pageResult(List<? extends T> list){
+        return success(PageResult.page(new PageInfo<T>(list)));
     }
 
     public String getMessage() {

@@ -1,7 +1,5 @@
 package github.serliunx.varytalk.project.system.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import github.serliunx.varytalk.common.base.BaseController;
 import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
@@ -21,14 +19,10 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("list")
-    public Result list(@RequestParam(required = false, defaultValue = "10") int pageSize,
-                       @RequestParam(required = false, defaultValue = "1") int pageNum,
-                       @RequestBody(required = false) SystemUser systemUser){
-
-        PageHelper.startPage(pageNum, pageSize);
+    public Result list(@RequestBody(required = false) SystemUser systemUser){
+        startPage();
         List<SystemUser> systemUsers = systemUserService.selectList(systemUser);
-        PageInfo<SystemUser> pageInfo = new PageInfo<>(systemUsers);
-        return page(pageInfo);
+        return page(systemUsers);
     }
 
     @GetMapping("get/{id}")

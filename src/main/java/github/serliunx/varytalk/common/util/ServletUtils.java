@@ -36,6 +36,10 @@ public class ServletUtils {
         return getRequest().getHeader(header);
     }
 
+    public static String getParameter(String parameter){
+        return getRequest().getParameter(parameter);
+    }
+
     /**
      * 获取特定请求的ip地址 (此方法源自ruoyi)
      * @param request 请求

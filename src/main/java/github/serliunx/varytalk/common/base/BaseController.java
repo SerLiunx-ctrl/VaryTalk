@@ -1,7 +1,10 @@
 package github.serliunx.varytalk.common.base;
 
-import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.PageHelper;
 import github.serliunx.varytalk.common.result.Result;
+import github.serliunx.varytalk.common.util.ServletUtils;
+
+import java.util.List;
 
 public class BaseController {
 
@@ -29,7 +32,20 @@ public class BaseController {
         return Result.fail(msg);
     }
 
-    protected <T> Result page(PageInfo<T> pageInfo){
-       return Result.pageResult(pageInfo);
+    protected void startPage(){
+        int pageNum = 1, pageSize = 10;
+        String pageNumString = ServletUtils.getParameter("pageNum");
+        String pageSizeString = ServletUtils.getParameter("pageSize");
+        try {
+            pageNum = Integer.parseInt(pageNumString);
+            pageSize = Integer.parseInt(pageSizeString);
+        }catch (Exception e){
+            //
+        }
+        PageHelper.startPage(pageNum, pageSize);
+    }
+
+    protected <T> Result page(List<? extends T> list){
+        return Result.pageResult(list);
     }
 }
