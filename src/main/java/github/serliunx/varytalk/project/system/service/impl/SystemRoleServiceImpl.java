@@ -1,5 +1,6 @@
 package github.serliunx.varytalk.project.system.service.impl;
 
+import github.serliunx.varytalk.common.annotation.GetOperator;
 import github.serliunx.varytalk.project.system.entity.SystemRole;
 import github.serliunx.varytalk.project.system.mapper.SystemRoleMapper;
 import github.serliunx.varytalk.project.system.service.SystemRoleService;
@@ -22,6 +23,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     }
 
     @Override
+    @GetOperator(SystemRole.class)
     public Long insertRole(SystemRole systemRole) {
         return systemRoleMapper.insertRole(systemRole);
     }
