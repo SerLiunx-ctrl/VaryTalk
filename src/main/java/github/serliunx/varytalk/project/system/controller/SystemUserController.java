@@ -21,7 +21,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("list")
-    public Result list(@RequestBody(required = false) SystemUser systemUser){
+    public Result list(SystemUser systemUser){
         startPage();
         List<SystemUser> systemUsers = systemUserService.selectList(systemUser);
         return page(systemUsers);

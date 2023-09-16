@@ -1,5 +1,6 @@
 package github.serliunx.varytalk.project.system.controller;
 
+import github.serliunx.varytalk.common.annotation.PermissionRequired;
 import github.serliunx.varytalk.common.base.BaseController;
 import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.project.system.entity.SystemRole;
@@ -20,7 +21,8 @@ public class SystemRoleController extends BaseController {
     }
 
     @GetMapping("list")
-    public Result list(@RequestBody(required = false) SystemRole systemRole){
+    @PermissionRequired("system.role.list")
+    public Result list(SystemRole systemRole){
         startPage();
         List<SystemRole> systemRoles = systemRoleService.selectList(systemRole);
         return page(systemRoles);

@@ -42,7 +42,7 @@ public class SystemPermissionController extends BaseController {
      * @return 节点列表
      */
     @GetMapping("list")
-    public Result list(@RequestBody(required = false) SystemPermission systemPermission){
+    public Result list(SystemPermission systemPermission){
         startPage();
         List<SystemPermission> systemPermissions = systemPermissionService.selectList(systemPermission);
         return page(systemPermissions);
