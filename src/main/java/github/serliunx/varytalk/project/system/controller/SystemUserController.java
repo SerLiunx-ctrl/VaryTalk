@@ -1,6 +1,7 @@
 package github.serliunx.varytalk.project.system.controller;
 
 import github.serliunx.varytalk.common.base.BaseController;
+import github.serliunx.varytalk.common.result.CountResult;
 import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
 import github.serliunx.varytalk.project.system.service.SystemUserService;
@@ -42,5 +43,10 @@ public class SystemUserController extends BaseController {
         }
         systemUserService.insertUser(systemUser);
         return Result.success(systemUser.getId());
+    }
+
+    @GetMapping("online")
+    public Result getOnline(){
+        return CountResult.success(systemUserService.getOnlineUser());
     }
 }

@@ -14,28 +14,31 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-    <sql id="permissionList">
+    <sql id="permission">
         select sp.id, sp.node_name, sp.value, su.nick_name as create_by, sp.create_time, sp.update_by, sp.update_time, sp.remark
         from sys_permission sp left join sys_user su on sp.create_by = su.username where sp.id > 0
     </sql>
 
     <select id="selectList" parameterType="SystemPermission" resultMap="permissionResult">
-        <include refid="permissionList"/>
+        <include refid="permission"/>
         <if test="nodeName != null and nodeName != ''">
             and sp.node_name like concat('%', #{nodeName}, '%')
         </if>
     </select>
 
     <select id="selectById" parameterType="long" resultMap="permissionResult">
-        select * from sys_permission where #{id} = id limit 1
+        <include refid="permission"/>
+        and sp.id = #{id} limit 1
     </select>
 
     <select id="selectByValue" parameterType="string" resultMap="permissionResult">
-        select * from sys_permission where #{value} = value limit 1
+        <include refid="permission"/>
+        and sp.value = #{value} limit 1
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="permissionResult">
-        select * from sys_permission where #{nodeName} = node_name limit 1
+        <include refid="permission"/>
+        and sp.node_name = #{nodeName} limit 1
     </select>
 
     <insert id="insertPermission" parameterType="SystemPermission" useGeneratedKeys="true" keyProperty="id" keyColumn="id">

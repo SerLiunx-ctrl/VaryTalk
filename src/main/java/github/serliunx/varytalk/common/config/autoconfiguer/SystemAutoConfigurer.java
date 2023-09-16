@@ -5,6 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("talk-system")
 public class SystemAutoConfigurer {
 
+    private final RedisPrefix redisPrefix = new RedisPrefix();
+
     /**
      * token密钥
      */
@@ -29,5 +31,38 @@ public class SystemAutoConfigurer {
 
     public void setTokenExpireHour(Integer tokenExpireHour) {
         this.tokenExpireHour = tokenExpireHour;
+    }
+
+    public RedisPrefix getRedisPrefix() {
+        return redisPrefix;
+    }
+
+    public static class RedisPrefix{
+
+        /**
+         * redis主键
+         */
+        private String mainPrefix = "vary_talk:";
+
+        /**
+         * 当前在线用户, 最终为 mainPrefix+onlineUsers 如: vary_talk:user_online:
+         */
+        private String onlineUsers = mainPrefix + "user_online:";
+
+        public String getMainPrefix() {
+            return mainPrefix;
+        }
+
+        public void setMainPrefix(String mainPrefix) {
+            this.mainPrefix = mainPrefix;
+        }
+
+        public String getOnlineUsers() {
+            return onlineUsers;
+        }
+
+        public void setOnlineUsers(String onlineUsers) {
+            this.onlineUsers = this.mainPrefix + onlineUsers;
+        }
     }
 }

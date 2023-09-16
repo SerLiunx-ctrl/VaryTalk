@@ -14,24 +14,26 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-    <sql id="roleList">
+    <sql id="role">
         select sr.id, sr.role_name, su.nick_name as create_by, sr.create_time, sr.update_by, sr.update_time, sr.remark
         from sys_role sr left join sys_user su on sr.create_by = su.username where sr.id > 0
     </sql>
 
     <select id="selectList" parameterType="SystemRole" resultMap="roleResult">
-        <include refid="roleList"/>
+        <include refid="role"/>
         <if test="roleName != null and roleName != ''">
             and sr.role_name like concat('%', #{roleName}, '%')
         </if>
     </select>
 
     <select id="selectById" parameterType="long" resultMap="roleResult">
-        select * from sys_role where #{id} = id limit 1
+        <include refid="role"/>
+        and sr.id = #{id} limit 1
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="roleResult">
-        select * from sys_role where #{roleName} = role_name limit 1
+        <include refid="role"/>
+        and sr.role_name = #{roleName} limit 1
     </select>
 
     <insert id="insertRole" parameterType="SystemRole" useGeneratedKeys="true" keyProperty="id" keyColumn="id">

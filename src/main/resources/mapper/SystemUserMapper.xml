@@ -17,14 +17,14 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-    <sql id="userList">
+    <sql id="user">
         select s.id, s.username, s.password, s.phone_number, s.email, s.nick_name, sds.sex_tag as sex, s.create_by,
                s.create_time, s.update_by, s.update_time, s.remark from sys_user s left join sys_dict_sex sds on s.sex_id = sds.id
         where s.id > 0
     </sql>
 
     <select id="selectList" parameterType="SystemUser" resultMap="userResult">
-        <include refid="userList"/>
+        <include refid="user"/>
         <if test="username != null and username != ''">
             and s.username like concat('%', #{username}, '%')
         </if>
@@ -43,19 +43,23 @@
     </select>
 
     <select id="checkUserByUsername" resultMap="userResult" parameterType="string">
-        select * from sys_user where username=#{username} limit 1
+        <include refid="user"/>
+        and s.username = #{username} limit 1
     </select>
 
     <select id="checkUserByPhoneNumber" resultMap="userResult" parameterType="string">
-        select * from sys_user where phone_number=#{phoneNumber} limit 1
+        <include refid="user"/>
+        and s.phone_number = #{phoneNumber} limit 1
     </select>
 
     <select id="checkUserByEmail" resultMap="userResult" parameterType="string">
-        select * from sys_user where email=#{email} limit 1
+        <include refid="user"/>
+        and s.email = #{email} limit 1
     </select>
 
     <select id="selectUserById" resultMap="userResult" parameterType="long">
-        select * from sys_user where id = #{id}
+        <include refid="user"/>
+        and s.id = #{id}
     </select>
 
     <insert id="insertUser" parameterType="SystemUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">

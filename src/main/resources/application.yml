@@ -1,9 +1,16 @@
-#系统内置设置
+﻿#系统内置设置
 talk-system:
   #token密钥设置
   token-secret: serliunxvarytalktoken
   #token过期时间(小时)
   token-expire-hour: 24
+  #redis键
+  redis-prefix:
+    #主键
+    main-prefix: "vary_talk:"
+    #在线用户
+    online-users: "user_online:"
+
 #服务器设置
 server:
   port: 6666
@@ -41,7 +48,24 @@ spring:
   mvc:
     #数据校验日志开关
     log-resolved-exception: false
-
+  data:
+    #redis设置
+    redis:
+      #连接地址
+      host: localhost
+      #端口号
+      port: 6379
+      #数据库序号
+      database: 0
+      connect-timeout: 10000
+      password: 2636257370
+      lettuce:
+        pool:
+          max-wait: -1
+          max-idle: 8
+          min-idle: 0
+          #连接池最大连接数
+          max-active: 25
 #mybatis设置
 mybatis:
   #mapper扫描地址

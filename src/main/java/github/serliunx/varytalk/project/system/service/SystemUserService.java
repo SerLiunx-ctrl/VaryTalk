@@ -5,6 +5,7 @@ import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
 
 import java.util.List;
+import java.util.Set;
 
 public interface SystemUserService {
 
@@ -79,4 +80,6 @@ public interface SystemUserService {
      * @return 结果, 结果为null时则验证通过.
      */
     String checkUserInformation(SystemUser systemUser);
+
+    Set<LoginUser> getOnlineUser();
 }
