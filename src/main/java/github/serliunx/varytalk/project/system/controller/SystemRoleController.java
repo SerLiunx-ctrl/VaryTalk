@@ -29,6 +29,7 @@ public class SystemRoleController extends BaseController {
     }
 
     @PostMapping("add")
+    @PermissionRequired("system.role.add")
     public Result add(@RequestBody @Validated SystemRole systemRole){
         if (systemRoleService.selectByName(systemRole.getRoleName()) != null) {
             return fail("该角色已存在, 请换个角色名试试!");

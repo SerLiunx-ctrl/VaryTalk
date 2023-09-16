@@ -6,6 +6,7 @@ import org.aspectj.lang.JoinPoint;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Arrays;
 
 public class AopUtils {
     private AopUtils(){}
@@ -84,6 +85,17 @@ public class AopUtils {
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean checkIfNull(Object[] objects){
+        boolean result = true;
+        for (Object object : objects) {
+            if (object != null) {
+                result = false;
+                break;
+            }
+        }
+        return result;
     }
 
     /**

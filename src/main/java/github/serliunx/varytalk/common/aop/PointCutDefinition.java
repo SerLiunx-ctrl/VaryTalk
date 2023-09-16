@@ -10,4 +10,7 @@ public class PointCutDefinition {
 
     @Pointcut("@annotation(github.serliunx.varytalk.common.annotation.SetOperator)")
     public void operatorPoint(){}
+
+    @Pointcut("@annotation(github.serliunx.varytalk.common.annotation.PermissionRequired)")
+    public void permissionPoint(){}
 }

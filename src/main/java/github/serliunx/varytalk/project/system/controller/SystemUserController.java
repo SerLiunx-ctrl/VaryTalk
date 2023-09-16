@@ -1,5 +1,6 @@
 package github.serliunx.varytalk.project.system.controller;
 
+import github.serliunx.varytalk.common.annotation.PermissionRequired;
 import github.serliunx.varytalk.common.base.BaseController;
 import github.serliunx.varytalk.common.result.CountResult;
 import github.serliunx.varytalk.common.result.Result;
@@ -21,6 +22,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("list")
+    @PermissionRequired("system.user.list")
     public Result list(SystemUser systemUser){
         startPage();
         List<SystemUser> systemUsers = systemUserService.selectList(systemUser);
@@ -28,6 +30,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("get/{id}")
+    @PermissionRequired("system.user.get")
     public Result getUserById(@PathVariable Long id){
         if(id == null || id < 0){
            return fail("id有误, 请重试.");
@@ -36,6 +39,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PostMapping("add")
+    @PermissionRequired("system.user.add")
     public Result add(@RequestBody @Validated SystemUser systemUser){
         String result = systemUserService.checkUserInformation(systemUser);
         if(result != null){
@@ -46,6 +50,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("online")
+    @PermissionRequired("system.user.online.detail")
     public Result getOnline(){
         return CountResult.success(systemUserService.getOnlineUser());
     }

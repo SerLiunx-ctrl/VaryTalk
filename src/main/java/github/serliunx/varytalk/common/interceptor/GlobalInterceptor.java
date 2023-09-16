@@ -38,6 +38,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
     }
 
     @Override
+    @SuppressWarnings("all")
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(!(handler instanceof HandlerMethod handlerMethod)){
             return false;
@@ -71,6 +72,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
     }
 
     @Override
+    @SuppressWarnings("all")
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         SecurityUtils.removeUserId();
     }

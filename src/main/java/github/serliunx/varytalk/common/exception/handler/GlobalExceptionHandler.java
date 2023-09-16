@@ -1,6 +1,7 @@
 package github.serliunx.varytalk.common.exception.handler;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import github.serliunx.varytalk.common.exception.PermissionNotFoundException;
 import github.serliunx.varytalk.common.exception.ServiceException;
 import github.serliunx.varytalk.common.result.Result;
 import org.slf4j.Logger;
@@ -51,6 +52,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(JWTVerificationException.class)
     public Result doJWTVerificationException(){
         return Result.fail("token无效!");
+    }
+
+    /**
+     * 权限鉴定异常(权限未找到)
+     */
+    @ExceptionHandler(PermissionNotFoundException.class)
+    public Result doPermissionNotFoundException(PermissionNotFoundException e){
+        logger.error("发生异常-> 权限鉴定错误, 无法在数据库中找到接口指定的权限: {}, 如有需要请手动添加或检查代码!",
+                e.getPermissionValue());
+        return Result.fail("权限鉴定错误, 属于系统错误! 请联系管理员!");
     }
 
     /**

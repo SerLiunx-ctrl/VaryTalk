@@ -84,7 +84,7 @@ logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss(SSS)
   level:
-    github.serliunx.*: debug
+    github.serliunx.*: info
 
 #分页插件设置
 pagehelper:
