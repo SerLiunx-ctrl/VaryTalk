@@ -1,7 +1,10 @@
 package github.serliunx.varytalk.common.interceptor;
 
+import github.serliunx.varytalk.common.base.LoginUser;
+import github.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import github.serliunx.varytalk.common.exception.ServiceException;
 import github.serliunx.varytalk.common.util.JwtUtils;
+import github.serliunx.varytalk.common.util.RedisUtils;
 import github.serliunx.varytalk.common.util.SecurityUtils;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
 import github.serliunx.varytalk.project.system.service.SystemUserService;
@@ -20,10 +23,18 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
     private final JwtUtils jwtUtils;
     private final SystemUserService systemUserService;
+    private final SystemAutoConfigurer systemAutoConfigurer;
+    private final RedisUtils redisUtils;
 
-    public GlobalInterceptor(JwtUtils jwtUtils, SystemUserService systemUserService) {
+    public GlobalInterceptor(JwtUtils jwtUtils,
+                             SystemUserService systemUserService,
+                             SystemAutoConfigurer systemAutoConfigurer,
+                             RedisUtils redisUtils) {
+
         this.jwtUtils = jwtUtils;
         this.systemUserService = systemUserService;
+        this.systemAutoConfigurer = systemAutoConfigurer;
+        this.redisUtils = redisUtils;
     }
 
     @Override
@@ -31,7 +42,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if(!(handler instanceof HandlerMethod handlerMethod)){
             return false;
         }
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader(systemAutoConfigurer.getAuthHeader());
         if(token == null){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             throw new ServiceException("你还未登录!", 401);
@@ -42,12 +53,16 @@ public class GlobalInterceptor implements HandlerInterceptor {
         }
 
         Long userId = jwtUtils.getUserId(token);
+        LoginUser loginUser = (LoginUser) redisUtils.get(systemAutoConfigurer.getRedisPrefix().getOnlineUsers() +
+                jwtUtils.getUsername(token));
+        if(!loginUser.getToken().equals(token)){
+            throw new ServiceException("token已失效, 请重新登录!", 401);
+        }
         SystemUser systemUser = systemUserService.selectUserById(userId);
         if(systemUser == null){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             throw new ServiceException("token验证失败, 用户不存在!", 401);
         }
-
         Map<String, Long> map = new HashMap<>();
         map.put("userId", userId);
         SecurityUtils.setUserId(map);

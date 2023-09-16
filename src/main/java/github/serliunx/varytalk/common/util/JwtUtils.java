@@ -61,11 +61,27 @@ public class JwtUtils {
         return verify != null;
     }
 
+    /**
+     * 获取用户id
+     * @param token token
+     * @return id
+     */
     public Long getUserId(String token){
         DecodedJWT decodedJWT = verifyToken0(token);
         Map<String, Claim> claims = decodedJWT.getClaims();
         String id = claims.get("userId").toString().replace("\"", "");
         return Long.valueOf(id);
+    }
+
+    /**
+     * 获取用户名称
+     * @param token token
+     * @return 用户名称
+     */
+    public String getUsername(String token){
+        DecodedJWT decodedJWT = verifyToken0(token);
+        Map<String, Claim> claims = decodedJWT.getClaims();
+        return claims.get("userName").toString().replace("\"", "");
     }
 
     private DecodedJWT verifyToken0(String token){

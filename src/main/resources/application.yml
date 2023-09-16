@@ -3,7 +3,9 @@ talk-system:
   #token密钥设置
   token-secret: serliunxvarytalktoken
   #token过期时间(小时)
-  token-expire-hour: 24
+  token-expire-hour: 1
+  #token头标识
+  auth-header: Authorization
   #redis键
   redis-prefix:
     #主键

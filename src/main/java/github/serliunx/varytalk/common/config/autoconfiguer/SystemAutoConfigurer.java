@@ -13,6 +13,11 @@ public class SystemAutoConfigurer {
     private String tokenSecret = "serliunxpersonalblogtoken";
 
     /**
+     * token头标识
+     */
+    private String authHeader = "Authorization";
+
+    /**
      * token过期时间（小时为单位）
      */
     private Integer tokenExpireHour = 1;
@@ -35,6 +40,14 @@ public class SystemAutoConfigurer {
 
     public RedisPrefix getRedisPrefix() {
         return redisPrefix;
+    }
+
+    public String getAuthHeader() {
+        return authHeader;
+    }
+
+    public void setAuthHeader(String authHeader) {
+        this.authHeader = authHeader;
     }
 
     public static class RedisPrefix{
