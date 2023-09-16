@@ -1,5 +1,6 @@
 package github.serliunx.varytalk.project.system.service.impl;
 
+import github.serliunx.varytalk.common.annotation.SetOperator;
 import github.serliunx.varytalk.common.base.LoginUser;
 import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.common.util.SecurityUtils;
@@ -67,5 +68,26 @@ public class SystemUserServiceImpl implements SystemUserService {
     public void registerUser(SystemUser systemUser) {
         systemUser.setPassword(SecurityUtils.generateMD5Message(systemUser.getPassword()));
         systemUserMapper.insertUser(systemUser);
+    }
+
+    @Override
+    @SetOperator(SystemUser.class)
+    public void insertUser(SystemUser systemUser) {
+        systemUser.setPassword(SecurityUtils.generateMD5Message(systemUser.getPassword()));
+        systemUserMapper.insertUser(systemUser);
+    }
+
+    @Override
+    public String checkUserInformation(SystemUser systemUser) {
+        if(checkUserByUsername(systemUser.getUsername())){
+            return "该用户名已被使用, 请更换一个用户名试试.";
+        }
+        if(checkUserByEmail(systemUser.getEmail())){
+            return "该邮箱已被其它用户绑定, 换一个试试.";
+        }
+        if(checkUserByPhoneNumber(systemUser.getPhoneNumber())){
+            return "该手机号已被其它用户绑定, 换一个试试.";
+        }
+        return null;
     }
 }

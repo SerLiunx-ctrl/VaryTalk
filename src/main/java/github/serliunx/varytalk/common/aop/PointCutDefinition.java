@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class PointCutDefinition {
 
-    @Pointcut("@annotation(github.serliunx.varytalk.common.annotation.GetOperator)")
+    @Pointcut("@annotation(github.serliunx.varytalk.common.annotation.SetOperator)")
     public void operatorPoint(){}
 }

@@ -4,6 +4,7 @@ import github.serliunx.varytalk.common.base.BaseController;
 import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
 import github.serliunx.varytalk.project.system.service.SystemUserService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +32,15 @@ public class SystemUserController extends BaseController {
            return fail("id有误, 请重试.");
         }
         return success(systemUserService.selectUserById(id));
+    }
+
+    @PostMapping("add")
+    public Result add(@RequestBody @Validated SystemUser systemUser){
+        String result = systemUserService.checkUserInformation(systemUser);
+        if(result != null){
+            return fail(result);
+        }
+        systemUserService.insertUser(systemUser);
+        return Result.success(systemUser.getId());
     }
 }

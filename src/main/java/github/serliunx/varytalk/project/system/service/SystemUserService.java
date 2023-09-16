@@ -62,4 +62,21 @@ public interface SystemUserService {
      * @param systemUser 用户信息
      */
     void registerUser(SystemUser systemUser);
+
+    /**
+     * 新增一条用户无数
+     * @param systemUser 用户信息
+     */
+    void insertUser(SystemUser systemUser);
+
+    /**
+     * 查询用户信息是否唯一
+     *
+     * <li> 手机号
+     * <li> 用户名
+     * <li> 邮箱
+     * @param systemUser 用户
+     * @return 结果, 结果为null时则验证通过.
+     */
+    String checkUserInformation(SystemUser systemUser);
 }

@@ -45,14 +45,9 @@ public class AuthController extends BaseController {
 
     @PostMapping("register")
     public Result register(@RequestBody @Validated SystemUser user){
-        if(systemUserService.checkUserByUsername(user.getUsername())){
-            return fail("该用户名已被使用, 请更换一个用户名试试.");
-        }
-        if(user.getEmail() != null && systemUserService.checkUserByEmail(user.getEmail())){
-            return fail("该邮箱已被其它用户绑定, 换一个试试.");
-        }
-        if(user.getPhoneNumber() != null && systemUserService.checkUserByPhoneNumber(user.getPhoneNumber())){
-            return fail("该手机号已被其它用户绑定, 换一个试试.");
+        String result = systemUserService.checkUserInformation(user);
+        if(result != null){
+            return fail(result);
         }
         systemUserService.registerUser(user);
         return success(user.getId(), "注册成功! 你现在可以登录了.");

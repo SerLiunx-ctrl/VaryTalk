@@ -1,6 +1,6 @@
 package github.serliunx.varytalk.common.aop;
 
-import github.serliunx.varytalk.common.annotation.GetOperator;
+import github.serliunx.varytalk.common.annotation.SetOperator;
 import github.serliunx.varytalk.common.exception.ServiceException;
 import github.serliunx.varytalk.common.util.AopUtils;
 import github.serliunx.varytalk.common.util.SecurityUtils;
@@ -30,18 +30,19 @@ public class OperatorAdvice {
             Method pointMethod = AopUtils.getMethodByJoinPoint(joinPoint);
             pointMethod.setAccessible(true);
 
-            GetOperator annotation = pointMethod.getAnnotation(GetOperator.class);
+            SetOperator annotation = pointMethod.getAnnotation(SetOperator.class);
             if(annotation == null) return;
 
             SystemUser systemUser = systemUserService.selectUserById(SecurityUtils.getUserId());
             if(systemUser == null) return;
 
+            //获取需修改的参数
             Object arg = AopUtils.getArg(joinPoint.getArgs(), annotation.value());
             if(arg == null) return;
 
+            //获取参数中需要修改的属性, 设置为操作者的用户名称(非昵称)
             Field field = AopUtils.getField(arg.getClass(), annotation.fieldName(), true);
             if(field == null) return;
-
             field.setAccessible(true);
             field.set(arg, systemUser.getUsername());
         }catch (Exception e){

@@ -1,5 +1,6 @@
 package github.serliunx.varytalk.project.system.service.impl;
 
+import github.serliunx.varytalk.common.annotation.SetOperator;
 import github.serliunx.varytalk.project.system.entity.SystemPermission;
 import github.serliunx.varytalk.project.system.mapper.SystemPermissionMapper;
 import github.serliunx.varytalk.project.system.service.SystemPermissionService;
@@ -22,6 +23,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     }
 
     @Override
+    @SetOperator(SystemPermission.class)
     public Long insertPermission(SystemPermission systemPermission) {
         return systemPermissionMapper.insertPermission(systemPermission);
     }

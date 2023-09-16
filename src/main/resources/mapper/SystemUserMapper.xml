@@ -31,6 +31,15 @@
         <if test="nickName != null and nickName != ''">
             and s.nick_name like concat('%', #{nickName}, '%')
         </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            and s.phone_number like concat('%', #{phoneNumber}, '%')
+        </if>
+        <if test="email != null and email != ''">
+            and s.email like concat('%', #{email}, '%')
+        </if>
+        <if test="sex != null and sex != ''">
+            and sds.sex_tag like concat('%', #{sex}, '%')
+        </if>
     </select>
 
     <select id="checkUserByUsername" resultMap="userResult" parameterType="string">
@@ -46,7 +55,7 @@
     </select>
 
     <select id="selectUserById" resultMap="userResult" parameterType="long">
-        select * from sys_user where id = #{id} limit 1
+        select * from sys_user where id = #{id}
     </select>
 
     <insert id="insertUser" parameterType="SystemUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">

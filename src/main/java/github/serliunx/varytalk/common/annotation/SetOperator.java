@@ -13,8 +13,8 @@ import java.lang.annotation.Target;
  * 默认操作类型为创建数据 {@link OperationType#CREATE}
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
-public @interface GetOperator {
+@Target({ElementType.METHOD})
+public @interface SetOperator {
 
     /**
      * 需修改的参数类型, 如存在多个则默认操作第一个
