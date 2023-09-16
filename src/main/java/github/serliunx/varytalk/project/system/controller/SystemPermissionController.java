@@ -33,7 +33,7 @@ public class SystemPermissionController extends BaseController {
             return fail("该权限节点名称已存在, 换一个试试!");
         }
         systemPermissionService.insertPermission(systemPermission);
-        return success();
+        return success(systemPermission.getId());
     }
 
     /**

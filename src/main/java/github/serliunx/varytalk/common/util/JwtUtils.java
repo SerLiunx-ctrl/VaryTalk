@@ -31,7 +31,7 @@ public class JwtUtils {
      */
     public String getLoginToken(LoginUser loginUser){
         Map<String, String> map = new HashMap<>();
-        map.put("id", String.valueOf(loginUser.getId()));
+        map.put("userId", String.valueOf(loginUser.getId()));
         map.put("userName", loginUser.getUsername());
         return generateToken(map, systemAutoConfigurer.getTokenExpireHour());
     }
@@ -64,10 +64,7 @@ public class JwtUtils {
     public Long getUserId(String token){
         DecodedJWT decodedJWT = verifyToken0(token);
         Map<String, Claim> claims = decodedJWT.getClaims();
-        for (Claim value : claims.values()) {
-            System.out.println(value);
-        }
-        String id = claims.get("id").toString().replace("\"", "");
+        String id = claims.get("userId").toString().replace("\"", "");
         return Long.valueOf(id);
     }
 

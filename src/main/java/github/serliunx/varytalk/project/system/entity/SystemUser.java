@@ -1,10 +1,12 @@
 package github.serliunx.varytalk.project.system.entity;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import github.serliunx.varytalk.common.base.BaseEntity;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
+@JsonPropertyOrder({"id", "username", "password", "phoneNumber", "email", "nickName", "sex"})
 public class SystemUser extends BaseEntity {
 
     private Long id;
