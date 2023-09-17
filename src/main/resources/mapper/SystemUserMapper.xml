@@ -10,16 +10,23 @@
         <result property="phoneNumber" column="phone_number"/>
         <result property="email" column="email"/>
         <result property="nickName" column="nick_name"/>
+        <result property="roleId" column="role_id"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
+        <association property="role" column="role_id" javaType="SystemRole" select="role"/>
     </resultMap>
 
+    <select id="role" parameterType="long" resultMap="github.serliunx.varytalk.project.system.mapper.SystemRoleMapper.roleResult">
+        select sr.id, sr.role_name, su.nick_name as create_by, sr.create_time, sr.update_by, sr.update_time, sr.remark
+        from sys_role sr left join sys_user su on sr.create_by = su.username where sr.id = #{id}
+    </select>
+
     <sql id="user">
-        select s.id, s.username, s.password, s.phone_number, s.email, s.nick_name, sds.sex_tag as sex, s.create_by,
-               s.create_time, s.update_by, s.update_time, s.remark from sys_user s left join sys_dict_sex sds on s.sex_id = sds.id
+        select s.id, s.username, s.password, s.phone_number, s.role_id, s.email, s.nick_name, sds.sex_tag as sex, s.create_by,
+        s.create_time, s.update_by, s.update_time, s.remark from sys_user s left join sys_dict_sex sds on s.sex_id = sds.id
         where s.id > 0
     </sql>
 
@@ -63,9 +70,13 @@
     </select>
 
     <insert id="insertUser" parameterType="SystemUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into sys_user(id, username, password, phone_number, email, nick_name, sex_id, create_by, create_time,
+        insert into sys_user(id, username, password, phone_number, email, nick_name, role_id, sex_id, create_by, create_time,
                              update_by, update_time, remark)
-        values (null, #{username}, #{password}, #{phoneNumber}, #{email}, #{nickName}, ifnull(#{sex}, 1), #{createBy}, sysdate(),
+        values (null, #{username}, #{password}, #{phoneNumber}, #{email}, #{nickName}, ifnull(#{roleId}, 2), ifnull(#{sex}, 1), #{createBy}, sysdate(),
                 null, null, #{remark})
     </insert>
+
+    <update id="updateRole" parameterType="SystemUser">
+        update sys_user set role_id = #{roleId}, update_by = #{updateBy}, update_time = sysdate() where id = #{id}
+    </update>
 </mapper>

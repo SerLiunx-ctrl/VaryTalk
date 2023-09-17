@@ -82,4 +82,6 @@ public interface SystemUserService {
     String checkUserInformation(SystemUser systemUser);
 
     Set<LoginUser> getOnlineUser();
+
+    void updateRole(SystemUser systemUser);
 }

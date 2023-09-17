@@ -46,7 +46,7 @@ public class OperatorAdvice {
             field.setAccessible(true);
             field.set(arg, systemUser.getUsername());
         }catch (Exception e){
-            throw new ServiceException(e.getClass() + ": " + e.getMessage(), 400);
+            throw new RuntimeException(e);
         }
     }
 }

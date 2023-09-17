@@ -113,4 +113,10 @@ public class SystemUserServiceImpl implements SystemUserService {
         }
         return users;
     }
+
+    @Override
+    @SetOperator(value = SystemUser.class, fieldName = "updateBy")
+    public void updateRole(SystemUser systemUser) {
+        systemUserMapper.updateRole(systemUser);
+    }
 }

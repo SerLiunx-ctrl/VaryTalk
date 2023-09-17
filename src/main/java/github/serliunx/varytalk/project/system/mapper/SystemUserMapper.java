@@ -19,4 +19,6 @@ public interface SystemUserMapper {
     SystemUser selectUserById(Long id);
 
     Long insertUser(SystemUser systemUser);
+
+    void updateRole(SystemUser systemUser);
 }
