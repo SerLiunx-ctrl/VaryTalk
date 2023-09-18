@@ -2,9 +2,11 @@ package github.serliunx.varytalk.security.service;
 
 import github.serliunx.varytalk.common.exception.PermissionNotFoundException;
 import github.serliunx.varytalk.project.system.entity.SystemPermission;
+import github.serliunx.varytalk.project.system.entity.SystemRolePermission;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
 import github.serliunx.varytalk.project.system.entity.SystemUserPermission;
 import github.serliunx.varytalk.project.system.service.SystemPermissionService;
+import github.serliunx.varytalk.project.system.service.SystemRolePermissionService;
 import github.serliunx.varytalk.project.system.service.SystemUserPermissionService;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,14 @@ public class PermissionService {
 
     private final SystemPermissionService systemPermissionService;
     private final SystemUserPermissionService systemUserPermissionService;
+    private final SystemRolePermissionService systemRolePermissionService;
 
     public PermissionService(SystemPermissionService systemPermissionService,
-                             SystemUserPermissionService systemUserPermissionService) {
+                             SystemUserPermissionService systemUserPermissionService,
+                             SystemRolePermissionService systemRolePermissionService) {
         this.systemPermissionService = systemPermissionService;
         this.systemUserPermissionService = systemUserPermissionService;
+        this.systemRolePermissionService = systemRolePermissionService;
     }
 
     /**
@@ -37,12 +42,22 @@ public class PermissionService {
                 .selectByUserId(systemUser.getId());
 
         //第一步, 直接检查该用户是否拥有该节点, 拥有则直接返回真
-        List<String> values = systemUserPermissions.stream().map(SystemUserPermission::getPermissionValue).toList();
+        List<String> values = systemUserPermissions.stream()
+                .map(SystemUserPermission::getPermissionValue).toList();
         if(values.contains(permission)){
             return true;
         }
-        //第二部, 检查用户所属角色是否拥有该节点, 拥有则直接返回真
-        //待做
+        //第二步, 检查用户所属角色是否拥有该节点, 拥有则直接返回真
+        List<String> rolePermissions = systemRolePermissionService.selectByRoleId(systemUser.getRoleId()).stream()
+                .map(SystemRolePermission::getPermissionValue).toList();
+        if(rolePermissions.contains(permission)){
+            return true;
+        }
+        //第三步, 匹配用户所属角色的权限节点,
+        if(matchPermission(rolePermissions, permission)){
+            return true;
+        }
+        //最后匹配用户节点
         return matchPermission(values, permission);
     }
 
