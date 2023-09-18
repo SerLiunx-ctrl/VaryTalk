@@ -1,5 +1,6 @@
 package github.serliunx.varytalk.project.system.controller;
 
+import github.serliunx.varytalk.common.annotation.Logger;
 import github.serliunx.varytalk.common.annotation.PermissionRequired;
 import github.serliunx.varytalk.common.base.BaseController;
 import github.serliunx.varytalk.common.result.Result;
@@ -30,6 +31,7 @@ public class SystemRoleController extends BaseController {
 
     @PostMapping("add")
     @PermissionRequired("system.role.add")
+    @Logger(opName = "角色接口", value = "添加一个新的角色")
     public Result add(@RequestBody @Validated SystemRole systemRole){
         if (systemRoleService.selectByName(systemRole.getRoleName()) != null) {
             return fail("该角色已存在, 请换个角色名试试!");

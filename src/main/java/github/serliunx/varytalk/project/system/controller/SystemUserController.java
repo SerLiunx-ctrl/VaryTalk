@@ -1,5 +1,6 @@
 package github.serliunx.varytalk.project.system.controller;
 
+import github.serliunx.varytalk.common.annotation.Logger;
 import github.serliunx.varytalk.common.annotation.PermissionRequired;
 import github.serliunx.varytalk.common.base.BaseController;
 import github.serliunx.varytalk.common.result.CountResult;
@@ -45,6 +46,7 @@ public class SystemUserController extends BaseController {
 
     @PostMapping("add")
     @PermissionRequired("system.user.add")
+    @Logger(opName = "用户接口", value = "添加一个用户")
     public Result add(@RequestBody @Validated SystemUser systemUser){
         String result = systemUserService.checkUserInformation(systemUser);
         if(result != null){
@@ -56,6 +58,7 @@ public class SystemUserController extends BaseController {
 
     @PutMapping("bind-role")
     @PermissionRequired("system.user.bind.role")
+    @Logger(opName = "用户接口", value = "修改用户的角色")
     public Result bindRole(@Validated(SystemUserRoleUpdateGroup.class) SystemUser systemUser){
         SystemUser systemUserFound = systemUserService.selectUserById(systemUser.getId());
         if(systemUserFound == null){

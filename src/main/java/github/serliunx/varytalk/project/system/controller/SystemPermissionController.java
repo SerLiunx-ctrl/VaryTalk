@@ -1,5 +1,6 @@
 package github.serliunx.varytalk.project.system.controller;
 
+import github.serliunx.varytalk.common.annotation.Logger;
 import github.serliunx.varytalk.common.annotation.PermissionRequired;
 import github.serliunx.varytalk.common.base.BaseController;
 import github.serliunx.varytalk.common.result.Result;
@@ -40,6 +41,7 @@ public class SystemPermissionController extends BaseController {
      */
     @PostMapping("add")
     @PermissionRequired("system.permission.add")
+    @Logger(opName = "权限接口", value = "添加一个新的权限节点")
     public Result add(@RequestBody @Validated SystemPermission systemPermission){
         if(systemPermissionService.selectByValue(systemPermission.getValue()) != null){
             return fail("该权限节点值已存在, 请重新输入!");
@@ -53,6 +55,7 @@ public class SystemPermissionController extends BaseController {
 
     @PostMapping("give-user")
     @PermissionRequired("system.permission.give.user")
+    @Logger(opName = "权限接口", value = "给用户添加权限")
     public Result give(@Validated SystemUserPermission systemUserPermission){
         SystemUser systemUser = systemUserService.selectUserById(systemUserPermission.getUserId());
         if(systemUser == null){
@@ -73,6 +76,7 @@ public class SystemPermissionController extends BaseController {
 
     @PostMapping("give-role")
     @PermissionRequired("system.permission.give.role")
+    @Logger(opName = "权限接口", value = "给角色添加权限")
     public Result giveRole(@Validated SystemRolePermission systemRolePermission){
         SystemRole systemRole = systemRoleService.selectById(systemRolePermission.getRoleId());
         if(systemRole == null){

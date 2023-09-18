@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="github.serliunx.varytalk.project.system.mapper.SystemLogMapper">
+    <resultMap id="logResult" type="github.serliunx.varytalk.project.system.entity.SystemLog">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="ipAddress" column="ip_address"/>
+        <result property="apiPath" column="api_path"/>
+        <result property="opName" column="op_name"/>
+        <result property="opContext" column="op_context"/>
+        <result property="opTime" column="op_time"/>
+    </resultMap>
+
+    <sql id="log">
+        select sl.id, sl.user_id, sl.ip_address, su.username as username, sl.api_path, sl.op_name, sl.op_context, sl.op_time from sys_log sl
+        left join sys_user su on sl.user_id = su.id where sl.id > 0
+    </sql>
+
+    <select id="selectList" parameterType="SystemLog" resultMap="logResult">
+        <include refid="log"/>
+    </select>
+
+    <select id="selectByUserId" parameterType="long" resultMap="logResult">
+        <include refid="log"/>
+        and sl.user_id = #{userId}
+    </select>
+
+    <insert id="insertLog" parameterType="SystemLog">
+        insert into sys_log(id, user_id, ip_address, api_path, op_name, op_context, op_time)
+        values(null, #{userId}, #{ipAddress}, #{apiPath}, #{opName}, #{opContext}, #{opTime})
+    </insert>
+</mapper>
