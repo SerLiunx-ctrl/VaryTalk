@@ -6,6 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class SystemAutoConfigurer {
 
     private final RedisPrefix redisPrefix = new RedisPrefix();
+    private final FileInfo fileInfo = new FileInfo();
+    private final RedisTtl redisTtl = new RedisTtl();
 
     /**
      * token密钥
@@ -38,16 +40,24 @@ public class SystemAutoConfigurer {
         this.tokenExpireHour = tokenExpireHour;
     }
 
-    public RedisPrefix getRedisPrefix() {
-        return redisPrefix;
-    }
-
     public String getAuthHeader() {
         return authHeader;
     }
 
     public void setAuthHeader(String authHeader) {
         this.authHeader = authHeader;
+    }
+
+    public RedisPrefix getRedisPrefix() {
+        return redisPrefix;
+    }
+
+    public FileInfo getFileInfo() {
+        return fileInfo;
+    }
+
+    public RedisTtl getRedisTtl() {
+        return redisTtl;
     }
 
     public static class RedisPrefix{
@@ -61,6 +71,11 @@ public class SystemAutoConfigurer {
          * 当前在线用户, 最终为 mainPrefix+onlineUsers 如: vary_talk:user_online:
          */
         private String onlineUsers = mainPrefix + "user_online:";
+
+        /**
+         * #方法/属性缓存, 用于鉴权、日志记录
+         */
+        private String joinPointCache = mainPrefix + "join_point_cache:";
 
         public String getMainPrefix() {
             return mainPrefix;
@@ -76,6 +91,46 @@ public class SystemAutoConfigurer {
 
         public void setOnlineUsers(String onlineUsers) {
             this.onlineUsers = this.mainPrefix + onlineUsers;
+        }
+
+        public String getJoinPointCache() {
+            return joinPointCache;
+        }
+
+        public void setJoinPointCache(String joinPointCache) {
+            this.joinPointCache = this.mainPrefix + joinPointCache;
+        }
+    }
+
+    public static class RedisTtl{
+
+        /**
+         * #方法/属性缓存, 用于鉴权、日志记录(存活时间)
+         */
+        private Integer joinPointCache = 24;
+
+        public Integer getJoinPointCache() {
+            return joinPointCache;
+        }
+
+        public void setJoinPointCache(Integer joinPointCache) {
+            this.joinPointCache = joinPointCache;
+        }
+    }
+
+    public static class FileInfo{
+
+        /**
+         * 文件上传路径
+         */
+        private String uploadPath = "C:/vary_talk/upload_files";
+
+        public String getUploadPath() {
+            return uploadPath;
+        }
+
+        public void setUploadPath(String uploadPath) {
+            this.uploadPath = uploadPath;
         }
     }
 }

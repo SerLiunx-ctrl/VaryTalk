@@ -39,7 +39,9 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
     @Override
     @SuppressWarnings("all")
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+
         if(!(handler instanceof HandlerMethod handlerMethod)){
             return false;
         }
@@ -56,7 +58,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         Long userId = jwtUtils.getUserId(token);
         LoginUser loginUser = (LoginUser) redisUtils.get(systemAutoConfigurer.getRedisPrefix().getOnlineUsers() +
                 jwtUtils.getUsername(token));
-        if(!loginUser.getToken().equals(token)){
+        if(loginUser == null || !loginUser.getToken().equals(token)){
             throw new ServiceException("token已失效, 请重新登录!", 401);
         }
         SystemUser systemUser = systemUserService.selectUserById(userId);

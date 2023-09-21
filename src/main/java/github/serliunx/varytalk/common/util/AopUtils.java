@@ -73,7 +73,10 @@ public class AopUtils {
      * 根据切入点获取切入方法
      * @param joinPoint 切入点
      * @return 方法
+     *
+     * @deprecated 此方法效率低且没必要, 请使用JoinPoint.getSignature(MethodSignature实现类)来获取方法
      */
+    @Deprecated(since = "1.0")
     public static Method getMethodByJoinPoint(JoinPoint joinPoint){
         Object target = joinPoint.getTarget();
         Class<?> pointClass = target.getClass();
@@ -119,6 +122,7 @@ public class AopUtils {
                 }
             }
             if(findInSuper){
+                //递归调用向上查找父类
                return getField(clazz.getSuperclass(), name, true);
             }
         }catch (Exception e){

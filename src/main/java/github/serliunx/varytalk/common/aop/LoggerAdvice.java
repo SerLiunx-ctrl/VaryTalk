@@ -31,7 +31,7 @@ public class LoggerAdvice {
         try {
             result = joinPoint.proceed();
             if(result instanceof Result resp){
-                MethodSignature methodSignature = (MethodSignature) joinPoint;
+                MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
                 Logger annotation = methodSignature.getMethod().getAnnotation(Logger.class);
                 if(annotation == null){
                     return result;

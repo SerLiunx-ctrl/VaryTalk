@@ -82,6 +82,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public Result doDefaultException(RuntimeException e){
         logger.error("发生异常-> {}: {}", e.getClass().getName(), e.getMessage());
+        e.printStackTrace();
         return Result.fail(null, "发生了未知错误, 请联系管理员!", 400);
     }
 }
