@@ -4,14 +4,12 @@ import github.serliunx.varytalk.common.base.BaseController;
 import github.serliunx.varytalk.common.base.LoginUser;
 import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.common.util.JwtUtils;
+import github.serliunx.varytalk.common.util.SecurityUtils;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
 import github.serliunx.varytalk.project.system.service.SystemUserService;
-import org.springframework.util.DigestUtils;
+import github.serliunx.varytalk.security.entity.ChangePasswordQuery;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
@@ -31,7 +29,7 @@ public class AuthController extends BaseController {
         if(userFound == null){
             return fail("该用户不存在!");
         }
-        String passWord = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
+        String passWord = SecurityUtils.generateMD5Message(user.getPassword());
         if(!userFound.getPassword().equals(passWord)){
             return fail("密码错误!");
         }
@@ -51,6 +49,20 @@ public class AuthController extends BaseController {
         }
         systemUserService.registerUser(user);
         return success(user.getId(), "注册成功! 你现在可以登录了.");
+    }
+
+    @PutMapping("change-password")
+    public Result changePassword(@Validated @RequestBody ChangePasswordQuery query){
+        SystemUser systemUser = systemUserService.selectUserById(SecurityUtils.getUserId());
+        if(systemUser == null){
+            return fail("用户不存在, 请重试!");
+        }
+        if(!SecurityUtils.generateMD5Message(query.getOldPassword()).equals(systemUser.getPassword())){
+            return fail("旧密码错误, 请重试!");
+        }
+        systemUser.setPassword(query.getNewPassword());
+        systemUserService.updatePassword(systemUser);
+        return success("密码修改成功!");
     }
 
     public Result logout(){

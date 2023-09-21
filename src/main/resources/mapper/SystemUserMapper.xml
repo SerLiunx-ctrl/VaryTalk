@@ -76,6 +76,10 @@
                 null, null, #{remark})
     </insert>
 
+    <update id="updatePassword" parameterType="SystemUser">
+        update sys_user set password = #{password}, update_by = #{updateBy}, update_time = sysdate() where id = #{id}
+    </update>
+
     <update id="updateRole" parameterType="SystemUser">
         update sys_user set role_id = #{roleId}, update_by = #{updateBy}, update_time = sysdate() where id = #{id}
     </update>

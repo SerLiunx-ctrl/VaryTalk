@@ -84,4 +84,6 @@ public interface SystemUserService {
     Set<LoginUser> getOnlineUser();
 
     void updateRole(SystemUser systemUser);
+
+    void updatePassword(SystemUser systemUser);
 }

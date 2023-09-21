@@ -119,4 +119,11 @@ public class SystemUserServiceImpl implements SystemUserService {
     public void updateRole(SystemUser systemUser) {
         systemUserMapper.updateRole(systemUser);
     }
+
+    @Override
+    @SetOperator(value = SystemUser.class, fieldName = "updateBy")
+    public void updatePassword(SystemUser systemUser) {
+        systemUser.setPassword(SecurityUtils.generateMD5Message(systemUser.getPassword()));
+        systemUserMapper.updatePassword(systemUser);
+    }
 }
