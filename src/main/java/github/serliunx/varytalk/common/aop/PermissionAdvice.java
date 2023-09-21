@@ -10,8 +10,10 @@ import github.serliunx.varytalk.project.system.entity.SystemUser;
 import github.serliunx.varytalk.project.system.service.SystemUserService;
 import github.serliunx.varytalk.security.service.PermissionService;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -44,20 +46,14 @@ public class PermissionAdvice {
 
     @Before("github.serliunx.varytalk.common.aop.PointCutDefinition.permissionPoint()")
     public void permissionCheck(JoinPoint joinPoint){
+        MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
+        System.out.println(joinPoint.getSignature().getClass());
         Long userId = SecurityUtils.getUserId();
-        String key = systemAutoConfigurer.getRedisPrefix().getJoinPointCache() +
-                joinPoint.getSignature().toString().replace(" ", "-");
-        String permission = (String)redisUtils.get(key);
-        if(permission == null){
-            Method method = AopUtils.getMethodByJoinPoint(joinPoint);
-            PermissionRequired annotation = method.getAnnotation(PermissionRequired.class);
-            if(annotation == null){
-                return;
-            }
-            permission = annotation.value();
-            logger.info("新访问->权限鉴定接口: {} 已缓存. 权限值: {}", joinPoint.getSignature().toString(), permission);
-            redisUtils.put(key, permission, 1, TimeUnit.DAYS);
+        PermissionRequired annotation = methodSignature.getMethod().getAnnotation(PermissionRequired.class);
+        if(annotation == null){
+            return;
         }
+        String permission = annotation.value();
         SystemUser systemUser = systemUserService.selectUserById(userId);
         boolean result = permissionService.hasPermission(systemUser, permission);
         if(!result){

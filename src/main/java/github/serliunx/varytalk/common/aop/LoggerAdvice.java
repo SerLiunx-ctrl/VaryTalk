@@ -10,6 +10,7 @@ import github.serliunx.varytalk.project.system.service.SystemLogService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -30,8 +31,8 @@ public class LoggerAdvice {
         try {
             result = joinPoint.proceed();
             if(result instanceof Result resp){
-                Method method = AopUtils.getMethodByJoinPoint(joinPoint);
-                Logger annotation = method.getAnnotation(Logger.class);
+                MethodSignature methodSignature = (MethodSignature) joinPoint;
+                Logger annotation = methodSignature.getMethod().getAnnotation(Logger.class);
                 if(annotation == null){
                     return result;
                 }

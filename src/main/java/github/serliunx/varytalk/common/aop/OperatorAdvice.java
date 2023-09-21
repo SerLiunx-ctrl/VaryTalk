@@ -9,6 +9,7 @@ import github.serliunx.varytalk.project.system.service.SystemUserService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -27,10 +28,8 @@ public class OperatorAdvice {
     @Before("github.serliunx.varytalk.common.aop.PointCutDefinition.operatorPoint()")
     public void dataOperator(JoinPoint joinPoint){
         try {
-            Method pointMethod = AopUtils.getMethodByJoinPoint(joinPoint);
-            pointMethod.setAccessible(true);
-
-            SetOperator annotation = pointMethod.getAnnotation(SetOperator.class);
+            MethodSignature methodSignature = (MethodSignature) joinPoint;
+            SetOperator annotation = methodSignature.getMethod().getAnnotation(SetOperator.class);
             if(annotation == null) return;
 
             SystemUser systemUser = systemUserService.selectUserById(SecurityUtils.getUserId());
