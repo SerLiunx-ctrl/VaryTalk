@@ -28,7 +28,7 @@ public class OperatorAdvice {
     @Before("github.serliunx.varytalk.common.aop.PointCutDefinition.operatorPoint()")
     public void dataOperator(JoinPoint joinPoint){
         try {
-            MethodSignature methodSignature = (MethodSignature) joinPoint;
+            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             SetOperator annotation = methodSignature.getMethod().getAnnotation(SetOperator.class);
             if(annotation == null) return;
 

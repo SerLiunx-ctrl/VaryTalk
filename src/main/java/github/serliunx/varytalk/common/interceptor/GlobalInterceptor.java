@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class GlobalInterceptor implements HandlerInterceptor {
@@ -61,11 +62,17 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if(loginUser == null || !loginUser.getToken().equals(token)){
             throw new ServiceException("token已失效, 请重新登录!", 401);
         }
-        SystemUser systemUser = systemUserService.selectUserById(userId);
+        SystemUser cachedUser = (SystemUser)redisUtils.get(systemAutoConfigurer.getRedisPrefix().getUserCache()
+                + loginUser.getUsername());
+        SystemUser systemUser = cachedUser == null ? systemUserService.selectUserById(userId) : cachedUser;
         if(systemUser == null){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             throw new ServiceException("token验证失败, 用户不存在!", 401);
         }
+        //将用户信息放到redis缓存中
+        redisUtils.put(systemAutoConfigurer.getRedisPrefix().getUserCache() + systemUser.getUsername(),
+                systemUser, systemAutoConfigurer.getRedisTtl().getUserCache(), TimeUnit.HOURS);
+
         Map<String, Long> map = new HashMap<>();
         map.put("userId", userId);
         SecurityUtils.setUserId(map);

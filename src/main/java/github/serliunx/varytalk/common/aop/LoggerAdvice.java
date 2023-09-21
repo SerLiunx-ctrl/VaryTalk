@@ -1,6 +1,7 @@
 package github.serliunx.varytalk.common.aop;
 
 import github.serliunx.varytalk.common.annotation.Logger;
+import github.serliunx.varytalk.common.executor.SyncTaskExecutor;
 import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.common.util.AopUtils;
 import github.serliunx.varytalk.common.util.SecurityUtils;
@@ -20,9 +21,12 @@ import java.lang.reflect.Method;
 public class LoggerAdvice {
 
     private final SystemLogService systemLogService;
+    private final SyncTaskExecutor syncTaskExecutor;
 
-    public LoggerAdvice(SystemLogService systemLogService) {
+    public LoggerAdvice(SystemLogService systemLogService,
+                        SyncTaskExecutor syncTaskExecutor) {
         this.systemLogService = systemLogService;
+        this.syncTaskExecutor = syncTaskExecutor;
     }
 
     @Around("github.serliunx.varytalk.common.aop.PointCutDefinition.logPoint()")
@@ -37,7 +41,7 @@ public class LoggerAdvice {
                     return result;
                 }
                 String ip = ServletUtils.getIp();
-                String requestURI = ServletUtils.getRequest().getRequestURI();
+                String requestURI = ServletUtils.getRequestURI();
                 Long userId = SecurityUtils.getUserId();
                 String opName = annotation.opName();
                 String opContext = annotation.value() + " 状态信息: " + resp.getMessage();
@@ -49,7 +53,7 @@ public class LoggerAdvice {
                         .setIpAddress(ip)
                         .now().build();
                 if(annotation.saveToSql()){
-                    systemLogService.insertLog(systemLog);
+                    syncTaskExecutor.submit(() -> systemLogService.insertLog(systemLog));
                 }
             }
         } catch (Throwable e) {

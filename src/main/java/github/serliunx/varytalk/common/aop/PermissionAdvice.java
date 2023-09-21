@@ -47,7 +47,6 @@ public class PermissionAdvice {
     @Before("github.serliunx.varytalk.common.aop.PointCutDefinition.permissionPoint()")
     public void permissionCheck(JoinPoint joinPoint){
         MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
-        System.out.println(joinPoint.getSignature().getClass());
         Long userId = SecurityUtils.getUserId();
         PermissionRequired annotation = methodSignature.getMethod().getAnnotation(PermissionRequired.class);
         if(annotation == null){

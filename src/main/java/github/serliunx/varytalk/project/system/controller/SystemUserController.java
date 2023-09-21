@@ -3,6 +3,7 @@ package github.serliunx.varytalk.project.system.controller;
 import github.serliunx.varytalk.common.annotation.Logger;
 import github.serliunx.varytalk.common.annotation.PermissionRequired;
 import github.serliunx.varytalk.common.base.BaseController;
+import github.serliunx.varytalk.common.event.UserUpdateEvent;
 import github.serliunx.varytalk.common.result.CountResult;
 import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.common.validation.group.SystemUserRoleUpdateGroup;
@@ -10,6 +11,7 @@ import github.serliunx.varytalk.project.system.entity.SystemRole;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
 import github.serliunx.varytalk.project.system.service.SystemRoleService;
 import github.serliunx.varytalk.project.system.service.SystemUserService;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +23,14 @@ public class SystemUserController extends BaseController {
 
     private final SystemUserService systemUserService;
     private final SystemRoleService systemRoleService;
+    private final ApplicationEventPublisher publisher;
 
-    public SystemUserController(SystemUserService systemUserService, SystemRoleService systemRoleService) {
+    public SystemUserController(SystemUserService systemUserService,
+                                SystemRoleService systemRoleService,
+                                ApplicationEventPublisher publisher) {
         this.systemUserService = systemUserService;
         this.systemRoleService = systemRoleService;
+        this.publisher = publisher;
     }
 
     @GetMapping("list")
@@ -56,6 +62,12 @@ public class SystemUserController extends BaseController {
         return Result.success(systemUser.getId());
     }
 
+    @PutMapping("update-basic-info")
+    public Result update(){
+
+        return success();
+    }
+
     @PutMapping("bind-role")
     @PermissionRequired("system.user.bind.role")
     @Logger(opName = "用户接口", value = "修改用户的角色")
@@ -69,6 +81,7 @@ public class SystemUserController extends BaseController {
             return fail("未找到该角色!");
         }
         systemUserService.updateRole(systemUser);
+        publisher.publishEvent(new UserUpdateEvent(systemUserFound));
         return success();
     }
 

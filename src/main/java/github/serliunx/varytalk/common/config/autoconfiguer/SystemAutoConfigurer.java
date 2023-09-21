@@ -73,6 +73,11 @@ public class SystemAutoConfigurer {
         private String onlineUsers = mainPrefix + "user_online:";
 
         /**
+         * 用户信息缓存, 用于鉴权、避免频繁查询数据库
+         */
+        private String userCache = mainPrefix +  "user_cache:";
+
+        /**
          * #方法/属性缓存, 用于鉴权、日志记录
          */
         private String joinPointCache = mainPrefix + "join_point_cache:";
@@ -100,6 +105,14 @@ public class SystemAutoConfigurer {
         public void setJoinPointCache(String joinPointCache) {
             this.joinPointCache = this.mainPrefix + joinPointCache;
         }
+
+        public String getUserCache() {
+            return userCache;
+        }
+
+        public void setUserCache(String userCache) {
+            this.userCache = this.mainPrefix + userCache;
+        }
     }
 
     public static class RedisTtl{
@@ -109,12 +122,25 @@ public class SystemAutoConfigurer {
          */
         private Integer joinPointCache = 24;
 
+        /**
+         * 用户信息缓存, 用于鉴权、避免频繁查询数据库
+         */
+        private Integer userCache = 6;
+
         public Integer getJoinPointCache() {
             return joinPointCache;
         }
 
         public void setJoinPointCache(Integer joinPointCache) {
             this.joinPointCache = joinPointCache;
+        }
+
+        public Integer getUserCache() {
+            return userCache;
+        }
+
+        public void setUserCache(Integer userCache) {
+            this.userCache = userCache;
         }
     }
 

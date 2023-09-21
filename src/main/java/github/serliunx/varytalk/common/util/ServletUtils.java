@@ -28,6 +28,10 @@ public class ServletUtils {
         return getIp(getRequest());
     }
 
+    public static String getRequestURI(){
+        return getRequest().getRequestURI();
+    }
+
     public static String getAgent(){
         return getRequest().getHeader("user-agent");
     }

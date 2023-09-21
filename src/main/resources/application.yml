@@ -12,7 +12,20 @@ talk-system:
     main-prefix: "vary_talk:"
     #在线用户
     online-users: "user_online:"
-
+    #方法/属性缓存, 用于鉴权、日志记录
+    join-point-cache: "join_point_cache:"
+    #用户信息缓存, 用于鉴权、避免频繁查询数据库
+    user-cache: "user_cache:"
+  #redis缓存过期时间设置
+  redis-ttl:
+    #aop切入点缓存过期时间(小时为单位)
+    join-point-cache: 12
+    #用户信息缓存(小时为单位)
+    user-cache: 6
+  #文件相关设置
+  file-info:
+    #文件上传路径(Windows带盘符, Linux使用/home/xxx)
+    upload-path: "D:/vary_talk/upload_files"
 #服务器设置
 server:
   port: 6666
@@ -84,7 +97,7 @@ logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss(SSS)
   level:
-    github.serliunx.*: info
+    github.serliunx.*: debug
 
 #分页插件设置
 pagehelper:
