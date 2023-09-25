@@ -5,6 +5,7 @@ import github.serliunx.varytalk.common.base.LoginUser;
 import github.serliunx.varytalk.common.result.Result;
 import github.serliunx.varytalk.common.util.JwtUtils;
 import github.serliunx.varytalk.common.util.SecurityUtils;
+import github.serliunx.varytalk.common.validation.group.SystemUserRegisterGroup;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
 import github.serliunx.varytalk.project.system.service.SystemUserService;
 import github.serliunx.varytalk.security.entity.ChangePasswordQuery;
@@ -42,7 +43,7 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("register")
-    public Result register(@RequestBody @Validated SystemUser user){
+    public Result register(@RequestBody @Validated(SystemUserRegisterGroup.class) SystemUser user){
         String result = systemUserService.checkUserInformation(user);
         if(result != null){
             return fail(result);
