@@ -5,6 +5,7 @@ import github.serliunx.varytalk.common.base.BaseEntity;
 import github.serliunx.varytalk.common.validation.group.SystemUserInsertGroup;
 import github.serliunx.varytalk.common.validation.group.SystemUserRegisterGroup;
 import github.serliunx.varytalk.common.validation.group.SystemUserRoleUpdateGroup;
+import github.serliunx.varytalk.common.validation.group.SystemUserUpdateGroup;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -27,7 +28,8 @@ public class SystemUser extends BaseEntity {
     @Length(min = 8, max = 20, message = "密码长度必须不符合要求!", groups = SystemUserInsertGroup.class)
     private String password;
 
-    @Length(min = 8, max = 12, message = "手机号码长度必须为8位及以上", groups = SystemUserInsertGroup.class)
+    @Length(min = 8, max = 12, message = "手机号码长度必须为8位及以上",
+            groups = {SystemUserInsertGroup.class, SystemUserUpdateGroup.class})
     private String phoneNumber;
 
     private String email;

@@ -76,6 +76,23 @@
                 null, null, #{remark})
     </insert>
 
+    <update id="updateUser" parameterType="SystemUser">
+        update sys_user set
+        <if test="phoneNumber != null and phoneNumber != ''">
+            phone_number = #{phoneNumber},
+        </if>
+        <if test="email != null and email != ''">
+            email = #{email},
+        </if>
+        <if test="nickName != null and nickName != ''">
+            nick_name = #{nickName},
+        </if>
+        <if test="sex != null and sex != ''">
+            sex_id = (select sds.id from sys_dict_sex sds where sex_tag = #{sex} limit 1),
+        </if>
+        update_time = sysdate(), update_by = #{updateBy} where id = #{id}
+    </update>
+
     <update id="updatePassword" parameterType="SystemUser">
         update sys_user set password = #{password}, update_by = #{updateBy}, update_time = sysdate() where id = #{id}
     </update>

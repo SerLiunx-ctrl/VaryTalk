@@ -6,6 +6,7 @@ import github.serliunx.varytalk.common.base.BaseController;
 import github.serliunx.varytalk.common.event.UserUpdateEvent;
 import github.serliunx.varytalk.common.result.CountResult;
 import github.serliunx.varytalk.common.result.Result;
+import github.serliunx.varytalk.common.util.SecurityUtils;
 import github.serliunx.varytalk.common.validation.group.SystemUserRoleUpdateGroup;
 import github.serliunx.varytalk.project.system.entity.SystemRole;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
@@ -63,8 +64,21 @@ public class SystemUserController extends BaseController {
     }
 
     @PutMapping("update-basic-info")
-    public Result update(){
+    public Result update(@RequestBody SystemUser systemUser){
+        if(systemUser.getId() == null){
+            Long userId = SecurityUtils.getUserId();
+            systemUser.setId(userId);
+        }
+        if(systemUser.getEmail() != null && systemUserService.checkUserByEmail(systemUser.getEmail(),
+                true)){
+            return fail("该邮箱已被使用, 请换一个试试!");
+        }
+        if(systemUser.getPhoneNumber() != null && systemUserService.checkUserByPhoneNumber(systemUser.getPhoneNumber(),
+                true)){
+            return fail("该手机号已被使用, 请换一个试试!");
+        }
 
+        systemUserService.updateUser(systemUser);
         return success();
     }
 

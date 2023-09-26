@@ -20,6 +20,8 @@ public interface SystemUserMapper {
 
     Long insertUser(SystemUser systemUser);
 
+    void updateUser(SystemUser systemUser);
+
     void updateRole(SystemUser systemUser);
 
     void updatePassword(SystemUser systemUser);

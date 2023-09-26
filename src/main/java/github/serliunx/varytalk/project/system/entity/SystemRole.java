@@ -9,6 +9,11 @@ import org.hibernate.validator.constraints.Length;
 public class SystemRole extends BaseEntity {
     private Long id;
 
+    /**
+     * 父角色id
+     */
+    private Long fatherId;
+
     @Length(min = 2, message = "角色名称长度过短!")
     @NotEmpty(message = "角色名称不能为空")
     private String roleName;
@@ -27,5 +32,13 @@ public class SystemRole extends BaseEntity {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Long getFatherId() {
+        return fatherId;
+    }
+
+    public void setFatherId(Long fatherId) {
+        this.fatherId = fatherId;
     }
 }

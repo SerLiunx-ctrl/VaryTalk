@@ -67,6 +67,33 @@ public class SystemUserServiceImpl implements SystemUserService {
     }
 
     @Override
+    public boolean checkUserByUsername(String username, boolean ignoreSelf) {
+        if(!ignoreSelf){
+            return checkUserByUsername(username);
+        }
+        SystemUser systemUser = systemUserMapper.checkUserByUsername(username);
+        return ignoreCurrentUser(systemUser);
+    }
+
+    @Override
+    public boolean checkUserByPhoneNumber(String phoneNumber, boolean ignoreSelf) {
+        if(!ignoreSelf){
+            return checkUserByPhoneNumber(phoneNumber);
+        }
+        SystemUser systemUser = systemUserMapper.checkUserByPhoneNumber(phoneNumber);
+        return ignoreCurrentUser(systemUser);
+    }
+
+    @Override
+    public boolean checkUserByEmail(String email, boolean ignoreSelf) {
+        if(!ignoreSelf){
+            return checkUserByEmail(email);
+        }
+        SystemUser systemUser = systemUserMapper.checkUserByEmail(email);
+        return ignoreCurrentUser(systemUser);
+    }
+
+    @Override
     public Result loginUser(LoginUser user) {
         user.setLoginIp(ServletUtils.getIp());
         user.setClient(ServletUtils.getAgent());
@@ -116,6 +143,12 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     @SetOperator(value = SystemUser.class, fieldName = "updateBy")
+    public void updateUser(SystemUser systemUser) {
+        systemUserMapper.updateUser(systemUser);
+    }
+
+    @Override
+    @SetOperator(value = SystemUser.class, fieldName = "updateBy")
     public void updateRole(SystemUser systemUser) {
         systemUserMapper.updateRole(systemUser);
     }
@@ -125,5 +158,13 @@ public class SystemUserServiceImpl implements SystemUserService {
     public void updatePassword(SystemUser systemUser) {
         systemUser.setPassword(SecurityUtils.generateMD5Message(systemUser.getPassword()));
         systemUserMapper.updatePassword(systemUser);
+    }
+
+    private boolean ignoreCurrentUser(SystemUser systemUser){
+        if(systemUser == null){
+            return false;
+        }else{
+            return !SecurityUtils.getUserId().equals(systemUser.getId());
+        }
     }
 }

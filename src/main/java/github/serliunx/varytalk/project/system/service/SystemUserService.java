@@ -52,6 +52,30 @@ public interface SystemUserService {
     boolean checkUserByEmail(String email);
 
     /**
+     * 通过账户名称判断用户是否已存在
+     * @param username 用户名
+     * @param ignoreSelf 忽略当前登录的账户
+     * @return 存在返回真, 否则返回假
+     */
+    boolean checkUserByUsername(String username, boolean ignoreSelf);
+
+    /**
+     * 检查手机号是否已被使用
+     * @param phoneNumber 手机号
+     * @param ignoreSelf 忽略当前登录的账户
+     * @return 已被使用返回真, 否则返回假
+     */
+    boolean checkUserByPhoneNumber(String phoneNumber, boolean ignoreSelf);
+
+    /**
+     * 检查邮箱是否已被使用
+     * @param email 邮箱
+     * @param ignoreSelf 忽略当前登录的账户
+     * @return 已被使用返回真, 否则返回假
+     */
+    boolean checkUserByEmail(String email, boolean ignoreSelf);
+
+    /**
      * 用户登录
      * @param user 用户
      * @return 结果封装
@@ -82,6 +106,8 @@ public interface SystemUserService {
     String checkUserInformation(SystemUser systemUser);
 
     Set<LoginUser> getOnlineUser();
+
+    void updateUser(SystemUser systemUser);
 
     void updateRole(SystemUser systemUser);
 

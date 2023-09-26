@@ -6,6 +6,7 @@
 
     <resultMap id="roleResult" type="github.serliunx.varytalk.project.system.entity.SystemRole">
         <result property="id" column="id"/>
+        <result property="fatherId" column="father_id"/>
         <result property="roleName" column="role_name"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -15,7 +16,7 @@
     </resultMap>
 
     <sql id="role">
-        select sr.id, sr.role_name, su.nick_name as create_by, sr.create_time, sr.update_by, sr.update_time, sr.remark
+        select sr.id, sr.father_id, sr.role_name, su.nick_name as create_by, sr.create_time, sr.update_by, sr.update_time, sr.remark
         from sys_role sr left join sys_user su on sr.create_by = su.username where sr.id > 0
     </sql>
 
@@ -37,8 +38,8 @@
     </select>
 
     <insert id="insertRole" parameterType="SystemRole" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into sys_role(id, role_name, create_by, create_time, update_by, update_time, remark)
-        values(null, #{roleName}, #{createBy}, sysdate(),null, null, #{remark})
+        insert into sys_role(id, father_id, role_name, create_by, create_time, update_by, update_time, remark)
+        values(null, #{fatherId}, #{roleName}, #{createBy}, sysdate(),null, null, #{remark})
     </insert>
 
 </mapper>
