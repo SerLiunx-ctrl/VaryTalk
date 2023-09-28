@@ -1,7 +1,6 @@
 package github.serliunx.varytalk.common.aop;
 
 import github.serliunx.varytalk.common.annotation.SetOperator;
-import github.serliunx.varytalk.common.exception.ServiceException;
 import github.serliunx.varytalk.common.util.AopUtils;
 import github.serliunx.varytalk.common.util.SecurityUtils;
 import github.serliunx.varytalk.project.system.entity.SystemUser;
@@ -13,7 +12,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 @Aspect
 @Component

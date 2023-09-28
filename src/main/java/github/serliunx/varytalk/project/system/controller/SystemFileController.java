@@ -16,12 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class SystemFileController extends BaseController {
 
     private final SystemFileService systemFileService;
-    private final SystemAutoConfigurer systemAutoConfigurer;
 
     public SystemFileController(SystemFileService systemFileService,
                                 SystemAutoConfigurer systemAutoConfigurer) {
         this.systemFileService = systemFileService;
-        this.systemAutoConfigurer = systemAutoConfigurer;
     }
 
     @PostMapping("upload")

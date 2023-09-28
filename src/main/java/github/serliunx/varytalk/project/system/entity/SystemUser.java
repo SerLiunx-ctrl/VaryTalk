@@ -6,7 +6,6 @@ import github.serliunx.varytalk.common.validation.group.SystemUserInsertGroup;
 import github.serliunx.varytalk.common.validation.group.SystemUserRegisterGroup;
 import github.serliunx.varytalk.common.validation.group.SystemUserRoleUpdateGroup;
 import github.serliunx.varytalk.common.validation.group.SystemUserUpdateGroup;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;

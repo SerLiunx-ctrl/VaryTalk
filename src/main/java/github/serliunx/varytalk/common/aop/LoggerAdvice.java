@@ -3,7 +3,6 @@ package github.serliunx.varytalk.common.aop;
 import github.serliunx.varytalk.common.annotation.Logger;
 import github.serliunx.varytalk.common.executor.SyncTaskExecutor;
 import github.serliunx.varytalk.common.result.Result;
-import github.serliunx.varytalk.common.util.AopUtils;
 import github.serliunx.varytalk.common.util.SecurityUtils;
 import github.serliunx.varytalk.common.util.ServletUtils;
 import github.serliunx.varytalk.project.system.entity.SystemLog;
@@ -13,8 +12,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
 
 @Aspect
 @Component
