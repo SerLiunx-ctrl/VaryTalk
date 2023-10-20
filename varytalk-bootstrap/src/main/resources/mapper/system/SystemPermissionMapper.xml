@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.serliunx.varytalk.system.mapper.SystemPermissionMapper">
+    <resultMap id="permissionResult" type="com.serliunx.varytalk.system.entity.SystemPermission">
+        <result property="id" column="id"/>
+        <result property="nodeName" column="node_name"/>
+        <result property="value" column="value"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="permission">
+        select sp.id, sp.node_name, sp.value, su.nick_name as create_by, sp.create_time, sp.update_by, sp.update_time, sp.remark
+        from sys_permission sp left join sys_user su on sp.create_by = su.username where sp.id > 0
+    </sql>
+
+    <select id="selectList" parameterType="com.serliunx.varytalk.system.entity.SystemPermission" resultMap="permissionResult">
+        <include refid="permission"/>
+        <if test="nodeName != null and nodeName != ''">
+            and sp.node_name like concat('%', #{nodeName}, '%')
+        </if>
+    </select>
+
+    <select id="selectById" parameterType="long" resultMap="permissionResult">
+        <include refid="permission"/>
+        and sp.id = #{id} limit 1
+    </select>
+
+    <select id="selectByValue" parameterType="string" resultMap="permissionResult">
+        <include refid="permission"/>
+        and sp.value = #{value} limit 1
+    </select>
+
+    <select id="selectByName" parameterType="string" resultMap="permissionResult">
+        <include refid="permission"/>
+        and sp.node_name = #{nodeName} limit 1
+    </select>
+
+    <insert id="insertPermission" parameterType="com.serliunx.varytalk.system.entity.SystemPermission" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into sys_permission(id, value, node_name, create_by, create_time, update_by, update_time, remark)
+        values(null, #{value}, #{nodeName}, #{createBy}, sysdate(),null, null, #{remark})
+    </insert>
+
+</mapper>
