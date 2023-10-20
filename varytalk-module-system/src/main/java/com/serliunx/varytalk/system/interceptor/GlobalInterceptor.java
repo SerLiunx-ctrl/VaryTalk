@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.system.interceptor;
 
+import com.serliunx.varytalk.common.annotation.PermitAll;
 import com.serliunx.varytalk.common.base.LoginUser;
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.exception.ServiceException;
@@ -46,6 +47,9 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if(!(handler instanceof HandlerMethod handlerMethod)){
             return false;
         }
+        if(ignoreCheck(handlerMethod.getMethodAnnotation(PermitAll.class))){
+            return true;
+        }
         String token = request.getHeader(systemAutoConfigurer.getAuthHeader());
         if(token == null){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -84,5 +88,12 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @SuppressWarnings("all")
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         SecurityUtils.removeUserId();
+    }
+
+    private boolean ignoreCheck(PermitAll permitAll){
+        if(permitAll == null){
+            return false;
+        }
+        return permitAll.value();
     }
 }

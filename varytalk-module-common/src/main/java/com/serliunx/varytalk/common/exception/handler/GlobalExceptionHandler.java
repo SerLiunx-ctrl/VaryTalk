@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.common.exception.handler;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.serliunx.varytalk.common.exception.AuthenticationConflictException;
 import com.serliunx.varytalk.common.exception.PermissionNotFoundException;
 import com.serliunx.varytalk.common.exception.ServiceException;
 import com.serliunx.varytalk.common.result.Result;
@@ -72,6 +73,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     public Result doServiceException(ServiceException e){
         return Result.fail(null, e.getMessage(), e.getStatus());
+    }
+
+    /**
+     * 鉴权冲突异常
+     * @param e 异常
+     * @return 结果
+     */
+    @ExceptionHandler(AuthenticationConflictException.class)
+    public Result doAuthenticationConflictException(AuthenticationConflictException e){
+        logger.error("发生异常-> 权限鉴定错误, 方法 {} 同时标注了(PermissionRequired)和(PermitAll)注解", e.getMethodFullName());
+        return Result.fail(null, e.getMessage());
     }
 
     /**

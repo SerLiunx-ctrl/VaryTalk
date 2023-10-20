@@ -1,6 +1,8 @@
 package com.serliunx.varytalk.security.aop;
 
 import com.serliunx.varytalk.common.annotation.PermissionRequired;
+import com.serliunx.varytalk.common.annotation.PermitAll;
+import com.serliunx.varytalk.common.exception.AuthenticationConflictException;
 import com.serliunx.varytalk.common.exception.ServiceException;
 import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.system.entity.SystemUser;
@@ -11,6 +13,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Method;
 
 @Aspect
 @Component
@@ -29,8 +33,13 @@ public class PermissionAdvice {
     @Before("com.serliunx.varytalk.common.aop.PointCutDefinition.permissionPoint()")
     public void permissionCheck(JoinPoint joinPoint){
         MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
+        Method method = methodSignature.getMethod();
+        if(method.getAnnotation(PermitAll.class) != null){
+            throw new AuthenticationConflictException("权限鉴定错误, 通常是服务器权限鉴定逻辑出错!",
+                    joinPoint.getTarget().getClass().getName() + "." + method.getName() + "()");
+        }
         Long userId = SecurityUtils.getUserId();
-        PermissionRequired annotation = methodSignature.getMethod().getAnnotation(PermissionRequired.class);
+        PermissionRequired annotation = method.getAnnotation(PermissionRequired.class);
         if(annotation == null){
             return;
         }
