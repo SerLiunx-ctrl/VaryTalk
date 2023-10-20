@@ -16,6 +16,7 @@
         <module>varytalk-module-system</module>
         <module>varytalk-module-common</module>
         <module>varytalk-module-security</module>
+        <module>varytalk-module-console</module>
     </modules>
 
     <properties>
@@ -30,6 +31,11 @@
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-common</artifactId>
+                <version>${vversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-module-console</artifactId>
                 <version>${vversion}</version>
             </dependency>
             <dependency>
@@ -105,11 +111,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.1.4</version>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
