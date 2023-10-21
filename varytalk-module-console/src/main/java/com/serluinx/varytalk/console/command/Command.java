@@ -26,7 +26,7 @@ public abstract class Command{
     public abstract boolean handleCommand(String command);
 
     public void handleCommand(String[] commands){
-        if(hasChildren()){
+        if(hasChildren() && commands.length > 1){
             boolean matchedChild = false;
             for (Command child : children) {
                 if(child.getName().equals(commands[1])){
@@ -53,8 +53,9 @@ public abstract class Command{
     public void showSyntax(){
         System.out.println(name + " - " + description);
         if(hasChildren()){
-            System.out.println("参数:");
+            System.out.println("\t参数:");
             for (Command child : children) {
+                System.out.print("\t");
                 child.showSyntax();
             }
         }

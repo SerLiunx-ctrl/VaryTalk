@@ -31,11 +31,17 @@ public class CommandHandler {
         if(resolveCommand.length == 0){
             return;
         }
+        boolean commandFound = false;
         for (Command cmd : commands) {
             if(cmd.getName().equals(resolveCommand[0])){
                 cmd.handleCommand(resolveCommand);
+                commandFound = true;
                 break;
             }
+        }
+        //处理未找到匹配的指令
+        if(!commandFound){
+            System.out.println("指令不存在, 请使用 help 查看系统帮助信息!");
         }
     }
 
