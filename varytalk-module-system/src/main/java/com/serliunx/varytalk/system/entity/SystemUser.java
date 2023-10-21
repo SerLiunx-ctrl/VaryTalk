@@ -8,6 +8,7 @@ import com.serliunx.varytalk.common.validation.group.SystemUserRoleUpdateGroup;
 import com.serliunx.varytalk.common.validation.group.SystemUserUpdateGroup;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
 
 @JsonPropertyOrder({"id", "username", "password", "phoneNumber", "email", "nickName", "sex", "roleId", "role"})
@@ -19,7 +20,8 @@ public class SystemUser extends BaseEntity {
     @NotNull(message = "账户名称不能为空!", groups = SystemUserInsertGroup.class)
     @NotNull(message = "注册账号不能为空!", groups = SystemUserRegisterGroup.class)
     @Pattern(regexp = "^[0-9a-zA-Z_]+$", message = "用户名格式不符合要求! 只允许下划线_、数字0~9及大小写字母", groups = SystemUserInsertGroup.class)
-    @Length(min = 4, max = 25, message = "用户名称长度必须为4到25个字符", groups = SystemUserInsertGroup.class)
+    @Size(min = 4, max = 25, message = "用户名称长度必须为4到25个字符",
+            groups = {SystemUserInsertGroup.class, SystemUserRegisterGroup.class})
     private String username;
 
     @NotNull(message = "账户密码不能为空!", groups = SystemUserInsertGroup.class)
