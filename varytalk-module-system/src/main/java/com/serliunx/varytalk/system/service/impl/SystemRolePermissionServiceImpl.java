@@ -23,8 +23,8 @@ public class SystemRolePermissionServiceImpl implements SystemRolePermissionServ
     }
 
     @Override
-    public SystemRolePermission checkIfGiven(Long roleId, Long permissionId) {
-        return systemRolePermissionMapper.checkIfGiven(roleId, permissionId);
+    public boolean checkIfGiven(Long roleId, Long permissionId) {
+        return systemRolePermissionMapper.checkIfGiven(roleId, permissionId) != null;
     }
 
     @Override

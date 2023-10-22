@@ -8,7 +8,7 @@ public interface SystemRolePermissionService {
 
     List<SystemRolePermission> selectList(SystemRolePermission systemRolePermission);
 
-    SystemRolePermission checkIfGiven(Long roleId, Long permissionId);
+    boolean checkIfGiven(Long roleId, Long permissionId);
 
     List<SystemRolePermission> selectByRoleId(Long roleId);
 

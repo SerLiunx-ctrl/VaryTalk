@@ -85,6 +85,18 @@ public class RedisUtils {
     }
 
     /**
+     * 根据key获取普通值（字符串）
+     * @param key 键
+     * @param clazz 类
+     * @return 结果
+     * @param <T> 类
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T get(String key, Class<T> clazz){
+        return key == null ? null : (T)redisTemplate.opsForValue().get(key);
+    }
+
+    /**
      * 放入值
      * @param key 键
      * @param value 值

@@ -2,6 +2,7 @@ package com.serliunx.varytalk.system.mapper;
 
 import com.serliunx.varytalk.system.entity.SystemRolePermission;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public interface SystemRolePermissionMapper {
     List<SystemRolePermission> selectList(SystemRolePermission systemRolePermission);
 
-    SystemRolePermission checkIfGiven(Long roleId, Long permissionId);
+    SystemRolePermission checkIfGiven(@Param("roleId") Long roleId, @Param("permissionId") Long permissionId);
 
     List<SystemRolePermission> selectByRoleId(Long roleId);
 

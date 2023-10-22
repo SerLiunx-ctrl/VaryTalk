@@ -86,7 +86,7 @@ public class SystemPermissionController extends BaseController {
         if(systemPermission == null){
             return fail("指定权限节点不存在!");
         }
-        boolean result = systemUserPermissionService.checkIfGiven(systemRolePermission.getRoleId(),
+        boolean result = systemRolePermissionService.checkIfGiven(systemRolePermission.getRoleId(),
                 systemRolePermission.getPermissionId());
         if(result){
             return fail("该角色已拥有该权限, 无法重复给予!");
