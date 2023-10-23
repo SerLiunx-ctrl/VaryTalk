@@ -1,11 +1,8 @@
 package com.serliunx.varytalk.common.executor;
 
-import org.springframework.stereotype.Component;
-
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Component
 public class CustomThreadFactory implements ThreadFactory {
 
     private final AtomicInteger count = new AtomicInteger();
