@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.annotation.PermissionRequired;
+import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.system.entity.*;
@@ -40,7 +40,7 @@ public class SystemPermissionController extends BaseController {
      * @return 结果
      */
     @PostMapping("add")
-    @PermissionRequired("system.permission.add")
+    @RequiredPermission("system.permission.add")
     @Logger(opName = "权限接口", value = "添加一个新的权限节点")
     public Result add(@RequestBody @Validated SystemPermission systemPermission){
         if(systemPermissionService.selectByValue(systemPermission.getValue()) != null){
@@ -54,7 +54,7 @@ public class SystemPermissionController extends BaseController {
     }
 
     @PostMapping("give-user")
-    @PermissionRequired("system.permission.give.user")
+    @RequiredPermission("system.permission.give.user")
     @Logger(opName = "权限接口", value = "给用户添加权限")
     public Result give(@Validated SystemUserPermission systemUserPermission){
         SystemUser systemUser = systemUserService.selectUserById(systemUserPermission.getUserId());
@@ -75,7 +75,7 @@ public class SystemPermissionController extends BaseController {
     }
 
     @PostMapping("give-role")
-    @PermissionRequired("system.permission.give.role")
+    @RequiredPermission("system.permission.give.role")
     @Logger(opName = "权限接口", value = "给角色添加权限")
     public Result giveRole(@Validated SystemRolePermission systemRolePermission){
         SystemRole systemRole = systemRoleService.selectById(systemRolePermission.getRoleId());
@@ -96,7 +96,7 @@ public class SystemPermissionController extends BaseController {
     }
 
     @GetMapping("user-permissions")
-    @PermissionRequired("system.permission.get.users")
+    @RequiredPermission("system.permission.get.users")
     public Result getUserPermissions(Long userId){
         if(userId == null){
             return fail("请指定用户id!");
@@ -111,7 +111,7 @@ public class SystemPermissionController extends BaseController {
     }
 
     @GetMapping("role-permissions")
-    @PermissionRequired("system.permission.get.roles")
+    @RequiredPermission("system.permission.get.roles")
     public Result getRolePermissions(Long roleId){
         if(roleId == null){
             return fail("请指定角色id!");
@@ -131,7 +131,7 @@ public class SystemPermissionController extends BaseController {
      * @return 节点列表
      */
     @GetMapping("list")
-    @PermissionRequired("system.permission.list")
+    @RequiredPermission("system.permission.list")
     public Result list(SystemPermission systemPermission){
         startPage();
         List<SystemPermission> systemPermissions = systemPermissionService.selectList(systemPermission);

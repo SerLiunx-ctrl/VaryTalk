@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.annotation.PermissionRequired;
+import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.system.event.UserUpdateEvent;
 import com.serliunx.varytalk.common.result.CountResult;
@@ -35,7 +35,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("list")
-    @PermissionRequired("system.user.list")
+    @RequiredPermission("system.user.list")
     public Result list(SystemUser systemUser){
         startPage();
         List<SystemUser> systemUsers = systemUserService.selectList(systemUser);
@@ -43,7 +43,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("get/{id}")
-    @PermissionRequired("system.user.get")
+    @RequiredPermission("system.user.get")
     public Result getUserById(@PathVariable Long id){
         if(id == null || id < 0){
            return fail("id有误, 请重试.");
@@ -52,7 +52,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PostMapping("add")
-    @PermissionRequired("system.user.add")
+    @RequiredPermission("system.user.add")
     @Logger(opName = "用户接口", value = "添加一个用户")
     public Result add(@RequestBody @Validated SystemUser systemUser){
         String result = systemUserService.checkUserInformation(systemUser);
@@ -83,7 +83,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PutMapping("bind-role")
-    @PermissionRequired("system.user.bind.role")
+    @RequiredPermission("system.user.bind.role")
     @Logger(opName = "用户接口", value = "修改用户的角色")
     public Result bindRole(@Validated(SystemUserRoleUpdateGroup.class) SystemUser systemUser){
         SystemUser systemUserFound = systemUserService.selectUserById(systemUser.getId());
@@ -100,7 +100,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("online")
-    @PermissionRequired("system.user.online.detail")
+    @RequiredPermission("system.user.online.detail")
     public Result getOnline(){
         return CountResult.success(systemUserService.getOnlineUser());
     }

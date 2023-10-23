@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.annotation.PermissionRequired;
+import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.system.entity.SystemRole;
@@ -22,7 +22,7 @@ public class SystemRoleController extends BaseController {
     }
 
     @GetMapping("list")
-    @PermissionRequired("system.role.list")
+    @RequiredPermission("system.role.list")
     public Result list(SystemRole systemRole){
         startPage();
         List<SystemRole> systemRoles = systemRoleService.selectList(systemRole);
@@ -30,7 +30,7 @@ public class SystemRoleController extends BaseController {
     }
 
     @PostMapping("add")
-    @PermissionRequired("system.role.add")
+    @RequiredPermission("system.role.add")
     @Logger(opName = "角色接口", value = "添加一个新的角色")
     public Result add(@RequestBody @Validated SystemRole systemRole){
         if (systemRoleService.selectByName(systemRole.getRoleName()) != null) {

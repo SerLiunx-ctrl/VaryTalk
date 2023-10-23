@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.annotation.PermissionRequired;
+import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.result.Result;
@@ -23,7 +23,7 @@ public class SystemFileController extends BaseController {
     }
 
     @PostMapping("upload")
-    @PermissionRequired("system.file.upload")
+    @RequiredPermission("system.file.upload")
     @Logger(opName = "文件管理", value = "用户上传文件")
     public Result upload(@RequestParam(value = "file")MultipartFile multipartFile){
         SystemFile systemFile = systemFileService.uploadFile(multipartFile);

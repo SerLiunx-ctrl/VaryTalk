@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.system.controller;
 
-import com.serliunx.varytalk.common.annotation.PermissionRequired;
+import com.serliunx.varytalk.common.annotation.RequiredPermission;
+import com.serliunx.varytalk.common.annotation.RequiredRole;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.system.entity.SystemLog;
@@ -22,7 +23,8 @@ public class SystemLogController extends BaseController {
     }
 
     @GetMapping("list")
-    @PermissionRequired("system.log.list")
+    @RequiredPermission("system.log.list")
+    @RequiredRole("2")
     public Result list(SystemLog systemLog){
         startPage();
         List<SystemLog> systemLogs = systemLogService.selectList(systemLog);
