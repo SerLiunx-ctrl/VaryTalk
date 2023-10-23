@@ -77,9 +77,10 @@ public class GlobalInterceptor implements HandlerInterceptor {
         redisUtils.put(systemAutoConfigurer.getRedisPrefix().getUserCache() + systemUser.getUsername(),
                 systemUser, systemAutoConfigurer.getRedisTtl().getUserCache(), TimeUnit.HOURS);
 
-        Map<String, Long> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
-        SecurityUtils.setUserId(map);
+        map.put("userName", systemUser.getUsername());
+        SecurityUtils.setUserInfo(map);
 
         return true;
     }
@@ -87,7 +88,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Override
     @SuppressWarnings("all")
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        SecurityUtils.removeUserId();
+        SecurityUtils.clear();
     }
 
     private boolean ignoreCheck(PermitAll permitAll){

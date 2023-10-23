@@ -6,23 +6,49 @@ import java.util.Map;
 
 public class SecurityUtils {
 
-    private static final ThreadLocal<Map<String, Long>> userId = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, Object>> infoMap = new ThreadLocal<>();
 
     private SecurityUtils(){}
 
+    /**
+     * 对输入的字符串加密
+     * <p>
+     * 使用的是 Spring 自带的{@link DigestUtils}
+     * @param source 原字符串
+     * @return 加密后的字符串
+     */
     public static String generateMD5Message(String source){
         return DigestUtils.md5DigestAsHex(source.getBytes());
     }
 
-    public static void setUserId(Map<String, Long> map){
-        userId.set(map);
+    /**
+     * 设置当前用户的信息
+     * @param info 信息
+     */
+    public static void setUserInfo(Map<String, Object> info){
+        infoMap.set(info);
     }
 
+    /**
+     * 获取当前用户的id
+     * @return 用户id
+     */
     public static Long getUserId(){
-        return userId.get().get("userId");
+        return (Long) infoMap.get().get("userId");
     }
 
-    public static void removeUserId(){
-        userId.remove();
+    /**
+     * 获取当前用的用户名
+     * @return 用户名
+     */
+    public static String getUsername(){
+        return (String)infoMap.get().get("username");
+    }
+
+    /**
+     * 移除临时用户信息
+     */
+    public static void clear(){
+        infoMap.remove();
     }
 }
