@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.common.util;
 
+import com.serliunx.varytalk.common.exception.ServiceException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -93,7 +94,14 @@ public class RedisUtils {
      */
     @SuppressWarnings("unchecked")
     public <T> T get(String key, Class<T> clazz){
-        return key == null ? null : (T)redisTemplate.opsForValue().get(key);
+        if(key == null || clazz == null){
+            return null;
+        }
+        try{
+            return (T)redisTemplate.opsForValue().get(key);
+        }catch (Exception e){
+            throw new ServiceException(400);
+        }
     }
 
     /**
