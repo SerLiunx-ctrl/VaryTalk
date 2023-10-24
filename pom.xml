@@ -17,6 +17,7 @@
         <module>varytalk-module-common</module>
         <module>varytalk-module-security</module>
         <module>varytalk-module-console</module>
+        <module>varytalk-module-forum</module>
     </modules>
 
     <properties>
@@ -46,6 +47,11 @@
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-security</artifactId>
+                <version>${vversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-module-forum</artifactId>
                 <version>${vversion}</version>
             </dependency>
             <dependency>

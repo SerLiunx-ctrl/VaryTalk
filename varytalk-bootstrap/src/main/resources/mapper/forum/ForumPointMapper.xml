@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.serliunx.varytalk.forum.mapper.ForumPointMapper">
+    <resultMap id="forumPointResult" type="com.serliunx.varytalk.forum.entity.ForumPoint">
+        <result property="id" column="id"/>
+        <result property="pointName" column="point_name"/>
+        <result property="pointTag" column="point_tag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="forumPoint">
+        select fp.id, fp.point_name, fp.point_tag, fp.create_by, fp.create_time, fp.update_by, fp.update_time,
+               fp.remark from forum_point fp where id > 0
+    </sql>
+
+    <select id="selectList" parameterType="ForumPoint" resultMap="forumPointResult">
+        <include refid="forumPoint"/>
+        <if test="pointName != null and pointName != ''">
+            and fp.point_name like concat('%', #{pointName}, '%')
+        </if>
+        <if test="pointTag != null and pointTag != ''">
+            and fp.point_tag like concat('%', #{pointTag}, '%')
+        </if>
+    </select>
+
+    <select id="checkByPointTag" parameterType="string" resultMap="forumPointResult">
+        <include refid="forumPoint"/>
+        and fp.point_tag = #{pointTag}
+    </select>
+
+    <insert id="insertForumPoint" parameterType="ForumPoint"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into forum_point(id, point_tag, point_name, create_by, create_time, update_by, update_time, remark)
+        values(null, #{pointTag}, #{pointName}, #{createBy}, sysdate(), null, null, #{remark})
+    </insert>
+</mapper>
