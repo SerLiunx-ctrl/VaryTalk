@@ -5,7 +5,7 @@ import com.serliunx.varytalk.common.base.LoginUser;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.common.util.JwtUtils;
 import com.serliunx.varytalk.common.util.SecurityUtils;
-import com.serliunx.varytalk.common.validation.group.SystemUserRegisterGroup;
+import com.serliunx.varytalk.common.validation.system.SystemUserRegisterGroup;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.SystemUserService;
 import com.serliunx.varytalk.security.entity.ChangePasswordQuery;

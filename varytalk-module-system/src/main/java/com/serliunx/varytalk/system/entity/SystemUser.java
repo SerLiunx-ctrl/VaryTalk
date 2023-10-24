@@ -2,10 +2,10 @@ package com.serliunx.varytalk.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.serliunx.varytalk.common.base.BaseEntity;
-import com.serliunx.varytalk.common.validation.group.SystemUserInsertGroup;
-import com.serliunx.varytalk.common.validation.group.SystemUserRegisterGroup;
-import com.serliunx.varytalk.common.validation.group.SystemUserRoleUpdateGroup;
-import com.serliunx.varytalk.common.validation.group.SystemUserUpdateGroup;
+import com.serliunx.varytalk.common.validation.system.SystemUserInsertGroup;
+import com.serliunx.varytalk.common.validation.system.SystemUserRegisterGroup;
+import com.serliunx.varytalk.common.validation.system.SystemUserRoleUpdateGroup;
+import com.serliunx.varytalk.common.validation.system.SystemUserUpdateGroup;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

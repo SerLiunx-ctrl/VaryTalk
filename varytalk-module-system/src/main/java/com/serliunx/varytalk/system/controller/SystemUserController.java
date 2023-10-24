@@ -7,7 +7,7 @@ import com.serliunx.varytalk.system.event.UserUpdateEvent;
 import com.serliunx.varytalk.common.result.CountResult;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.common.util.SecurityUtils;
-import com.serliunx.varytalk.common.validation.group.SystemUserRoleUpdateGroup;
+import com.serliunx.varytalk.common.validation.system.SystemUserRoleUpdateGroup;
 import com.serliunx.varytalk.system.entity.SystemRole;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.SystemRoleService;
