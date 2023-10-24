@@ -46,13 +46,14 @@ public class PermissionAdvice {
                     joinPoint.getTarget().getClass().getName() + "." + method.getName() + "()");
         }
         Long userId = SecurityUtils.getUserId();
+        SystemUser systemUser = null;
         RequiredPermission requiredPermission = method.getAnnotation(RequiredPermission.class);
         RequiredRole requiredRole = method.getAnnotation(RequiredRole.class);
-        SystemUser systemUser = null;
+
         if(requiredRole != null || requiredPermission != null){
             systemUser = systemUserService.selectUserById(userId);
         }
-        boolean result = true;
+        boolean result = false;
 
         //判定角色
         if(requiredRole != null){
