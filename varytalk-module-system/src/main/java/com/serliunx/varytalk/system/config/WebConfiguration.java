@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.system.config;
 
+import com.serliunx.varytalk.common.interceptor.LogInterceptor;
 import com.serliunx.varytalk.system.interceptor.GlobalInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,13 +14,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfiguration implements WebMvcConfigurer {
 
     private final GlobalInterceptor globalInterceptor;
+    private final LogInterceptor logInterceptor;
 
-    public WebConfiguration(GlobalInterceptor globalInterceptor) {
+    public WebConfiguration(GlobalInterceptor globalInterceptor,
+                            LogInterceptor logInterceptor) {
         this.globalInterceptor = globalInterceptor;
+        this.logInterceptor = logInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //注册请求耗时统计拦截器
+        registry.addInterceptor(logInterceptor);
         //注册通用拦截器
         registry.addInterceptor(globalInterceptor)
                 .addPathPatterns("/**")
