@@ -39,7 +39,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Bean
     public CorsFilter corsFilter(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost");
+        corsConfiguration.addAllowedOrigin("*");
         //2) 是否发送Cookie信息
         corsConfiguration.setAllowCredentials(true);
         //3) 允许的请求方式
