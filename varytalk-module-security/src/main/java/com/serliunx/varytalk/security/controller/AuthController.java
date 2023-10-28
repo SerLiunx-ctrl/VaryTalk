@@ -2,13 +2,18 @@ package com.serliunx.varytalk.security.controller;
 
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.base.LoginUser;
+import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.common.util.JwtUtils;
+import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.common.validation.system.SystemUserRegisterGroup;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.SystemUserService;
 import com.serliunx.varytalk.security.entity.ChangePasswordQuery;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +22,18 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController extends BaseController {
 
     private final SystemUserService systemUserService;
+    private final SystemAutoConfigurer systemAutoConfigurer;
     private final JwtUtils jwtUtils;
+    private final RedisUtils redisUtils;
 
-    public AuthController(SystemUserService systemUserService, JwtUtils jwtUtils) {
+    public AuthController(SystemUserService systemUserService,
+                          SystemAutoConfigurer systemAutoConfigurer,
+                          JwtUtils jwtUtils,
+                          RedisUtils redisUtils) {
         this.systemUserService = systemUserService;
+        this.systemAutoConfigurer = systemAutoConfigurer;
         this.jwtUtils = jwtUtils;
+        this.redisUtils = redisUtils;
     }
 
     @PostMapping("login")
@@ -66,7 +78,15 @@ public class AuthController extends BaseController {
         return success("密码修改成功!");
     }
 
-    public Result logout(){
-        return Result.success("成功注销!");
+    @PostMapping("logout")
+    public Result logout(HttpServletRequest request){
+        String token = request.getHeader(systemAutoConfigurer.getAuthHeader());
+        String key = systemAutoConfigurer.getRedisPrefix().getOnlineUsers() + jwtUtils.getUsername(token);
+        LoginUser loginUser = redisUtils.get(key, LoginUser.class);
+        if(loginUser == null){
+            return fail("操作失败, 用户未登录!");
+        }
+        redisUtils.delete(key);
+        return success(redisUtils.delete(key), "注销成功!");
     }
 }
