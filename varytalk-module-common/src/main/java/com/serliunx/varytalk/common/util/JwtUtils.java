@@ -18,6 +18,8 @@ import java.util.Map;
 @Component
 public class JwtUtils {
     private final SystemAutoConfigurer systemAutoConfigurer;
+    private static final String USERNAME = "username";
+    private static final String USER_ID = "userId";
 
     @Autowired
     public JwtUtils(SystemAutoConfigurer systemAutoConfigurer) {
@@ -31,8 +33,8 @@ public class JwtUtils {
      */
     public String getLoginToken(LoginUser loginUser){
         Map<String, String> map = new HashMap<>();
-        map.put("userId", String.valueOf(loginUser.getId()));
-        map.put("userName", loginUser.getUsername());
+        map.put(USER_ID, String.valueOf(loginUser.getId()));
+        map.put(USERNAME, loginUser.getUsername());
         return generateToken(map, systemAutoConfigurer.getTokenExpireHour());
     }
 
@@ -69,7 +71,7 @@ public class JwtUtils {
     public Long getUserId(String token){
         DecodedJWT decodedJWT = verifyToken0(token);
         Map<String, Claim> claims = decodedJWT.getClaims();
-        String id = claims.get("userId").toString().replace("\"", "");
+        String id = claims.get(USER_ID).toString().replace("\"", "");
         return Long.valueOf(id);
     }
 
@@ -81,7 +83,7 @@ public class JwtUtils {
     public String getUsername(String token){
         DecodedJWT decodedJWT = verifyToken0(token);
         Map<String, Claim> claims = decodedJWT.getClaims();
-        return claims.get("userName").toString().replace("\"", "");
+        return claims.get(USERNAME).toString().replace("\"", "");
     }
 
     private DecodedJWT verifyToken0(String token){
