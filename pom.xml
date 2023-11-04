@@ -18,12 +18,14 @@
         <module>varytalk-module-security</module>
         <module>varytalk-module-console</module>
         <module>varytalk-module-forum</module>
+        <module>varytalk-module-httpclient</module>
     </modules>
 
     <properties>
 <!--        主程序版本-->
         <vversion>1.0.0</vversion>
         <java.version>17</java.version>
+        <openfeign.version>12.2</openfeign.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -53,6 +55,16 @@
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-forum</artifactId>
                 <version>${vversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-module-httpclient</artifactId>
+                <version>${vversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-core</artifactId>
+                <version>${openfeign.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
