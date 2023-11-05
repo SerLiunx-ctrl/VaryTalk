@@ -1,9 +1,13 @@
 package com.serliunx.varytalk.common.result;
 
 import com.github.pagehelper.PageInfo;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 public class Result {
     private String message;
     private int status;
@@ -52,29 +56,5 @@ public class Result {
 
     public static <T> Result pageResult(List<? extends T> list){
         return success(PageResult.page(new PageInfo<T>(list)));
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
     }
 }

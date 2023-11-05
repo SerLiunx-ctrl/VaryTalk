@@ -1,9 +1,12 @@
 package com.serliunx.varytalk.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
 public class SystemLog {
 
     private SystemLog(){}
@@ -49,56 +52,28 @@ public class SystemLog {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date opTime;
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
-    }
-
-    public String getApiPath() {
-        return apiPath;
     }
 
     public void setApiPath(String apiPath) {
         this.apiPath = apiPath;
     }
 
-    public String getOpName() {
-        return opName;
-    }
-
     public void setOpName(String opName) {
         this.opName = opName;
     }
 
-    public String getOpContext() {
-        return opContext;
-    }
-
     public void setOpContext(String opContext) {
         this.opContext = opContext;
-    }
-
-    public Date getOpTime() {
-        return opTime;
     }
 
     public void setOpTime(Date opTime) {
@@ -107,10 +82,6 @@ public class SystemLog {
 
     public static Builder getBuilder() {
         return new Builder(new SystemLog());
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public void setUsername(String username) {

@@ -3,9 +3,11 @@ package com.serliunx.varytalk.security.permission;
 import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.annotation.PermitAll;
 import com.serliunx.varytalk.common.annotation.RequiredRole;
+import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.exception.AuthenticationConflictException;
 import com.serliunx.varytalk.common.exception.ServiceException;
 import com.serliunx.varytalk.common.util.ArrayUtils;
+import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.security.service.PermissionService;
 import com.serliunx.varytalk.system.entity.SystemUser;
@@ -27,13 +29,18 @@ public class PermissionAdvice {
 
     private final SystemUserService systemUserService;
     private final PermissionService permissionService;
+    private final RedisUtils redisUtils;
+    private final SystemAutoConfigurer systemAutoConfigurer;
     private final Logger logger = LoggerFactory.getLogger(PermissionAdvice.class);
 
     public PermissionAdvice(SystemUserService systemUserService,
-                            PermissionService permissionService) {
-
+                            PermissionService permissionService,
+                            RedisUtils redisUtils,
+                            SystemAutoConfigurer systemAutoConfigurer) {
         this.systemUserService = systemUserService;
         this.permissionService = permissionService;
+        this.redisUtils = redisUtils;
+        this.systemAutoConfigurer = systemAutoConfigurer;
     }
 
     @Before("com.serliunx.varytalk.common.aop.PointCutDefinition.permissionPoint()")
@@ -51,7 +58,9 @@ public class PermissionAdvice {
         RequiredRole requiredRole = method.getAnnotation(RequiredRole.class);
 
         if(requiredRole != null || requiredPermission != null){
-            systemUser = systemUserService.selectUserById(userId);
+            systemUser = redisUtils.get(systemAutoConfigurer.getRedisPrefix().getUserCache()
+                    + SecurityUtils.getUsername(), SystemUser.class);
+            systemUser = systemUser == null ? systemUserService.selectUserById(userId) : systemUser;
         }
         boolean result = false;
 

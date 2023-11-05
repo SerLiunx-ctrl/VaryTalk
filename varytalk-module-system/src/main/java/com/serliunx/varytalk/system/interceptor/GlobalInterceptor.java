@@ -64,6 +64,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         LoginUser loginUser = (LoginUser) redisUtils.get(systemAutoConfigurer.getRedisPrefix().getOnlineUsers() +
                 jwtUtils.getUsername(token));
         if(loginUser == null || !loginUser.getToken().equals(token)){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             throw new ServiceException("token已失效, 请重新登录!", 401);
         }
         SystemUser cachedUser = (SystemUser)redisUtils.get(systemAutoConfigurer.getRedisPrefix().getUserCache()
@@ -79,7 +80,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
-        map.put("userName", systemUser.getUsername());
+        map.put("username", systemUser.getUsername());
         SecurityUtils.setUserInfo(map);
 
         return true;

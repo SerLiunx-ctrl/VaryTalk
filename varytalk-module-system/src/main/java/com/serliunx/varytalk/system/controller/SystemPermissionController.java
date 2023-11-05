@@ -5,7 +5,9 @@ import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.system.entity.*;
+import com.serliunx.varytalk.system.event.PermissionUpdateEvent;
 import com.serliunx.varytalk.system.service.*;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,18 +22,21 @@ public class SystemPermissionController extends BaseController {
     private final SystemRolePermissionService systemRolePermissionService;
     private final SystemUserService systemUserService;
     private final SystemRoleService systemRoleService;
+    private final ApplicationEventPublisher publisher;
 
     public SystemPermissionController(SystemPermissionService systemPermissionService,
                                       SystemUserService systemUserService,
                                       SystemRolePermissionService systemRolePermissionService,
                                       SystemRoleService systemRoleService,
-                                      SystemUserPermissionService systemUserPermissionService) {
+                                      SystemUserPermissionService systemUserPermissionService,
+                                      ApplicationEventPublisher publisher) {
 
         this.systemPermissionService = systemPermissionService;
         this.systemUserService = systemUserService;
         this.systemUserPermissionService = systemUserPermissionService;
         this.systemRolePermissionService = systemRolePermissionService;
         this.systemRoleService = systemRoleService;
+        this.publisher = publisher;
     }
 
     /**
@@ -50,6 +55,7 @@ public class SystemPermissionController extends BaseController {
             return fail("该权限节点名称已存在, 换一个试试!");
         }
         systemPermissionService.insertPermission(systemPermission);
+        publisher.publishEvent(new PermissionUpdateEvent(systemPermissionService.selectList(null)));
         return success(systemPermission.getId());
     }
 

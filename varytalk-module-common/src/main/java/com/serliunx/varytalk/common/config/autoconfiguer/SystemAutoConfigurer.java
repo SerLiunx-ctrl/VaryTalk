@@ -5,9 +5,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("talk-system")
 public class SystemAutoConfigurer {
 
-    private final RedisPrefix redisPrefix = new RedisPrefix();
-    private final FileInfo fileInfo = new FileInfo();
-    private final RedisTtl redisTtl = new RedisTtl();
+    private RedisPrefix redisPrefix = new RedisPrefix();
+    private FileInfo fileInfo = new FileInfo();
+    private RedisTtl redisTtl = new RedisTtl();
 
     /**
      * token密钥
@@ -86,6 +86,18 @@ public class SystemAutoConfigurer {
         return redisTtl;
     }
 
+    public void setRedisPrefix(RedisPrefix redisPrefix) {
+        this.redisPrefix = redisPrefix;
+    }
+
+    public void setFileInfo(FileInfo fileInfo) {
+        this.fileInfo = fileInfo;
+    }
+
+    public void setRedisTtl(RedisTtl redisTtl) {
+        this.redisTtl = redisTtl;
+    }
+
     public static class RedisPrefix{
 
         /**
@@ -107,6 +119,11 @@ public class SystemAutoConfigurer {
          * #方法/属性缓存, 用于鉴权、日志记录
          */
         private String joinPointCache = mainPrefix + "join_point_cache:";
+
+        /**
+         * 权限节点缓存
+         */
+        private String permissionsCache = mainPrefix + "permissions_cache";
 
         public String getMainPrefix() {
             return mainPrefix;
@@ -139,6 +156,14 @@ public class SystemAutoConfigurer {
         public void setUserCache(String userCache) {
             this.userCache = this.mainPrefix + userCache;
         }
+
+        public String getPermissionsCache() {
+            return permissionsCache;
+        }
+
+        public void setPermissionsCache(String permissionsCache) {
+            this.permissionsCache = this.mainPrefix + permissionsCache;
+        }
     }
 
     public static class RedisTtl{
@@ -152,6 +177,11 @@ public class SystemAutoConfigurer {
          * 用户信息缓存, 用于鉴权、避免频繁查询数据库
          */
         private Integer userCache = 6;
+
+        /**
+         * 权限节点缓存
+         */
+        private Integer permissionsCache = 1;
 
         public Integer getJoinPointCache() {
             return joinPointCache;
@@ -167,6 +197,14 @@ public class SystemAutoConfigurer {
 
         public void setUserCache(Integer userCache) {
             this.userCache = userCache;
+        }
+
+        public Integer getPermissionsCache() {
+            return permissionsCache;
+        }
+
+        public void setPermissionsCache(Integer permissionsCache) {
+            this.permissionsCache = permissionsCache;
         }
     }
 

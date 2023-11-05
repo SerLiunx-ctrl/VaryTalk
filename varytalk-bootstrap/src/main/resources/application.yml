@@ -1,4 +1,4 @@
-﻿#系统内置设置
+﻿#VaryTalk设置
 talk-system:
   #token密钥设置
   token-secret: serliunxvarytalktoken
@@ -20,12 +20,16 @@ talk-system:
     join-point-cache: "join_point_cache:"
     #用户信息缓存, 用于鉴权、避免频繁查询数据库
     user-cache: "user_cache:"
+    #权限节点缓存
+    permissions-cache: "permissions_cache"
   #redis缓存过期时间设置
   redis-ttl:
     #aop切入点缓存过期时间(小时为单位)
     join-point-cache: 12
     #用户信息缓存(小时为单位)
-    user-cache: 6
+    user-cache: 1
+    #权限节点缓存(小时为单位)
+    permissions-cache: 1
   #文件相关设置
   file-info:
     #文件上传路径(Windows带盘符, Linux使用/home/xxx)

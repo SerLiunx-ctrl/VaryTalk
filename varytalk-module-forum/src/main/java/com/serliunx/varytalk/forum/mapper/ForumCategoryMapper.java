@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Mapper
 public interface ForumCategoryMapper {
 
     List<ForumCategory> selectList(ForumCategory forumCategory);

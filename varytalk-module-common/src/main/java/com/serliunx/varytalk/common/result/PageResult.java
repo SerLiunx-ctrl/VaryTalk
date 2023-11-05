@@ -1,9 +1,13 @@
 package com.serliunx.varytalk.common.result;
 
 import com.github.pagehelper.PageInfo;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 public class PageResult<T>{
 
     private Integer pageNum;
@@ -25,53 +29,5 @@ public class PageResult<T>{
     public static <T> PageResult<T> page(PageInfo<T> pageInfo){
         return new PageResult<>(pageInfo.getPageNum(), pageInfo.getPageSize(),
                 (long) pageInfo.getSize(), pageInfo.getPages(), pageInfo.getTotal(),pageInfo.getList());
-    }
-
-    public Integer getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public Long getActualSize() {
-        return actualSize;
-    }
-
-    public void setActualSize(Long actualSize) {
-        this.actualSize = actualSize;
-    }
-
-    public List<T> getRows() {
-        return rows;
-    }
-
-    public void setRows(List<T> rows) {
-        this.rows = rows;
-    }
-
-    public Integer getPages() {
-        return pages;
-    }
-
-    public void setPages(Integer pages) {
-        this.pages = pages;
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
     }
 }

@@ -19,13 +19,13 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class VaryTalkApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(VaryTalkApplication.class, args);
-        DruidDataSource dataSource = applicationContext.getBean(DruidDataSource.class);
-        //输入指令
-        ConsoleMenu menu = ConsoleMenu.build(applicationContext);
-        boolean result = menu.input();
-        if(!result){
-            dataSource.close();
-            applicationContext.close();
-        }
+//        DruidDataSource dataSource = applicationContext.getBean(DruidDataSource.class);
+//        //输入指令
+//        ConsoleMenu menu = ConsoleMenu.build(applicationContext);
+//        boolean result = menu.input();
+//        if(!result){
+//            dataSource.close();
+//            applicationContext.close();
+//        }
     }
 }
