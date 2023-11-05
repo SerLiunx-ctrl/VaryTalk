@@ -6,6 +6,10 @@ talk-system:
   token-expire-hour: 1
   #token头标识
   auth-header: Authorization
+  #仓库所有者
+  owner: SerLiunx-ctrl
+  #仓库名称
+  repos: VaryTalk
   #redis键
   redis-prefix:
     #主键

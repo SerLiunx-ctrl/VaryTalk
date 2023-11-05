@@ -1,7 +1,6 @@
 package com.serliunx.varytalk.forum.controller;
 
 import com.serliunx.varytalk.common.annotation.RequiredPermission;
-import com.serliunx.varytalk.common.annotation.RequiredRole;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.common.validation.forum.ForumPointInsertGroup;
@@ -38,9 +37,9 @@ public class ForumPointController extends BaseController {
     @RequiredPermission("forum.point.type.add")
     public Result add(@RequestBody @Validated(ForumPointInsertGroup.class) ForumPoint forumPoint){
         if(forumPointService.checkByPointTag(forumPoint.getPointTag())){
-            return Result.fail("该积分已存在, 换一个标签试试!");
+            return fail("该积分已存在, 换一个标签试试!");
         }
         forumPointService.insertForumPoint(forumPoint);
-        return Result.success(forumPoint.getId());
+        return success(forumPoint.getId());
     }
 }

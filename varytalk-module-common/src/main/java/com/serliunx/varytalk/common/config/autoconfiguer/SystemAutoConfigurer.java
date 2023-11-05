@@ -24,6 +24,16 @@ public class SystemAutoConfigurer {
      */
     private Integer tokenExpireHour = 1;
 
+    /**
+     * 项目仓库所有者
+     */
+    private String owner;
+
+    /**
+     * 仓库名称
+     */
+    private String repos;
+
     public String getTokenSecret() {
         return tokenSecret;
     }
@@ -46,6 +56,22 @@ public class SystemAutoConfigurer {
 
     public void setAuthHeader(String authHeader) {
         this.authHeader = authHeader;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getRepos() {
+        return repos;
+    }
+
+    public void setRepos(String repos) {
+        this.repos = repos;
     }
 
     public RedisPrefix getRedisPrefix() {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.serliunx.varytalk.forum.mapper.ForumCategoryMapper">
+    <resultMap id="forumCategoryResult" type="com.serliunx.varytalk.forum.entity.ForumCategory">
+        <result property="id" column="id"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="displayOrder" column="display_order"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="forumCategory">
+        select fc.id, fc.category_name, fc.display_order, fc.create_by, fc.create_time, fc.update_by, fc.update_time,
+               fc.remark from forum_category fc where id > 0 order by fc.display_order
+    </sql>
+
+    <select id="selectList" parameterType="ForumCategory" resultMap="forumCategoryResult">
+        <include refid="forumCategory"/>
+        <if test="categoryName != null and categoryName != ''">
+            and fc.category_name like concat('%', #{categoryName}, '%')
+        </if>
+    </select>
+
+    <select id="selectByName" parameterType="string" resultMap="forumCategoryResult">
+        <include refid="forumCategory"/>
+        and fc.category_name = #{categoryName}
+    </select>
+
+    <insert id="insertForumCategory" parameterType="ForumCategory"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into forum_category(id, category_name, display_order, create_by, create_time, update_by, update_time, remark)
+        values(null, #{categoryName}, #{displayOrder}, #{createBy}, sysdate(), null, null, #{remark})
+    </insert>
+</mapper>
