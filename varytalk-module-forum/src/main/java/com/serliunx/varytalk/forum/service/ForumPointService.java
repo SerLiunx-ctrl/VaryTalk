@@ -15,4 +15,6 @@ public interface ForumPointService {
     Long insertForumPoint(ForumPoint forumPoint);
 
     boolean checkByPointTag(String pointTag);
+
+    ForumPoint selectById(Long id);
 }

@@ -39,6 +39,7 @@ public class ForumCategoryController extends BaseController {
         if(fc != null){
             return fail("该分区名称已存在, 换一个试试!");
         }
-        return null;
+        forumCategoryService.insertForumCategory(forumCategory);
+        return success(forumCategory.getId());
     }
 }

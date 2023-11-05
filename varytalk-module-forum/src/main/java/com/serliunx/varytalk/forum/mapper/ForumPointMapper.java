@@ -17,4 +17,6 @@ public interface ForumPointMapper {
     Long insertForumPoint(ForumPoint forumPoint);
 
     ForumPoint checkByPointTag(String pointTag);
+
+    ForumPoint selectById(Long id);
 }

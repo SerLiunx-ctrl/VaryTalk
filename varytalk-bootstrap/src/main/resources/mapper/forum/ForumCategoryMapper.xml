@@ -16,7 +16,7 @@
 
     <sql id="forumCategory">
         select fc.id, fc.category_name, fc.display_order, fc.create_by, fc.create_time, fc.update_by, fc.update_time,
-               fc.remark from forum_category fc where id > 0 order by fc.display_order
+               fc.remark from forum_category fc where id > 0
     </sql>
 
     <select id="selectList" parameterType="ForumCategory" resultMap="forumCategoryResult">
@@ -24,6 +24,7 @@
         <if test="categoryName != null and categoryName != ''">
             and fc.category_name like concat('%', #{categoryName}, '%')
         </if>
+        order by fc.display_order
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="forumCategoryResult">

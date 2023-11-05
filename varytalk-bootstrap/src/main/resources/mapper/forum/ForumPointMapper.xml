@@ -39,4 +39,9 @@
         insert into forum_point(id, point_tag, point_name, create_by, create_time, update_by, update_time, remark)
         values(null, #{pointTag}, #{pointName}, #{createBy}, sysdate(), null, null, #{remark})
     </insert>
+
+    <select id="selectById" parameterType="long" resultMap="forumPointResult">
+        <include refid="forumPoint"/>
+        and fp.id = #{id} limit 1
+    </select>
 </mapper>

@@ -38,4 +38,9 @@ public class ForumPointServiceImpl implements ForumPointService {
     public boolean checkByPointTag(String pointTag) {
         return forumPointMapper.checkByPointTag(pointTag) != null;
     }
+
+    @Override
+    public ForumPoint selectById(Long id) {
+        return forumPointMapper.selectById(id);
+    }
 }

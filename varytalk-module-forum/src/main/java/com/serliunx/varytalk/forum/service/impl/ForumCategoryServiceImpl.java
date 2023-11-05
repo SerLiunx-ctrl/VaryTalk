@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.forum.service.impl;
 
+import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.forum.entity.ForumCategory;
 import com.serliunx.varytalk.forum.mapper.ForumCategoryMapper;
 import com.serliunx.varytalk.forum.service.ForumCategoryService;
@@ -31,6 +32,7 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
     }
 
     @Override
+    @SetOperator(value = ForumCategory.class)
     public Long insertForumCategory(ForumCategory forumCategory) {
         return forumCategoryMapper.insertForumCategory(forumCategory);
     }

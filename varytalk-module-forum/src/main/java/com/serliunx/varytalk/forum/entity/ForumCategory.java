@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.forum.entity;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.serliunx.varytalk.common.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@JsonPropertyOrder({"id", "categoryName", "displayOrder"})
 public class ForumCategory extends BaseEntity {
     private Long id;
     private String categoryName;
