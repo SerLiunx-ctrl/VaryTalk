@@ -16,6 +16,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -47,7 +48,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if(!(handler instanceof HandlerMethod handlerMethod)){
             return false;
         }
-        if(ignoreCheck(handlerMethod.getMethodAnnotation(PermitAll.class))){
+        if(ignoreCheck(handlerMethod)){
             return true;
         }
         String token = request.getHeader(systemAutoConfigurer.getAuthHeader());
@@ -92,10 +93,17 @@ public class GlobalInterceptor implements HandlerInterceptor {
         SecurityUtils.clear();
     }
 
-    private boolean ignoreCheck(PermitAll permitAll){
-        if(permitAll == null){
-            return false;
+    /**
+     * 检查{@link PermitAll} 注解
+     */
+    private boolean ignoreCheck(HandlerMethod handlerMethod){
+        Method method = handlerMethod.getMethod();
+        Class<?> clazz = method.getDeclaringClass();
+        PermitAll permitAll = clazz.getAnnotation(PermitAll.class);
+        if(permitAll != null && permitAll.value()){
+            return true;
         }
-        return permitAll.value();
+        PermitAll permitAllOnMethod = method.getAnnotation(PermitAll.class);
+        return permitAllOnMethod != null && permitAllOnMethod.value();
     }
 }

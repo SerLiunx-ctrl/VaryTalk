@@ -12,8 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class HttpClientConfiguration {
 
+    private static final String GITHUB_API_URL = "https://api.github.com";
+
     @Bean
     public GitHubRepositoryClient gitHubRepositoryClient(){
-        return GitHubRepositoryClient.build("https://api.github.com");
+        return GitHubRepositoryClient.build(GITHUB_API_URL);
     }
 }
