@@ -1,6 +1,5 @@
 package com.serliunx.varytalk.forum.service.impl;
 
-import com.serliunx.varytalk.common.annotation.Logger;
 import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.forum.entity.ForumPoint;
 import com.serliunx.varytalk.forum.mapper.ForumPointMapper;
@@ -29,7 +28,6 @@ public class ForumPointServiceImpl implements ForumPointService {
 
     @Override
     @SetOperator(ForumPoint.class)
-    @Logger(opName = "论坛积分接口", value = "新增一种积分类型")
     public Long insertForumPoint(ForumPoint forumPoint) {
         return forumPointMapper.insertForumPoint(forumPoint);
     }

@@ -53,7 +53,7 @@ public class ForumUserPointController extends BaseController {
     }
 
     @GetMapping("user-owned")
-    public Result modify(Long userId){
+    public Result userOwned(Long userId){
         SystemUser systemUser = systemUserService.selectUserById(userId);
         if(systemUser == null){
             return fail("该用户不存在!");
