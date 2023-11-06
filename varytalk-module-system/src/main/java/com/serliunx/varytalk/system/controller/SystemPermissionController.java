@@ -55,7 +55,6 @@ public class SystemPermissionController extends BaseController {
             return fail("该权限节点名称已存在, 换一个试试!");
         }
         systemPermissionService.insertPermission(systemPermission);
-        publisher.publishEvent(new PermissionUpdateEvent(systemPermissionService.selectList(null)));
         return success(systemPermission.getId());
     }
 

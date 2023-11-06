@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.httpclient.service;
 
+import com.serliunx.varytalk.common.annotation.Cached;
 import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.httpclient.client.GitHubRepositoryClient;
 import com.serliunx.varytalk.httpclient.entity.Contributor;
@@ -26,13 +27,8 @@ public class GithubRepositoryService {
         this.redisUtils = redisUtils;
     }
 
-    @SuppressWarnings("unchecked")
+    @Cached
     public List<Contributor> getContributors(String owner, String repos){
-        List<Contributor> contributors = (List<Contributor>)redisUtils.get(KEY_CONTRIBUTOR, List.class);
-        if(contributors == null){
-            contributors = gitHubRepositoryClient.getContributors(owner, repos);
-            redisUtils.put(KEY_CONTRIBUTOR, contributors, 10, TimeUnit.MINUTES);
-        }
-        return contributors;
+        return gitHubRepositoryClient.getContributors(owner, repos);
     }
 }

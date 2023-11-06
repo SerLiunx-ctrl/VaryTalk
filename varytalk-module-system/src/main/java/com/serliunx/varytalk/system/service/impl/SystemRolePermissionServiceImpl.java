@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.system.service.impl;
 
+import com.serliunx.varytalk.common.annotation.Cached;
 import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.system.entity.SystemRolePermission;
 import com.serliunx.varytalk.system.mapper.SystemRolePermissionMapper;
@@ -28,6 +29,7 @@ public class SystemRolePermissionServiceImpl implements SystemRolePermissionServ
     }
 
     @Override
+    @Cached(index = 0)
     public List<SystemRolePermission> selectByRoleId(Long roleId) {
         return systemRolePermissionMapper.selectByRoleId(roleId);
     }

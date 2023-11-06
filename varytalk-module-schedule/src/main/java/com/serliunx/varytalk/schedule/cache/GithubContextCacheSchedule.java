@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class GithubContextCacheSchedule extends BaseSchedule {
 
-    private static final String KEY_CONTRIBUTOR = "varytalk:cache:github_contributors";
+    private static final String KEY_CONTRIBUTOR = "vary_talk:github_repository_service:get_contributors";
     private final GitHubRepositoryClient gitHubRepositoryClient;
     private final RedisUtils redisUtils;
 

@@ -6,6 +6,8 @@ import org.aspectj.lang.JoinPoint;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AopUtils {
     private AopUtils(){}
@@ -66,6 +68,20 @@ public class AopUtils {
             }
         }
         return null;
+    }
+
+    /**
+     * 通过参数数组、参数值构建一个参数名称和值的Map
+     * @param parameters 参数数组
+     * @param args 参数值数组
+     * @return Map
+     */
+    public static Map<String, Object> buildArgsMap(Parameter[] parameters, Object[] args){
+        Map<String, Object> argsMap = new HashMap<>();
+        for (int i = 0; i < parameters.length; i++) {
+            argsMap.put(parameters[i].getName(), args[i]);
+        }
+        return argsMap;
     }
 
     /**

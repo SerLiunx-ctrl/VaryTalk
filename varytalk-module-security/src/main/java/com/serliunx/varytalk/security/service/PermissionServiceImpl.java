@@ -1,8 +1,6 @@
 package com.serliunx.varytalk.security.service;
 
-import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.exception.PermissionNotFoundException;
-import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.system.entity.SystemPermission;
 import com.serliunx.varytalk.system.entity.SystemRolePermission;
 import com.serliunx.varytalk.system.entity.SystemUser;
@@ -13,7 +11,6 @@ import com.serliunx.varytalk.system.service.SystemUserPermissionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class PermissionServiceImpl implements PermissionService{
@@ -21,19 +18,13 @@ public class PermissionServiceImpl implements PermissionService{
     private final SystemPermissionService systemPermissionService;
     private final SystemUserPermissionService systemUserPermissionService;
     private final SystemRolePermissionService systemRolePermissionService;
-    private final RedisUtils redisUtils;
-    private final SystemAutoConfigurer systemAutoConfigurer;
 
     public PermissionServiceImpl(SystemPermissionService systemPermissionService,
                                  SystemUserPermissionService systemUserPermissionService,
-                                 SystemRolePermissionService systemRolePermissionService,
-                                 RedisUtils redisUtils,
-                                 SystemAutoConfigurer systemAutoConfigurer) {
+                                 SystemRolePermissionService systemRolePermissionService) {
         this.systemPermissionService = systemPermissionService;
         this.systemUserPermissionService = systemUserPermissionService;
         this.systemRolePermissionService = systemRolePermissionService;
-        this.redisUtils = redisUtils;
-        this.systemAutoConfigurer = systemAutoConfigurer;
     }
 
     @Override
@@ -47,15 +38,8 @@ public class PermissionServiceImpl implements PermissionService{
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public boolean hasPermission(SystemUser systemUser, String permission){
-        //首先从缓存中查询所有权限节点
-        String pmCacheKey =  systemAutoConfigurer.getRedisPrefix().getPermissionsCache();
-        List<SystemPermission> list = (List<SystemPermission>)redisUtils.get(pmCacheKey, List.class);
-        if(list == null || list.isEmpty()){
-            list = systemPermissionService.selectList(null);
-            redisUtils.put(pmCacheKey, list, systemAutoConfigurer.getRedisTtl().getPermissionsCache(), TimeUnit.HOURS);
-        }
+        List<SystemPermission> list = systemPermissionService.selectList();
         List<String> valueList = list
                 .stream()
                 .map(SystemPermission::getValue)

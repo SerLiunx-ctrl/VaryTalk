@@ -1,5 +1,7 @@
 package com.serliunx.varytalk.system.service.impl;
 
+import com.serliunx.varytalk.common.annotation.CacheRefresh;
+import com.serliunx.varytalk.common.annotation.Cached;
 import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.system.entity.SystemPermission;
 import com.serliunx.varytalk.system.mapper.SystemPermissionMapper;
@@ -7,6 +9,7 @@ import com.serliunx.varytalk.system.service.SystemPermissionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class SystemPermissionServiceImpl implements SystemPermissionService {
@@ -23,7 +26,18 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     }
 
     @Override
+    @Cached(time = 1, timeUnit = TimeUnit.HOURS)
+    public List<SystemPermission> selectList() {
+        return systemPermissionMapper.selectList(null);
+    }
+
+    @Override
     @SetOperator(SystemPermission.class)
+    @CacheRefresh(
+            value = "selectList",
+            clazz = SystemPermission.class,
+            needTag = false
+    )
     public Long insertPermission(SystemPermission systemPermission) {
         return systemPermissionMapper.insertPermission(systemPermission);
     }
