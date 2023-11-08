@@ -8,7 +8,6 @@ import com.serliunx.varytalk.forum.service.ForumPointService;
 import com.serliunx.varytalk.forum.service.ForumUserPointService;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.SystemUserService;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,7 +43,7 @@ public class ForumUserPointController extends BaseController {
         if(forumPoint == null){
             return fail("不存在该积分项!");
         }
-        SystemUser systemUser = systemUserService.selectUserById(forumUserPoint.getUserId());
+        SystemUser systemUser = systemUserService.selectUserByIdFlatted(forumUserPoint.getUserId());
         if(systemUser == null){
             return fail("该用户不存在!");
         }
@@ -54,7 +53,7 @@ public class ForumUserPointController extends BaseController {
 
     @GetMapping("user-owned")
     public Result userOwned(Long userId){
-        SystemUser systemUser = systemUserService.selectUserById(userId);
+        SystemUser systemUser = systemUserService.selectUserByIdFlatted(userId);
         if(systemUser == null){
             return fail("该用户不存在!");
         }

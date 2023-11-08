@@ -20,6 +20,21 @@
                      select="role"/>
     </resultMap>
 
+    <resultMap id="userResultFlatted" type="SystemUser">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="email" column="email"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="roleId" column="role_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
     <select id="role" parameterType="long" resultMap="com.serliunx.varytalk.system.mapper.SystemRoleMapper.roleResult">
         select sr.id, sr.role_name, su.nick_name as create_by, sr.create_time, sr.update_by, sr.update_time, sr.remark
         from sys_role sr left join sys_user su on sr.create_by = su.username where sr.id = #{id}
@@ -68,6 +83,10 @@
     <select id="selectUserById" resultMap="userResult" parameterType="long">
         <include refid="user"/>
         and s.id = #{id}
+    </select>
+
+    <select id="selectUserByIdFlatted" resultMap="userResultFlatted" parameterType="long">
+        select * from sys_user where id = #{id}
     </select>
 
     <insert id="insertUser" parameterType="com.serliunx.varytalk.system.entity.SystemUser"

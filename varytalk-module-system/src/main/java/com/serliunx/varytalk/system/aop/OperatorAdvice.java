@@ -49,7 +49,7 @@ public class OperatorAdvice {
             SystemUser cachedUser = redisUtils.get(systemAutoConfigurer.getRedisPrefix().getUserCache()
                     + SecurityUtils.getUsername(), SystemUser.class);
 
-            SystemUser systemUser = cachedUser == null ? systemUserService.selectUserById(SecurityUtils.getUserId())
+            SystemUser systemUser = cachedUser == null ? systemUserService.selectUserByIdFlatted(SecurityUtils.getUserId())
                     : cachedUser;
             if(systemUser == null) return;
 

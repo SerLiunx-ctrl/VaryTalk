@@ -24,6 +24,11 @@ public interface SystemUserService {
     SystemUser selectUserById(Long id);
 
     /**
+     * 根据id选择用户, 不包含角色等附加信息
+     */
+    SystemUser selectUserByIdFlatted(Long id);
+
+    /**
      * 根据账户名称查找用户信息
      * @param username 账户名称
      * @return 用户

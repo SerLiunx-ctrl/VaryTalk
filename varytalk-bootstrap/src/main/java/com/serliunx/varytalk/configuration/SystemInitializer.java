@@ -30,7 +30,7 @@ public class SystemInitializer {
     private void refreshCache(){
         //刷新权限节点缓存
         SystemPermissionService permissionService = applicationContext.getBean(SystemPermissionService.class);
-        List<SystemPermission> systemPermissions = permissionService.selectList(null);
+        List<SystemPermission> systemPermissions = permissionService.selectList();
         log.info("{}权限节点共载入 {} 条数据.", STARTUP_PREFIX, systemPermissions.size());
     }
 }

@@ -18,6 +18,8 @@ public interface SystemUserMapper {
 
     SystemUser selectUserById(Long id);
 
+    SystemUser selectUserByIdFlatted(Long id);
+
     Long insertUser(SystemUser systemUser);
 
     void updateUser(SystemUser systemUser);

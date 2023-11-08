@@ -56,7 +56,7 @@ public class ForumUserPointServiceImpl implements ForumUserPointService {
         if(forumPoint == null){
             throw new ServiceException("不存在该积分项!", 400);
         }
-        SystemUser systemUser = systemUserService.selectUserById(forumUserPoint.getUserId());
+        SystemUser systemUser = systemUserService.selectUserByIdFlatted(forumUserPoint.getUserId());
         if(systemUser == null){
             throw new ServiceException("该用户不存在!", 400);
         }

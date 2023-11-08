@@ -62,7 +62,7 @@ public class SystemPermissionController extends BaseController {
     @RequiredPermission("system.permission.give.user")
     @Logger(opName = "权限接口", value = "给用户添加权限")
     public Result give(@Validated SystemUserPermission systemUserPermission){
-        SystemUser systemUser = systemUserService.selectUserById(systemUserPermission.getUserId());
+        SystemUser systemUser = systemUserService.selectUserByIdFlatted(systemUserPermission.getUserId());
         if(systemUser == null){
             return fail("指定用户不存在!");
         }
