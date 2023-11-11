@@ -18,6 +18,7 @@ import lombok.Setter;
 @Setter
 @JsonPropertyOrder({"id", "pointTag", "pointName"})
 public class ForumPoint extends BaseEntity {
+
     private Long id;
 
     @NotNull(message = "积分标签不能为空!", groups = ForumPointInsertGroup.class)
@@ -28,4 +29,6 @@ public class ForumPoint extends BaseEntity {
     @NotNull(message = "积分名称不能为空!", groups = ForumPointInsertGroup.class)
     @Size(min = 2, max = 25, message = "名称长度必须位于4~25之间", groups = ForumPointInsertGroup.class)
     private String pointName;
+
+    private Integer isSystem;
 }

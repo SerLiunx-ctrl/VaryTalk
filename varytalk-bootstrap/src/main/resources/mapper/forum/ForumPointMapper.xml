@@ -7,6 +7,7 @@
         <result property="id" column="id"/>
         <result property="pointName" column="point_name"/>
         <result property="pointTag" column="point_tag"/>
+        <result property="isSystem" column="is_system"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -15,7 +16,7 @@
     </resultMap>
 
     <sql id="forumPoint">
-        select fp.id, fp.point_name, fp.point_tag, fp.create_by, fp.create_time, fp.update_by, fp.update_time,
+        select fp.id, fp.point_name, fp.point_tag,  is_system, fp.create_by, fp.create_time, fp.update_by, fp.update_time,
                fp.remark from forum_point fp where id > 0
     </sql>
 
@@ -36,8 +37,8 @@
 
     <insert id="insertForumPoint" parameterType="ForumPoint"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into forum_point(id, point_tag, point_name, create_by, create_time, update_by, update_time, remark)
-        values(null, #{pointTag}, #{pointName}, #{createBy}, sysdate(), null, null, #{remark})
+        insert into forum_point(id, point_tag, point_name, is_system, create_by, create_time, update_by, update_time, remark)
+        values(null, #{pointTag}, #{pointName}, #{isSystem}, #{createBy}, sysdate(), null, null, #{remark})
     </insert>
 
     <select id="selectById" parameterType="long" resultMap="forumPointResult">

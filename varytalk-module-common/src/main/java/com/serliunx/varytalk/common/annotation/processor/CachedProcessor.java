@@ -6,6 +6,7 @@ import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.exception.ServiceException;
 import com.serliunx.varytalk.common.util.AopUtils;
 import com.serliunx.varytalk.common.util.RedisUtils;
+import com.serliunx.varytalk.common.util.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -58,11 +59,13 @@ public class CachedProcessor {
                 field.setAccessible(true);
                 Object property = field.get(arg);
                 key = systemAutoConfigurer.getRedisPrefix().getMainPrefix() +
-                        convertName(method.getDeclaringClass().getSimpleName()) + ":" + convertName(cacheRefresh.value())
+                        StringUtils.camelToUnderline(method.getDeclaringClass().getSimpleName()) +
+                        ":" + StringUtils.camelToUnderline(cacheRefresh.value())
                         + ":" + property.toString() + ":" + REFRESH_TAG;
             }else{
                 key = systemAutoConfigurer.getRedisPrefix().getMainPrefix() +
-                        convertName(method.getDeclaringClass().getSimpleName()) + ":" + convertName(cacheRefresh.value())
+                        StringUtils.camelToUnderline(method.getDeclaringClass().getSimpleName()) +
+                        ":" + StringUtils.camelToUnderline(cacheRefresh.value())
                         + ":" + REFRESH_TAG;
             }
             redisUtils.put(key, 1);
@@ -89,8 +92,9 @@ public class CachedProcessor {
             }
             //检查缓存是否需要更新
             String updateKey = systemAutoConfigurer.getRedisPrefix().getMainPrefix() +
-                    convertName(method.getDeclaringClass().getSimpleName()) + ":" + convertName(method.getName())
-                    + (cached.index() != -1 ? (":" + getTag(cached.index(), joinPoint)) : "") + ":" + REFRESH_TAG;
+                    StringUtils.camelToUnderline(method.getDeclaringClass().getSimpleName()) + ":" +
+                    StringUtils.camelToUnderline(method.getName()) +
+                    (cached.index() != -1 ? (":" + getTag(cached.index(), joinPoint)) : "") + ":" + REFRESH_TAG;
 
             if(redisUtils.hasKey(updateKey)){
                 Object result = joinPoint.proceed();
@@ -132,8 +136,8 @@ public class CachedProcessor {
         if(cached.index() != -1){
             tag = getTag(cached.index(), joinPoint);
         }
-        return systemAutoConfigurer.getRedisPrefix().getMainPrefix() + convertName(method.getDeclaringClass()
-                .getSimpleName()) + ":" + convertName(method.getName()) + (tag.isEmpty() ? "" : (":" + tag));
+        return systemAutoConfigurer.getRedisPrefix().getMainPrefix() + StringUtils.camelToUnderline(method.getDeclaringClass()
+                .getSimpleName()) + ":" + StringUtils.camelToUnderline(method.getName()) + (tag.isEmpty() ? "" : (":" + tag));
     }
 
     private String getTag(int index, ProceedingJoinPoint joinPoint){
@@ -145,11 +149,5 @@ public class CachedProcessor {
             return args[index].toString();
         }
         return "";
-    }
-
-    private String convertName(String source){
-        Pattern pattern = Pattern.compile("(?<=[a-z])([A-Z])");
-        Matcher matcher = pattern.matcher(source);
-        return matcher.replaceAll("_$1").toLowerCase();
     }
 }
