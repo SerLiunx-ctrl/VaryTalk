@@ -1,7 +1,9 @@
 package com.serliunx.varytalk.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.serliunx.varytalk.common.base.BaseEntity;
+import com.serliunx.varytalk.common.jsonserializer.SensitiveFieldSerializer;
 import com.serliunx.varytalk.common.validation.system.SystemUserInsertGroup;
 import com.serliunx.varytalk.common.validation.system.SystemUserRegisterGroup;
 import com.serliunx.varytalk.common.validation.system.SystemUserRoleUpdateGroup;
@@ -31,10 +33,12 @@ public class SystemUser extends BaseEntity {
     @NotNull(message = "账户密码不能为空!", groups = SystemUserInsertGroup.class)
     @NotNull(message = "必须输入你要注册的密码!", groups = SystemUserRegisterGroup.class)
     @Length(min = 8, max = 20, message = "密码长度必须不符合要求!", groups = SystemUserInsertGroup.class)
+    @JsonSerialize(using = SensitiveFieldSerializer.class)
     private String password;
 
     @Length(min = 8, max = 12, message = "手机号码长度必须为8位及以上",
             groups = {SystemUserInsertGroup.class, SystemUserUpdateGroup.class})
+    @JsonSerialize(using = SensitiveFieldSerializer.class)
     private String phoneNumber;
 
     private String email;
