@@ -114,6 +114,12 @@ public class CacheProcessor {
             Object cacheData = getCache(key);
             Object result = null;
             if(cacheData != null){
+                if (cache.forceRefresh()){
+                    result = joinPoint.proceed();
+                    //放入缓存
+                    redisUtils.put(key, result, cache.time(), cache.timeUnit());
+                    return result;
+                }
                 return cacheData;
             }else{
                 result = joinPoint.proceed();
@@ -128,7 +134,7 @@ public class CacheProcessor {
     }
 
     /**
-     * 根据方法名和类型生成缓存中的键值
+     * 根据方法和类型生成缓存中的键值
      */
     private String generateKey(ProceedingJoinPoint point, MethodSignature signature){
         StringBuilder keyBuilder = new StringBuilder(PREFIX);

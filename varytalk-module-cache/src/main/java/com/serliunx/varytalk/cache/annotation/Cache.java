@@ -37,4 +37,10 @@ public @interface Cache {
      * 缓存时长, 需要与timeUnit()搭配使用
      */
     int time() default 5;
+
+    /**
+     * 是否在调用方法时强制刷新缓存
+     * <li>主要用于定时任务, 主动调用的方法请保持默认值
+     */
+    boolean forceRefresh() default false;
 }

@@ -14,10 +14,13 @@ import java.lang.annotation.Target;
 public @interface CacheRefresh {
 
     /**
-     * {@link Cache} 注解所标注的方法名
+     * 自定义键值
      */
     String value() default "";
 
+    /**
+     * 获取缓存的方法名
+     */
     String method() default "";
 
     /**

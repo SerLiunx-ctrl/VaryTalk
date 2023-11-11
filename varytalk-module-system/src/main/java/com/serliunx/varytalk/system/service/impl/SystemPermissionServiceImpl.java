@@ -33,7 +33,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
 
     @Override
     @SetOperator(SystemPermission.class)
-    @CacheRefresh("selectList")
+    @CacheRefresh(method = "selectList")
     public Long insertPermission(SystemPermission systemPermission) {
         return systemPermissionMapper.insertPermission(systemPermission);
     }

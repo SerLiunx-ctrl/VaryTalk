@@ -1,7 +1,6 @@
 package com.serliunx.varytalk.schedule.cache;
 
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
-import com.serliunx.varytalk.httpclient.client.GitHubRepositoryClient;
 import com.serliunx.varytalk.httpclient.entity.Contributor;
 import com.serliunx.varytalk.httpclient.service.GithubRepositoryService;
 import com.serliunx.varytalk.schedule.BaseSchedule;
@@ -20,24 +19,20 @@ import java.util.List;
 @Slf4j
 public class GithubContextCacheSchedule extends BaseSchedule {
 
-    private static final String KEY_CONTRIBUTOR = "vary_talk:github_repository_service:get_contributors";
-    private final GitHubRepositoryClient gitHubRepositoryClient;
     private final GithubRepositoryService githubRepositoryService;
 
-    public GithubContextCacheSchedule(GitHubRepositoryClient gitHubRepositoryClient,
-
-                                      SystemAutoConfigurer systemAutoConfigurer, GithubRepositoryService githubRepositoryService) {
+    public GithubContextCacheSchedule(SystemAutoConfigurer systemAutoConfigurer,
+                                      GithubRepositoryService githubRepositoryService) {
         super(systemAutoConfigurer);
-        this.gitHubRepositoryClient = gitHubRepositoryClient;
         this.githubRepositoryService = githubRepositoryService;
     }
 
-    @Scheduled(cron = "0 0/3 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void runGetContributors(){
         log.info("[定时任务] 开始从 GitHub 拉取仓库的贡献者名单.");
         long timeStarted = System.currentTimeMillis();
-        List<Contributor> contributors = githubRepositoryService.updateContributors(systemAutoConfigurer.getOwner(),
-                systemAutoConfigurer.getRepos());
+        List<Contributor> contributors = githubRepositoryService.getContributors(systemAutoConfigurer.getOwner(),
+                systemAutoConfigurer.getRepos(), true);
         log.info("[定时任务] 成功从 GitHub 拉取到了仓库的贡献者名单,共有 {} 名贡献者无私奉献! 拉取耗时大约 {} 毫秒.",
                 contributors.size(), System.currentTimeMillis() - timeStarted);
     }
