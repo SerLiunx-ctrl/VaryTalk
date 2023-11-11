@@ -20,6 +20,7 @@
         <module>varytalk-module-forum</module>
         <module>varytalk-module-httpclient</module>
         <module>varytalk-module-schedule</module>
+        <module>varytalk-module-cache</module>
     </modules>
 
     <properties>
@@ -65,6 +66,11 @@
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-schedule</artifactId>
+                <version>${vversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-module-cache</artifactId>
                 <version>${vversion}</version>
             </dependency>
             <dependency>

@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.httpclient.service;
 
-import com.serliunx.varytalk.common.annotation.Cached;
+import com.serliunx.varytalk.cache.annotation.Cache;
+import com.serliunx.varytalk.cache.annotation.CacheRefresh;
 import com.serliunx.varytalk.httpclient.client.GitHubRepositoryClient;
 import com.serliunx.varytalk.httpclient.entity.Contributor;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,13 @@ public class GithubRepositoryService {
         this.gitHubRepositoryClient = gitHubRepositoryClient;
     }
 
-    @Cached
+    @Cache
     public List<Contributor> getContributors(String owner, String repos){
         return gitHubRepositoryClient.getContributors(owner, repos);
+    }
+
+    @CacheRefresh(method = "getContributors")
+    public List<Contributor> updateContributors(String owner, String repository){
+        return this.gitHubRepositoryClient.getContributors(owner, repository);
     }
 }

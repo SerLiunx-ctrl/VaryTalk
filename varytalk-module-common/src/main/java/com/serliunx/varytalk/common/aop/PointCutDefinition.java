@@ -17,10 +17,4 @@ public class PointCutDefinition {
 
     @Pointcut("@annotation(com.serliunx.varytalk.common.annotation.Logger)")
     public void logPoint(){}
-
-    @Pointcut("@annotation(com.serliunx.varytalk.common.annotation.Cached)")
-    public void cachedPoint(){}
-
-    @Pointcut("@annotation(com.serliunx.varytalk.common.annotation.CacheRefresh)")
-    public void cacheUpdatePoint(){}
 }

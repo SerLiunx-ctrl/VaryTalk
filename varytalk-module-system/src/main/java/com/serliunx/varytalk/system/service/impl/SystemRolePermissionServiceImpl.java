@@ -1,7 +1,9 @@
 package com.serliunx.varytalk.system.service.impl;
 
-import com.serliunx.varytalk.common.annotation.CacheRefresh;
-import com.serliunx.varytalk.common.annotation.Cached;
+import com.serliunx.varytalk.cache.annotation.Cache;
+import com.serliunx.varytalk.cache.annotation.CacheRefresh;
+import com.serliunx.varytalk.cache.annotation.TagEntity;
+import com.serliunx.varytalk.cache.annotation.TagValue;
 import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.system.entity.SystemRolePermission;
 import com.serliunx.varytalk.system.mapper.SystemRolePermissionMapper;
@@ -30,19 +32,15 @@ public class SystemRolePermissionServiceImpl implements SystemRolePermissionServ
     }
 
     @Override
-    @Cached(index = 0)
-    public List<SystemRolePermission> selectByRoleId(Long roleId) {
+    @Cache
+    public List<SystemRolePermission> selectByRoleId(@TagValue("roleId") Long roleId) {
         return systemRolePermissionMapper.selectByRoleId(roleId);
     }
 
     @Override
     @SetOperator(SystemRolePermission.class)
-    @CacheRefresh(
-            value = "selectByRoleId",
-            clazz = SystemRolePermission.class,
-            propertyName = "roleId"
-    )
-    public Long insertRolePermission(SystemRolePermission systemRolePermission) {
+    @CacheRefresh(method = "selectByRoleId")
+    public Long insertRolePermission(@TagEntity SystemRolePermission systemRolePermission) {
         return systemRolePermissionMapper.insertRolePermission(systemRolePermission);
     }
 }

@@ -1,7 +1,9 @@
 package com.serliunx.varytalk.system.service.impl;
 
-import com.serliunx.varytalk.common.annotation.CacheRefresh;
-import com.serliunx.varytalk.common.annotation.Cached;
+import com.serliunx.varytalk.cache.annotation.Cache;
+import com.serliunx.varytalk.cache.annotation.CacheRefresh;
+import com.serliunx.varytalk.cache.annotation.TagEntity;
+import com.serliunx.varytalk.cache.annotation.TagValue;
 import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.system.entity.SystemUserPermission;
 import com.serliunx.varytalk.system.mapper.SystemUserPermissionMapper;
@@ -26,12 +28,8 @@ public class SystemUserPermissionServiceImpl implements SystemUserPermissionServ
 
     @Override
     @SetOperator(SystemUserPermission.class)
-    @CacheRefresh(
-            value = "selectByUserId",
-            clazz = SystemUserPermission.class,
-            propertyName = "userId"
-    )
-    public Long insertUserPermission(SystemUserPermission systemUserPermission) {
+    @CacheRefresh(method = "selectByUserId")
+    public Long insertUserPermission(@TagEntity SystemUserPermission systemUserPermission) {
         return systemUserPermissionMapper.insertUserPermission(systemUserPermission);
     }
 
@@ -41,8 +39,8 @@ public class SystemUserPermissionServiceImpl implements SystemUserPermissionServ
     }
 
     @Override
-    @Cached(index = 0)
-    public List<SystemUserPermission> selectByUserId(Long userId) {
+    @Cache
+    public List<SystemUserPermission> selectByUserId(@TagValue("userId") Long userId) {
         return systemUserPermissionMapper.selectByUserId(userId);
     }
 }

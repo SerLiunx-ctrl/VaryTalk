@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.serliunx.varytalk.cache.annotation.TagValue;
 import com.serliunx.varytalk.common.base.BaseEntity;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -13,6 +14,7 @@ public class SystemRolePermission extends BaseEntity {
     private Long id;
 
     @NotNull(message = "请指定角色!")
+    @TagValue("roleId")
     private Long roleId;
 
     @NotNull(message = "请指定权限节点!")

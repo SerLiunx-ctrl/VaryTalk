@@ -11,17 +11,12 @@
     </parent>
 
     <packaging>jar</packaging>
-
-    <artifactId>varytalk-module-httpclient</artifactId>
+    <artifactId>varytalk-module-cache</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-cache</artifactId>
+            <artifactId>varytalk-module-common</artifactId>
         </dependency>
     </dependencies>
 </project>
