@@ -1,9 +1,7 @@
 package com.serluinx.varytalk.console.command.bean;
 
-import com.serluinx.varytalk.console.ConsoleMenu;
 import com.serluinx.varytalk.console.command.Command;
 import com.serluinx.varytalk.console.command.bean.children.BeanListCommand;
-import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * Bean 相关指令

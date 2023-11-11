@@ -2,7 +2,6 @@ package com.serliunx.varytalk.forum.mapper;
 
 import com.serliunx.varytalk.forum.entity.ForumCategory;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

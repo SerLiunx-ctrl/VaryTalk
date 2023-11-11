@@ -8,12 +8,10 @@ import com.serliunx.varytalk.common.util.JwtUtils;
 import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.common.validation.system.SystemUserRegisterGroup;
+import com.serliunx.varytalk.security.entity.ChangePasswordQuery;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.SystemUserService;
-import com.serliunx.varytalk.security.entity.ChangePasswordQuery;
-
 import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

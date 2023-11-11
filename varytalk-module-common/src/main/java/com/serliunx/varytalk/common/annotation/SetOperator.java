@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.common.annotation;
 
 import com.serliunx.varytalk.common.constants.OperationType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

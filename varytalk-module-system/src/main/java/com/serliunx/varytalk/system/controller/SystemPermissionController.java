@@ -5,7 +5,6 @@ import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.system.entity.*;
-import com.serliunx.varytalk.system.event.PermissionUpdateEvent;
 import com.serliunx.varytalk.system.service.*;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.annotation.Validated;

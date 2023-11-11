@@ -6,14 +6,11 @@ import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.result.CountResult;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.httpclient.client.GitHubRepositoryClient;
-import com.serliunx.varytalk.httpclient.entity.Contributor;
 import com.serliunx.varytalk.httpclient.service.GithubRepositoryService;
 import com.serliunx.varytalk.system.service.SystemInformationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author SerLiunx

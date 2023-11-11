@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.security.permission;
 
-import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.annotation.PermitAll;
+import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.annotation.RequiredRole;
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.exception.AuthenticationConflictException;

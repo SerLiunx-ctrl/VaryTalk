@@ -1,13 +1,11 @@
 package com.serliunx.varytalk.httpclient.service;
 
 import com.serliunx.varytalk.common.annotation.Cached;
-import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.httpclient.client.GitHubRepositoryClient;
 import com.serliunx.varytalk.httpclient.entity.Contributor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author SerLiunx
@@ -16,15 +14,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class GithubRepositoryService {
 
-    private static final String KEY_CONTRIBUTOR = "varytalk:cache:github_contributors";
-
     private final GitHubRepositoryClient gitHubRepositoryClient;
-    private final RedisUtils redisUtils;
 
-    public GithubRepositoryService(GitHubRepositoryClient gitHubRepositoryClient,
-                                   RedisUtils redisUtils) {
+    public GithubRepositoryService(GitHubRepositoryClient gitHubRepositoryClient) {
         this.gitHubRepositoryClient = gitHubRepositoryClient;
-        this.redisUtils = redisUtils;
     }
 
     @Cached

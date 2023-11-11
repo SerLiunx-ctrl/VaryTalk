@@ -1,10 +1,10 @@
 package com.serliunx.varytalk.system.event.handler;
 
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
+import com.serliunx.varytalk.common.executor.SyncTaskExecutor;
 import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.event.UserUpdateEvent;
-import com.serliunx.varytalk.common.executor.SyncTaskExecutor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
