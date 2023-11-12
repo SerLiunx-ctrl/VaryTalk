@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.forum.controller;
 
+import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.forum.entity.ForumPoint;
@@ -38,6 +39,7 @@ public class ForumUserPointController extends BaseController {
     }
 
     @PutMapping("modify")
+    @RequiredPermission("forum.point.user.modify")
     public Result modify(@Validated ForumUserPoint forumUserPoint){
         ForumPoint forumPoint = forumPointService.selectById(forumUserPoint.getPointId());
         if(forumPoint == null){

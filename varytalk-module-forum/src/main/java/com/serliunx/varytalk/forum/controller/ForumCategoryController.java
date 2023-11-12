@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.forum.controller;
 
+import com.serliunx.varytalk.common.annotation.Logger;
 import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
@@ -34,6 +35,7 @@ public class ForumCategoryController extends BaseController {
 
     @PostMapping("add")
     @RequiredPermission("forum.category.add")
+    @Logger(opName = "论坛分区接口", value = "添加一个新的分区")
     public Result add(@RequestBody ForumCategory forumCategory){
         ForumCategory fc = forumCategoryService.selectByName(forumCategory.getCategoryName());
         if(fc != null){

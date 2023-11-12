@@ -32,6 +32,11 @@
         and fc.category_name = #{categoryName}
     </select>
 
+    <select id="selectById" parameterType="long" resultMap="forumCategoryResult">
+        <include refid="forumCategory"/>
+        and fc.id = #{id}
+    </select>
+
     <insert id="insertForumCategory" parameterType="ForumCategory"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into forum_category(id, category_name, display_order, create_by, create_time, update_by, update_time, remark)

@@ -32,6 +32,11 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
     }
 
     @Override
+    public ForumCategory selectById(Long id) {
+        return forumCategoryMapper.selectById(id);
+    }
+
+    @Override
     @SetOperator(value = ForumCategory.class)
     public Long insertForumCategory(ForumCategory forumCategory) {
         return forumCategoryMapper.insertForumCategory(forumCategory);

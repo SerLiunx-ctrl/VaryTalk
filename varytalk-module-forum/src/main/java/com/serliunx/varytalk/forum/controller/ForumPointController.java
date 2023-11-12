@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.forum.controller;
 
+import com.serliunx.varytalk.common.annotation.Logger;
 import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
@@ -35,6 +36,7 @@ public class ForumPointController extends BaseController {
 
     @PostMapping("add")
     @RequiredPermission("forum.point.type.add")
+    @Logger(opName = "论坛积分接口", value = "添加一个新的积分类型")
     public Result add(@RequestBody @Validated(ForumPointInsertGroup.class) ForumPoint forumPoint){
         if(forumPointService.checkByPointTag(forumPoint.getPointTag())){
             return fail("该积分已存在, 换一个标签试试!");

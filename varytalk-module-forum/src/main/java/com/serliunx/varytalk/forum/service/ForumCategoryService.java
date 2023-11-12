@@ -14,5 +14,7 @@ public interface ForumCategoryService {
 
     ForumCategory selectByName(String categoryName);
 
+    ForumCategory selectById(Long id);
+
     Long insertForumCategory(ForumCategory forumCategory);
 }

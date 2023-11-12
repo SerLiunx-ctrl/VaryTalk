@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.serliunx.varytalk.forum.mapper.ForumSectionMapper">
+    <resultMap id="forumSectionResult" type="com.serliunx.varytalk.forum.entity.ForumSection">
+        <result property="id" column="id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="sectionName" column="section_name"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="forumSection">
+        select fs.id, fs.category_id, fs.section_name, fc.category_name as "category_name", fs.update_time, fs.update_by,
+        fs.create_time, fs.create_by, fs.remark from forum_section fs left join forum_category fc on fs.category_id = fc.id where fs.id > 0
+    </sql>
+
+    <select id="selectList" parameterType="ForumSection" resultMap="forumSectionResult">
+        <include refid="forumSection"/>
+        <if test="sectionName != null and sectionName != ''">
+            and fp.section_name like concat('%', #{sectionName}, '%')
+        </if>
+    </select>
+
+    <select id="selectByName" parameterType="string" resultMap="forumSectionResult">
+        <include refid="forumSection"/>
+        and fs.section_name = #{sectionName}
+    </select>
+
+    <select id="selectByCategoryId" parameterType="long" resultMap="forumSectionResult">
+        <include refid="forumSection"/>
+        and fs.category_id = #{categoryId}
+    </select>
+
+    <insert id="insertForumSection" parameterType="ForumSection"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into forum_section(id, category_id, section_name, create_by, create_time, update_by, update_time, remark)
+        values(null, #{categoryId}, #{sectionName}, #{createBy}, sysdate(), null, null, #{remark})
+    </insert>
+</mapper>
