@@ -17,7 +17,9 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,13 +34,15 @@ public class CacheProcessor {
 
     private static final Set<Class<?>> PRIMITIVE_CLASSES = new HashSet<>();
     private static final String REFRESH_TAG = "REFRESH";
+    private final Map<Method, FieldIndexHolder> entityFields = new HashMap<>();
+    private final Map<Method, ValueIndexHolder> valueFields = new HashMap<>();
 
     /**
      * 缓存key前缀
      */
     @Value("${talk-system.redis-prefix.main-prefix}")
     private String PREFIX;
-
+    private static final String KEY_DELIMITER = ":";
     private final RedisUtils redisUtils;
 
     static{
@@ -75,9 +79,9 @@ public class CacheProcessor {
             }
             //匹配到了tag, 代表着该方法需要使用tag区别不同数据
             if(tag != null){
-                key = new StringBuilder(key).append(":").append(tag).toString();
+                key = new StringBuilder(key).append(KEY_DELIMITER).append(tag).toString();
             }
-            key = key + ":" + REFRESH_TAG;
+            key = key + KEY_DELIMITER + REFRESH_TAG;
             //放置更新标记
             redisUtils.put(key, 1);
             return joinPoint.proceed();
@@ -101,10 +105,10 @@ public class CacheProcessor {
             }
             //匹配到了tag, 代表着该方法需要使用tag区别不同数据
             if(tag != null){
-                key = new StringBuilder(key).append(":").append(tag).toString();
+                key = new StringBuilder(key).append(KEY_DELIMITER).append(tag).toString();
             }
             //检查是否需要更新缓存
-            String updateKey = key + ":" + REFRESH_TAG;
+            String updateKey = key + KEY_DELIMITER + REFRESH_TAG;
             if(redisUtils.get(updateKey) != null){
                 Object object = joinPoint.proceed();
                 redisUtils.put(key, object, cache.time(), cache.timeUnit());
@@ -138,7 +142,7 @@ public class CacheProcessor {
      */
     private String generateKey(ProceedingJoinPoint point, MethodSignature signature){
         StringBuilder keyBuilder = new StringBuilder(PREFIX);
-        keyBuilder.append(camelToUnderline(point.getTarget().getClass().getSimpleName()) + ":");
+        keyBuilder.append(camelToUnderline(point.getTarget().getClass().getSimpleName()) + KEY_DELIMITER);
         keyBuilder.append(camelToUnderline(signature.getMethod().getName()));
         return keyBuilder.toString();
     }
@@ -148,7 +152,7 @@ public class CacheProcessor {
      */
     private String generateKey(ProceedingJoinPoint point, String methodName){
         StringBuilder keyBuilder = new StringBuilder(PREFIX);
-        keyBuilder.append(camelToUnderline(point.getTarget().getClass().getSimpleName()) + ":");
+        keyBuilder.append(camelToUnderline(point.getTarget().getClass().getSimpleName()) + KEY_DELIMITER);
         keyBuilder.append(camelToUnderline(methodName));
         return keyBuilder.toString();
     }
@@ -171,6 +175,16 @@ public class CacheProcessor {
      * 根据方法参数生成键值中的tag，用于区分同一个方法的缓存。如不同用户的全部关注用户
      */
     private String gennerateTag(Object[] args, Method method){
+        //检查内存中字段的缓存
+        FieldIndexHolder fieldIndexHolder = entityFields.get(method);
+        if(fieldIndexHolder != null){
+            return fieldIndexHolder.getTagValue().value() + KEY_DELIMITER + args[fieldIndexHolder.getIndex()].toString();
+        }
+        ValueIndexHolder valueIndexHolder = valueFields.get(method);
+        if(valueIndexHolder != null){
+            return valueIndexHolder.getTagValue().value() + KEY_DELIMITER + args[valueIndexHolder.getIndex()].toString();
+        }
+
         Parameter[] parameters = method.getParameters();
         TagValue tagValue = null;
         TagEntity tagEntity = null;
@@ -191,7 +205,11 @@ public class CacheProcessor {
         if(tagValue != null){
             if(isPrimitive(classes[index])){
                 try {
-                    return tagValue.value() + ":" + args[index].toString();
+                    ValueIndexHolder holder = new ValueIndexHolder()
+                            .setTagValue(tagValue)
+                            .setIndex(index);
+                    valueFields.put(method, holder);
+                    return tagValue.value() + KEY_DELIMITER + args[index].toString();
                 }catch (Exception e){
                     throw new RuntimeException(e.getMessage());
                 }
@@ -227,8 +245,13 @@ public class CacheProcessor {
                 throw new RuntimeException(msg);
             }
             try {
+                FieldIndexHolder holder = new FieldIndexHolder()
+                        .setField(fieldMatched)
+                        .setIndex(index)
+                        .setTagValue(entityTagValue);
+                entityFields.put(method, holder);
                 Object data = fieldMatched.get(args[index]);
-                return data != null ? (entityTagValue.value() + ":" + data.toString()) : null;
+                return data != null ? (entityTagValue.value() + KEY_DELIMITER + data.toString()) : null;
             }catch (Exception e){
                 throw new RuntimeException(e.getMessage());
             }

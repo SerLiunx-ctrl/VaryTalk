@@ -2,6 +2,14 @@ package com.serliunx.varytalk.common.util;
 
 import com.serliunx.varytalk.common.exception.ServiceException;
 import org.aspectj.lang.JoinPoint;
+import org.springframework.aop.SpringProxy;
+import org.springframework.aop.TargetClassAware;
+import org.springframework.aop.TargetSource;
+import org.springframework.aop.framework.Advised;
+import org.springframework.aop.target.SingletonTargetSource;
+import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
+import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -25,7 +33,34 @@ public class AopUtils {
         return classes;
     }
 
+    public static Class<?> ultimateTargetClass(Object candidate) {
+        Assert.notNull(candidate, "Candidate object must not be null");
+        Object current = candidate;
+        Class<?> result = null;
+        while (current instanceof TargetClassAware targetClassAware) {
+            result = targetClassAware.getTargetClass();
+            current = getSingletonTarget(current);
+        }
+        if (result == null) {
+            result = (org.springframework.aop.support.AopUtils.isCglibProxy(candidate) ? candidate.getClass().getSuperclass() : candidate.getClass());
+        }
+        return result;
+    }
 
+    public static Object getSingletonTarget(Object candidate) {
+        if (candidate instanceof Advised advised) {
+            TargetSource targetSource = advised.getTargetSource();
+            if (targetSource instanceof SingletonTargetSource singleTargetSource) {
+                return singleTargetSource.getTarget();
+            }
+        }
+        return null;
+    }
+
+    public static boolean isCglibProxy(@Nullable Object object) {
+        return (object instanceof SpringProxy &&
+                object.getClass().getName().contains(ClassUtils.CGLIB_CLASS_SEPARATOR));
+    }
 
     /**
      * 获取参数信息
