@@ -89,6 +89,9 @@ spring:
           min-idle: 0
           #连接池最大连接数
           max-active: 25
+  output:
+    ansi:
+      enabled: always
 #mybatis设置
 mybatis:
   #mapper扫描地址
