@@ -34,8 +34,8 @@ public class CacheProcessor {
 
     private static final Set<Class<?>> PRIMITIVE_CLASSES = new HashSet<>();
     private static final String REFRESH_TAG = "REFRESH";
-    private final Map<Method, FieldIndexHolder> entityFields = new HashMap<>();
-    private final Map<Method, ValueIndexHolder> valueFields = new HashMap<>();
+    private final Map<Method, FieldIndexHolder> entityFields = new HashMap<>(32);
+    private final Map<Method, ValueIndexHolder> valueFields = new HashMap<>(32);
 
     /**
      * 缓存key前缀

@@ -84,7 +84,6 @@ public class AuthController extends BaseController {
         if(loginUser == null){
             return fail("操作失败, 用户未登录!");
         }
-        redisUtils.delete(key);
         return success(redisUtils.delete(key), "注销成功!");
     }
 }

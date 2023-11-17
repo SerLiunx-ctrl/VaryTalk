@@ -91,7 +91,7 @@ spring:
           max-active: 25
   output:
     ansi:
-      enabled: always
+      enabled: detect
 #mybatis设置
 mybatis:
   #mapper扫描地址
