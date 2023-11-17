@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.serliunx.varytalk.forum.mapper.ForumTagMapper">
+    <resultMap id="forumTagResult" type="com.serliunx.varytalk.forum.entity.ForumTag">
+        <result property="id" column="id"/>
+        <result property="tagName" column="tag_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <resultMap id="forumTagSimpleResult" type="com.serliunx.varytalk.forum.entity.simple.ForumTagSimple">
+        <result property="id" column="id"/>
+        <result property="tagName" column="tag_name"/>
+    </resultMap>
+
+    <sql id="forumTag">
+        select * from forum_tag where id > 0
+    </sql>
+
+    <select id="selectList" parameterType="ForumTag" resultMap="forumTagResult">
+        <include refid="forumTag"/>
+        <if test="tagName != null and tagName != ''">
+            and tag_name like concat('%', #{tagName}, '%')
+        </if>
+    </select>
+
+    <select id="selectListSimple" resultMap="forumTagSimpleResult">
+        select id, tag_name from forum_tag;
+    </select>
+
+    <insert id="insertForumTag" parameterType="ForumTag"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into forum_tag(id, tag_name,create_by, create_time, update_by, update_time, remark)
+        values(null, #{tagName}, #{createBy}, sysdate(), null, null, #{remark})
+    </insert>
+
+    <select id="selectById" parameterType="long" resultMap="forumTagResult">
+        <include refid="forumTag"/>
+        and id = #{tagId}
+    </select>
+
+    <select id="selectByName" parameterType="string" resultMap="forumTagResult">
+        <include refid="forumTag"/>
+        and tag_name = #{tagName}
+    </select>
+</mapper>

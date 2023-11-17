@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 缓存注解处理器
@@ -98,6 +99,8 @@ public class CacheProcessor {
         Cache cache = method.getAnnotation(Cache.class);
         try{
             String cacheKey = cache.value();
+            int time = cache.time();
+            TimeUnit timeUnit = cache.timeUnit();
             String key = cacheKey.isEmpty() ? generateKey(joinPoint, signature) : cacheKey;
             String tag = null;
             if(hasTag(method)){
@@ -111,7 +114,7 @@ public class CacheProcessor {
             String updateKey = key + KEY_DELIMITER + REFRESH_TAG;
             if(redisUtils.get(updateKey) != null){
                 Object object = joinPoint.proceed();
-                redisUtils.put(key, object, cache.time(), cache.timeUnit());
+                redisUtils.put(key, object, time, timeUnit);
                 redisUtils.delete(updateKey);
                 return object;
             }
@@ -121,14 +124,14 @@ public class CacheProcessor {
                 if (cache.forceRefresh()){
                     result = joinPoint.proceed();
                     //放入缓存
-                    redisUtils.put(key, result, cache.time(), cache.timeUnit());
+                    redisUtils.put(key, result, time, timeUnit);
                     return result;
                 }
                 return cacheData;
             }else{
                 result = joinPoint.proceed();
                 //放入缓存
-                redisUtils.put(key, result, cache.time(), cache.timeUnit());
+                redisUtils.put(key, result, time, timeUnit);
             }
             return result;
         }catch (Throwable t){
