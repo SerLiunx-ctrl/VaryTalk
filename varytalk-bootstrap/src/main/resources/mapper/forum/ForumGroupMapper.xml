@@ -40,6 +40,11 @@
         and fg.id = #{groupId}
     </select>
 
+    <select id="selectByOwnerId" parameterType="long" resultMap="forumGroupResult">
+        <include refid="forumGroup"/>
+        and fg.owner_id = #{ownerId}
+    </select>
+
     <select id="selectByName" parameterType="string" resultMap="forumGroupResult">
         <include refid="forumGroup"/>
         and fg.group_name = #{groupName}

@@ -48,6 +48,10 @@ public class ForumGroupController extends BaseController {
                 return fail("不存在指定用户, 请换一个用户试试!");
             }
         }
+        ForumGroup byOwnerId = forumGroupService.selectByOwnerId(forumGroup.getOwnerId());
+        if(byOwnerId != null){
+            return fail("一个用户只允许创建一个群组!");
+        }
         ForumGroup byTag = forumGroupService.selectByTag(forumGroup.getGroupTag());
         if(byTag != null){
             return fail("该群组标签已存在, 请换一个试试!");

@@ -32,6 +32,11 @@ public class ForumGroupServiceImpl implements ForumGroupService {
     }
 
     @Override
+    public ForumGroup selectByOwnerId(Long ownerId) {
+        return forumGroupMapper.selectByOwnerId(ownerId);
+    }
+
+    @Override
     public ForumGroup selectByName(String groupName) {
         return forumGroupMapper.selectByName(groupName);
     }

@@ -45,7 +45,7 @@ public class ForumGroup extends BaseEntity {
     @NotNull(message = "群组标签不能为空!", groups = ForumGroupAddGroup.class)
     @Pattern(regexp = "^[0-9a-zA-Z_]+$", message = "群组标签格式不符合要求! 只允许下划线_、数字0~9及大小写字母",
             groups = ForumGroupAddGroup.class)
-    @Size(min = 8, max = 25, message = "群组标签长度必须为4到25个字符", groups = ForumGroupAddGroup.class)
+    @Size(min = 4, max = 25, message = "群组标签长度必须为4到25个字符", groups = ForumGroupAddGroup.class)
     private String groupTag;
 
     /**

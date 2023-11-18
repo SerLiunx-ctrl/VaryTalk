@@ -13,6 +13,8 @@ public interface ForumGroupService {
 
     ForumGroup selectById(Long groupId);
 
+    ForumGroup selectByOwnerId(Long ownerId);
+
     ForumGroup selectByName(String groupName);
 
     ForumGroup selectByTag(String groupTag);
