@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +36,9 @@ public class SystemFileServiceImpl implements SystemFileService {
     @Override
     public SystemFile uploadFile(MultipartFile multipartFile) {
         String name = UUID.randomUUID().toString();
-        File dir = new File(systemAutoConfigurer.getFileInfo().getUploadPath());
+        String path = generateFullPath(systemAutoConfigurer.getFileInfo().getUploadPath())
+                .replace("/", File.separator);
+        File dir = new File(path);
         if(!dir.exists()){
             if(!dir.mkdirs()){
                 throw new ServiceException("文件上传出错, 请联系管理员!", 400);
@@ -51,7 +55,7 @@ public class SystemFileServiceImpl implements SystemFileService {
             multipartFile.transferTo(toStore);
             systemFile.setFileSize(multipartFile.getSize());
             systemFile.setName(name + "." + extensionName);
-            systemFile.setPath(File.separator);
+            systemFile.setPath(path + File.separator + name + "." + extensionName);
             systemFile.setOriginalName(originalFilename);
             systemFile.setUserId(SecurityUtils.getUserId());
         }catch (Exception e){
@@ -74,5 +78,15 @@ public class SystemFileServiceImpl implements SystemFileService {
             extension = fullFileName.substring(i + 1);
         }
         return extension;
+    }
+
+    private String generateFullPath(String original){
+        Date dateTimeNow = new Date();
+        String years = new SimpleDateFormat("yyyy").format(dateTimeNow);
+        String months = new SimpleDateFormat("MM").format(dateTimeNow);
+        String days = new SimpleDateFormat("dd").format(dateTimeNow);
+        return original.replace("%years%", years)
+                .replace("%months%", months)
+                .replace("%days%", days);
     }
 }

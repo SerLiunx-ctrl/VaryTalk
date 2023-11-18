@@ -161,7 +161,7 @@ public class AopUtils {
      * @return 属性
      */
     public static Field getField(Class<?> clazz, String name, boolean findInSuper){
-        if(clazz == null){
+        if(clazz == null || clazz.equals(Object.class)){
             return null;
         }
         try{

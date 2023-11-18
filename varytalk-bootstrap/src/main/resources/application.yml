@@ -33,7 +33,7 @@ talk-system:
   #文件相关设置
   file-info:
     #文件上传路径(Windows带盘符, Linux使用/home/xxx)
-    upload-path: "D:/vary_talk/upload_files"
+    upload-path: "D:/vary_talk/upload_files/%years%/%months%/%days%"
 #服务器设置
 server:
   port: 3000
