@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.serliunx.varytalk.forum.mapper.ForumGroupMapper">
+    <resultMap id="forumGroupResult" type="com.serliunx.varytalk.forum.entity.ForumGroup">
+        <result property="id" column="id"/>
+        <result property="ownerId" column="owner_id"/>
+        <result property="ownerName" column="owner_name"/>
+        <result property="groupScore" column="group_score"/>
+        <result property="groupTag" column="group_tag"/>
+        <result property="groupName" column="group_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="forumGroup">
+        select fg.id, fg.owner_id, su.username as 'owner_name', fg.group_score, fg.group_tag, fg.group_name, fg.create_by, fg.create_time,
+              fg.update_by, fg.update_time, fg.remark from forum_group fg left join sys_user su on fg.owner_id = su.id where fg.id > 0
+    </sql>
+
+    <select id="selectList" parameterType="ForumGroup" resultMap="forumGroupResult">
+        <include refid="forumGroup"/>
+        <if test="ownerName != null and ownerName != ''">
+            and su.username like concat('%', #{ownerName}, '%')
+        </if>
+        <if test="groupTag != null and groupTag != ''">
+            and fg.group_tag like concat('%', #{groupTag}, '%')
+        </if>
+        <if test="groupName != null and groupName != ''">
+            and fg.group_name like concat('%', #{groupName}, '%')
+        </if>
+    </select>
+
+    <select id="selectById" parameterType="long" resultMap="forumGroupResult">
+        <include refid="forumGroup"/>
+        and fg.id = #{groupId}
+    </select>
+
+    <select id="selectByName" parameterType="string" resultMap="forumGroupResult">
+        <include refid="forumGroup"/>
+        and fg.group_name = #{groupName}
+    </select>
+
+    <select id="selectByTag" parameterType="string" resultMap="forumGroupResult">
+        <include refid="forumGroup"/>
+        and fg.group_tag = #{groupTag}
+    </select>
+
+    <insert id="insertForumGroup" parameterType="ForumGroup"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into forum_group(id, owner_id, group_score, group_tag, group_name, create_by, create_time, update_by,
+        update_time, remark) values(null, #{ownerId}, #{groupScore}, #{groupTag}, #{groupName}, #{createBy}, sysdate(),
+        null, null, #{remark})
+    </insert>
+</mapper>
