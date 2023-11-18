@@ -1,12 +1,12 @@
 package com.serliunx.varytalk.system.service.impl;
 
-import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.exception.ServiceException;
 import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.system.entity.SystemFile;
 import com.serliunx.varytalk.system.mapper.SystemFileMapper;
 import com.serliunx.varytalk.system.service.SystemFileService;
+import com.serliunx.varytalk.system.service.SystemUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,11 +20,14 @@ import java.util.UUID;
 public class SystemFileServiceImpl implements SystemFileService {
 
     private final SystemFileMapper systemFileMapper;
+    private final SystemUserService systemUserService;
     private final SystemAutoConfigurer systemAutoConfigurer;
 
     public SystemFileServiceImpl(SystemFileMapper systemFileMapper,
+                                 SystemUserService systemUserService,
                                  SystemAutoConfigurer systemAutoConfigurer) {
         this.systemFileMapper = systemFileMapper;
+        this.systemUserService = systemUserService;
         this.systemAutoConfigurer = systemAutoConfigurer;
     }
 
@@ -61,12 +64,12 @@ public class SystemFileServiceImpl implements SystemFileService {
         }catch (Exception e){
             throw new ServiceException("文件上传出错, 请联系管理员!", 400);
         }
+        systemFile.setCreateBy(systemUserService.selectUserByIdFlatted(SecurityUtils.getUserId()).getUsername());
         insertFile(systemFile);
         return systemFile;
     }
 
     @Override
-    @SetOperator(SystemFile.class)
     public Long insertFile(SystemFile systemFile) {
         return systemFileMapper.insertFile(systemFile);
     }

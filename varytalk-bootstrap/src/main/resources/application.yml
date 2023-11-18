@@ -67,7 +67,7 @@ spring:
   servlet:
     multipart:
       #允许上传的最大文件尺寸(单次)
-      max-file-size: 1GB
+      max-file-size: 10MB
   mvc:
     #数据校验日志开关
     log-resolved-exception: false
