@@ -3,7 +3,6 @@ package com.serliunx.varytalk.forum.enums;
 import com.serliunx.varytalk.common.exception.ServiceException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.List;
