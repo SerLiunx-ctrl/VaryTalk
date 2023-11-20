@@ -108,7 +108,7 @@ logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss(SSS)
   level:
-    com.serliunx.varytalk: info
+    com.serliunx.varytalk: debug
 
 #分页插件设置
 pagehelper:
