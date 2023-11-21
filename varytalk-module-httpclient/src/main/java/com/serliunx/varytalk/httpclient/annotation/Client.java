@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface FeignClient {
+public @interface Client {
 
     /**
      * Bean的名称

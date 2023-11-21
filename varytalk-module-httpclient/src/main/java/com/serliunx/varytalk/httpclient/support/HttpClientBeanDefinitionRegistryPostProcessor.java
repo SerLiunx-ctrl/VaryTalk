@@ -1,6 +1,6 @@
 package com.serliunx.varytalk.httpclient.support;
 
-import com.serliunx.varytalk.httpclient.annotation.FeignClient;
+import com.serliunx.varytalk.httpclient.annotation.Client;
 import com.serliunx.varytalk.httpclient.decoder.JacksonDecoder;
 import com.serliunx.varytalk.httpclient.encoder.JacksonEncoder;
 import feign.Feign;
@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 public final class HttpClientBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
     private static final String BASE_PACKAGE = "com.serliunx.varytalk.httpclient";
-    private final Class<? extends Annotation> annotatedType = FeignClient.class;
+    private final Class<? extends Annotation> annotatedType = Client.class;
     private final Encoder encoder = new JacksonEncoder();
     private final Decoder decoder = new JacksonDecoder();
 
@@ -57,12 +57,12 @@ public final class HttpClientBeanDefinitionRegistryPostProcessor implements Bean
             if(!clazz.isInterface()){
                 throw new RuntimeException("无法注册非接口类型的Feign客户端!");
             }
-            FeignClient feignClient = clazz.getAnnotation(FeignClient.class);
-            if(feignClient == null){
-                throw new RuntimeException("该接口为包含指定的注解: " + feignClient.getClass().getName());
+            Client client = clazz.getAnnotation(Client.class);
+            if(client == null){
+                throw new RuntimeException("该接口为包含指定的注解: " + client.getClass().getName());
             }
             //获取注解的url
-            String url = feignClient.url();
+            String url = client.url();
 
             //初始化bean定义
             GenericBeanDefinition genericBeanDefinition = new GenericBeanDefinition(beanDefinition);
@@ -74,7 +74,7 @@ public final class HttpClientBeanDefinitionRegistryPostProcessor implements Bean
             });
 
             //注册bean、生成bean名称
-            String name = feignClient.value().isEmpty() ? generateBeanName(beanDefinition) : feignClient.value();
+            String name = client.value().isEmpty() ? generateBeanName(beanDefinition) : client.value();
             return new BeanDefinitionHolder(genericBeanDefinition, name);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
