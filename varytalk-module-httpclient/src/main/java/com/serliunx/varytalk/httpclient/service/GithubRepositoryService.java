@@ -2,7 +2,7 @@ package com.serliunx.varytalk.httpclient.service;
 
 import com.serliunx.varytalk.cache.annotation.Cache;
 import com.serliunx.varytalk.httpclient.client.GitHubRepositoryClient;
-import com.serliunx.varytalk.httpclient.entity.Contributor;
+import com.serliunx.varytalk.httpclient.entity.github.Contributor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

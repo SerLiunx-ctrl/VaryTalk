@@ -5,6 +5,7 @@ import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.common.result.CountResult;
 import com.serliunx.varytalk.common.result.Result;
+import com.serliunx.varytalk.httpclient.service.BaiduMapWeatherService;
 import com.serliunx.varytalk.httpclient.service.GithubRepositoryService;
 import com.serliunx.varytalk.system.service.SystemInformationService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +24,16 @@ public class SystemInformationController extends BaseController {
     private final SystemAutoConfigurer systemAutoConfigurer;
     private final SystemInformationService systemInformationService;
     private final GithubRepositoryService githubRepositoryService;
+    private final BaiduMapWeatherService baiduMapWeatherService;
 
     public SystemInformationController(SystemAutoConfigurer systemAutoConfigurer,
                                        SystemInformationService systemInformationService,
-                                       GithubRepositoryService githubRepositoryService) {
+                                       GithubRepositoryService githubRepositoryService,
+                                       BaiduMapWeatherService baiduMapWeatherService) {
         this.systemAutoConfigurer = systemAutoConfigurer;
         this.systemInformationService = systemInformationService;
         this.githubRepositoryService = githubRepositoryService;
+        this.baiduMapWeatherService = baiduMapWeatherService;
     }
 
     @GetMapping("contributors")
@@ -37,6 +41,11 @@ public class SystemInformationController extends BaseController {
     public Result contributors(){
         return CountResult.success(githubRepositoryService.getContributors(systemAutoConfigurer.getOwner(),
                 systemAutoConfigurer.getRepos()));
+    }
+
+    @GetMapping("weather-now-query")
+    public Result getWeatherNow(String districtId){
+        return success(baiduMapWeatherService.getWeatherNow(districtId));
     }
 
     @GetMapping("system")

@@ -1,4 +1,4 @@
-package com.serliunx.varytalk.httpclient.entity;
+package com.serliunx.varytalk.httpclient.entity.github;
 
 /**
  * GitHub仓库实体
