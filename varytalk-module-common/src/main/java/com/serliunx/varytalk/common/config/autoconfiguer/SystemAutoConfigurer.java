@@ -34,6 +34,19 @@ public class SystemAutoConfigurer {
      */
     private String repos;
 
+    /**
+     * 百度地图开放平台AK
+     */
+    private String baiduAk;
+
+    public String getBaiduAk() {
+        return baiduAk;
+    }
+
+    public void setBaiduAk(String baiduAk) {
+        this.baiduAk = baiduAk;
+    }
+
     public String getTokenSecret() {
         return tokenSecret;
     }

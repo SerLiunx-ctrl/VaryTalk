@@ -1,9 +1,7 @@
 package com.serliunx.varytalk.httpclient.decoder;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
 import feign.FeignException;
 import feign.Response;
 import feign.Util;
@@ -30,7 +28,10 @@ public class JacksonDecoder implements Decoder {
     }
 
     public JacksonDecoder(Iterable<Module> modules) {
-        this(new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        this(new ObjectMapper()
+                //设置下划线自动转化为驼峰命名
+                .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .registerModules(modules));
     }
 

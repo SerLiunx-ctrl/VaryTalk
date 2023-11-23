@@ -10,6 +10,8 @@ talk-system:
   owner: SerLiunx-ctrl
   #仓库名称
   repos: VaryTalk
+  #百度地图开放平台AK
+  baidu-ak: tK1hHyl4YF51EO7jrFAFE5kvSKUGTMGN
   #redis键
   redis-prefix:
     #主键

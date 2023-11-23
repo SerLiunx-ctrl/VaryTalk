@@ -32,6 +32,8 @@ public final class HttpClientBeanDefinitionRegistryPostProcessor implements Bean
 
     private static final String BASE_PACKAGE = "com.serliunx.varytalk.httpclient";
     private final Class<? extends Annotation> annotatedType = Client.class;
+    private final InterfaceWithAnnotationTypeFilter interfaceWithAnnotationTypeFilter =
+            new InterfaceWithAnnotationTypeFilter(Client.class);
     private final Encoder encoder = new JacksonEncoder();
     private final Decoder decoder = new JacksonDecoder();
 
@@ -41,7 +43,7 @@ public final class HttpClientBeanDefinitionRegistryPostProcessor implements Bean
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         ClassPathClientScanner scanner = new ClassPathClientScanner(registry);
-        scanner.addIncludeFilter(new InterfaceWithAnnotationTypeFilter(annotatedType));
+        scanner.addIncludeFilter(interfaceWithAnnotationTypeFilter);
         Set<BeanDefinition> components = scanner.findCandidateComponents(BASE_PACKAGE);
         //扫描、逐一注册符合条件的HttpClient客户端
         for (BeanDefinition component : components) {

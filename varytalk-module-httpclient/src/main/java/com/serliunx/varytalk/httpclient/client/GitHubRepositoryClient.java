@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.httpclient.client;
 
 import com.serliunx.varytalk.httpclient.annotation.Client;
-import com.serliunx.varytalk.httpclient.entity.Contributor;
+import com.serliunx.varytalk.httpclient.entity.github.Contributor;
 import feign.Param;
 import feign.RequestLine;
 
@@ -12,9 +12,9 @@ import java.util.List;
  * @author SerLiunx
  * @since 1.0
  */
-@Client(url = "https://api.github.com")
+@Client(url = "https://api.github.com/repos")
 public interface GitHubRepositoryClient {
 
-    @RequestLine("GET /repos/{owner}/{repo}/contributors")
+    @RequestLine("GET /{owner}/{repo}/contributors")
     List<Contributor> getContributors(@Param("owner") String owner, @Param("repo") String repository);
 }

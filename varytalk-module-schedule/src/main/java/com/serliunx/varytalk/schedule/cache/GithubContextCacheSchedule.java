@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.schedule.cache;
 
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
-import com.serliunx.varytalk.httpclient.entity.Contributor;
+import com.serliunx.varytalk.httpclient.entity.github.Contributor;
 import com.serliunx.varytalk.httpclient.service.GithubRepositoryService;
 import com.serliunx.varytalk.schedule.BaseSchedule;
 import lombok.extern.slf4j.Slf4j;
