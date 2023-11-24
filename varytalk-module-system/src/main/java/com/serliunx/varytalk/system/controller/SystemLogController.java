@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.system.controller;
 
+import com.serliunx.varytalk.common.annotation.RateLimiter;
 import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.annotation.RequiredRole;
 import com.serliunx.varytalk.common.base.BaseController;
@@ -24,7 +25,7 @@ public class SystemLogController extends BaseController {
 
     @GetMapping("list")
     @RequiredPermission("system.log.list")
-    @RequiredRole("2")
+    @RateLimiter(time = 1, count = 2)
     public Result list(SystemLog systemLog){
         startPage();
         List<SystemLog> systemLogs = systemLogService.selectList(systemLog);
