@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.system.config;
 
 import com.serliunx.varytalk.common.interceptor.LogInterceptor;
+import com.serliunx.varytalk.common.interceptor.RateLimitInterceptor;
 import com.serliunx.varytalk.system.interceptor.GlobalInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,17 +16,22 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     private final GlobalInterceptor globalInterceptor;
     private final LogInterceptor logInterceptor;
+    private final RateLimitInterceptor rateLimitInterceptor;
 
     public WebConfiguration(GlobalInterceptor globalInterceptor,
-                            LogInterceptor logInterceptor) {
+                            LogInterceptor logInterceptor,
+                            RateLimitInterceptor rateLimitInterceptor) {
         this.globalInterceptor = globalInterceptor;
         this.logInterceptor = logInterceptor;
+        this.rateLimitInterceptor = rateLimitInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //注册请求耗时统计拦截器
         registry.addInterceptor(logInterceptor);
+        //注册接口速率限制拦截器
+        registry.addInterceptor(rateLimitInterceptor);
         //注册通用拦截器
         registry.addInterceptor(globalInterceptor)
                 .addPathPatterns("/**")

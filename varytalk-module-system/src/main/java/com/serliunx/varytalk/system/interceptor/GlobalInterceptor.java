@@ -82,6 +82,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
         map.put("username", systemUser.getUsername());
+        map.put("roleId", systemUser.getRoleId());
         SecurityUtils.setUserInfo(map);
 
         return true;

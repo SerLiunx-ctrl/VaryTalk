@@ -123,6 +123,10 @@ public class RedisUtils {
         put(key, value, time, TimeUnit.SECONDS);
     }
 
+    public Boolean setIfAbsent(String key, Object value, long time, TimeUnit timeUnit){
+        return redisTemplate.opsForValue().setIfPresent(key, value, time, timeUnit);
+    }
+
     /**
      * 放入值
      * @param key 键
