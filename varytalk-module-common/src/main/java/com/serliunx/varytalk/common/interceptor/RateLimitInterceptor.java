@@ -48,7 +48,15 @@ public class RateLimitInterceptor implements HandlerInterceptor {
         }
         String ip = ServletUtils.getIp();
         String uri = ServletUtils.getRequestURI();
-        String key = keyPrefix + LIMITER_PREFIX + ":" + ip.replace(".", "") + ":" + uri;
+        String key;
+
+        //根据限制类型生成不同的key
+        if(methodLimiter.type().equals(RateLimiter.LimitType.SEPARATELY)){
+            key = keyPrefix + LIMITER_PREFIX + ":" + ip.replace(".", "") + ":" + uri;
+        }else {
+            key = keyPrefix + LIMITER_PREFIX + ":" + uri;
+        }
+
         Integer count = redisUtils.get(key, Integer.class);
         if(count != null && count >= methodLimiter.count()){
             throw new ServiceException("访问频率过高, 请稍后再试!", 400);
