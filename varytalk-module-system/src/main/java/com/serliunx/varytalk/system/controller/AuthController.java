@@ -1,4 +1,4 @@
-package com.serliunx.varytalk.security.controller;
+package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.base.LoginUser;
@@ -8,7 +8,7 @@ import com.serliunx.varytalk.common.util.JwtUtils;
 import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.common.validation.system.SystemUserRegisterGroup;
-import com.serliunx.varytalk.security.entity.ChangePasswordQuery;
+import com.serliunx.varytalk.system.entity.query.ChangePasswordQuery;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.SystemUserService;
 import jakarta.servlet.http.HttpServletRequest;

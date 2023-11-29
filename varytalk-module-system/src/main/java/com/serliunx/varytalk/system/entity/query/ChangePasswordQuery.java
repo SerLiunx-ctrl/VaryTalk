@@ -1,4 +1,4 @@
-package com.serliunx.varytalk.security.entity;
+package com.serliunx.varytalk.system.entity.query;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

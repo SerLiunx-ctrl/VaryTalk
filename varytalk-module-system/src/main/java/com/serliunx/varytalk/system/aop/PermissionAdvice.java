@@ -1,4 +1,4 @@
-package com.serliunx.varytalk.security.permission;
+package com.serliunx.varytalk.system.aop;
 
 import com.serliunx.varytalk.common.annotation.PermitAll;
 import com.serliunx.varytalk.common.annotation.RequiredPermission;
@@ -9,7 +9,7 @@ import com.serliunx.varytalk.common.exception.ServiceException;
 import com.serliunx.varytalk.common.util.ArrayUtils;
 import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.common.util.SecurityUtils;
-import com.serliunx.varytalk.security.service.PermissionService;
+import com.serliunx.varytalk.system.service.PermissionService;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.SystemUserService;
 import org.aspectj.lang.JoinPoint;
