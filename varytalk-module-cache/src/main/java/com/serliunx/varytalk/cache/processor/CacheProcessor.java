@@ -4,6 +4,8 @@ import com.serliunx.varytalk.cache.annotation.Cache;
 import com.serliunx.varytalk.cache.annotation.CacheRefresh;
 import com.serliunx.varytalk.cache.annotation.TagEntity;
 import com.serliunx.varytalk.cache.annotation.TagValue;
+import com.serliunx.varytalk.cache.support.FieldIndexHolder;
+import com.serliunx.varytalk.cache.support.ValueIndexHolder;
 import com.serliunx.varytalk.common.util.AopUtils;
 import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.common.util.StringUtils;
