@@ -38,11 +38,19 @@ public class SecurityUtils {
     }
 
     /**
-     * 获取当前用的用户名
+     * 获取当前用户的用户名
      * @return 用户名
      */
     public static String getUsername(){
         return (String)infoMap.get().get("username");
+    }
+
+    /**
+     * 获取当前用户的角色id
+     * @return 角色id
+     */
+    public static Long getRoleId(){
+        return (Long)infoMap.get().get("roleId");
     }
 
     /**

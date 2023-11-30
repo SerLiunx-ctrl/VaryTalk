@@ -1,10 +1,11 @@
-package com.serliunx.varytalk.security.service;
+package com.serliunx.varytalk.system.service.impl;
 
 import com.serliunx.varytalk.common.exception.PermissionNotFoundException;
 import com.serliunx.varytalk.system.entity.SystemPermission;
 import com.serliunx.varytalk.system.entity.SystemRolePermission;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.entity.SystemUserPermission;
+import com.serliunx.varytalk.system.service.PermissionService;
 import com.serliunx.varytalk.system.service.SystemPermissionService;
 import com.serliunx.varytalk.system.service.SystemRolePermissionService;
 import com.serliunx.varytalk.system.service.SystemUserPermissionService;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PermissionServiceImpl implements PermissionService{
+public class PermissionServiceImpl implements PermissionService {
 
     private final SystemPermissionService systemPermissionService;
     private final SystemUserPermissionService systemUserPermissionService;
@@ -50,12 +51,12 @@ public class PermissionServiceImpl implements PermissionService{
         }
 
         //第一步, 直接检查该用户是否拥有该节点, 拥有则直接返回真
-        List<String> values = systemUserPermissionService
+        List<String> userPermissions = systemUserPermissionService
                 .selectByUserId(systemUser.getId())
                 .stream()
                 .map(SystemUserPermission::getPermissionValue)
                 .toList();
-        if(values.contains(permission)){
+        if(userPermissions.contains(permission)){
             return true;
         }
 
@@ -75,7 +76,7 @@ public class PermissionServiceImpl implements PermissionService{
         }
 
         //最后匹配用户节点
-        return matchPermission(values, permission);
+        return matchPermission(userPermissions, permission);
     }
 
     @Override

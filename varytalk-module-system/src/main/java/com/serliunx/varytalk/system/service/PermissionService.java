@@ -1,4 +1,4 @@
-package com.serliunx.varytalk.security.service;
+package com.serliunx.varytalk.system.service;
 
 import com.serliunx.varytalk.system.entity.SystemUser;
 

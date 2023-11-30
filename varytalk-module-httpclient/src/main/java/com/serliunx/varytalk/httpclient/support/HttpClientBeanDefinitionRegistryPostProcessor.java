@@ -61,7 +61,7 @@ public final class HttpClientBeanDefinitionRegistryPostProcessor implements Bean
             }
             Client client = clazz.getAnnotation(Client.class);
             if(client == null){
-                throw new RuntimeException("该接口为包含指定的注解: " + client.getClass().getName());
+                throw new RuntimeException("该接口未包含指定的注解: " + client.getClass().getName());
             }
             //获取注解的url
             String url = client.url();

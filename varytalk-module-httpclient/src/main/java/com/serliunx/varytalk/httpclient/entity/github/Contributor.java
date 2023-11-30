@@ -1,6 +1,5 @@
 package com.serliunx.varytalk.httpclient.entity.github;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
