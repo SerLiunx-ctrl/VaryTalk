@@ -10,7 +10,6 @@
     </parent>
 
     <packaging>jar</packaging>
-
     <artifactId>varytalk-module-system</artifactId>
 
     <dependencies>
@@ -25,10 +24,6 @@
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-module-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
