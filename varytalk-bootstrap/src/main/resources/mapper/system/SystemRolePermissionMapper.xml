@@ -28,6 +28,9 @@
         <if test="roleName != null and roleName != ''">
             and sr.role_name like concat('%', #{roleName}, '%')
         </if>
+        <if test="roleId != null and roleId != ''">
+            and srp.role_id = #{roleId}
+        </if>
     </select>
 
     <select id="selectByRoleId" parameterType="long" resultMap="rolePermissionResult">

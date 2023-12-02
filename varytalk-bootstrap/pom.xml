@@ -23,10 +23,6 @@
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-module-system</artifactId>
         </dependency>
         <dependency>

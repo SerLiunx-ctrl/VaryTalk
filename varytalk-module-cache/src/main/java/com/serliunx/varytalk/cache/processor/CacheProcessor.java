@@ -37,6 +37,7 @@ public class CacheProcessor {
 
     private static final Set<Class<?>> PRIMITIVE_CLASSES = new HashSet<>();
     private static final String REFRESH_TAG = "REFRESH";
+    private static final String TAG_VALUE = "VERSION OF THIS DATA IS OUT OF DATE!";
     private final Map<Method, FieldIndexHolder> entityFields = new HashMap<>(32);
     private final Map<Method, ValueIndexHolder> valueFields = new HashMap<>(32);
 
@@ -84,9 +85,13 @@ public class CacheProcessor {
             if(tag != null){
                 key = new StringBuilder(key).append(KEY_DELIMITER).append(tag).toString();
             }
+            //检测缓存中是否存在该键值, 没有该键值不会放置更新标记
+            if(redisUtils.get(key) == null){
+                return joinPoint.proceed();
+            }
             key = key + KEY_DELIMITER + REFRESH_TAG;
             //放置更新标记
-            redisUtils.put(key, 1);
+            redisUtils.put(key, TAG_VALUE);
             return joinPoint.proceed();
         }catch (Throwable t){
             t.printStackTrace();
