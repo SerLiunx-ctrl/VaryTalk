@@ -28,6 +28,9 @@
         <if test="username != null and username != ''">
             and su.username like concat('%', #{username}, '%')
         </if>
+        <if test="userId != null and userId != ''">
+            and sup.user_id = #{userId}
+        </if>
     </select>
 
     <select id="selectByUserId" parameterType="long" resultMap="userPermissionResult">

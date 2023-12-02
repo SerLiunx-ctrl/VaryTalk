@@ -6,7 +6,6 @@ import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.system.entity.*;
 import com.serliunx.varytalk.system.service.*;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,21 +20,19 @@ public class SystemPermissionController extends BaseController {
     private final SystemRolePermissionService systemRolePermissionService;
     private final SystemUserService systemUserService;
     private final SystemRoleService systemRoleService;
-    private final ApplicationEventPublisher publisher;
 
     public SystemPermissionController(SystemPermissionService systemPermissionService,
                                       SystemUserService systemUserService,
                                       SystemRolePermissionService systemRolePermissionService,
                                       SystemRoleService systemRoleService,
-                                      SystemUserPermissionService systemUserPermissionService,
-                                      ApplicationEventPublisher publisher) {
+                                      SystemUserPermissionService systemUserPermissionService
+    ) {
 
         this.systemPermissionService = systemPermissionService;
         this.systemUserService = systemUserService;
         this.systemUserPermissionService = systemUserPermissionService;
         this.systemRolePermissionService = systemRolePermissionService;
         this.systemRoleService = systemRoleService;
-        this.publisher = publisher;
     }
 
     /**
@@ -101,7 +98,9 @@ public class SystemPermissionController extends BaseController {
 
     @GetMapping("user-permissions")
     @RequiredPermission("system.permission.get.users")
-    public Result getUserPermissions(Long userId){
+    public Result getUserPermissions(SystemUserPermission systemUserPermission){
+        Long userId = systemUserPermission.getUserId();
+
         if(userId == null){
             return fail("请指定用户id!");
         }
@@ -110,13 +109,14 @@ public class SystemPermissionController extends BaseController {
             return fail("指定用户不存在!");
         }
         startPage();
-        List<SystemUserPermission> systemUserPermissions = systemUserPermissionService.selectByUserId(userId);
+        List<SystemUserPermission> systemUserPermissions = systemUserPermissionService.selectList(systemUserPermission);
         return page(systemUserPermissions);
     }
 
     @GetMapping("role-permissions")
     @RequiredPermission("system.permission.get.roles")
-    public Result getRolePermissions(Long roleId){
+    public Result getRolePermissions(SystemRolePermission systemRolePermission){
+        Long roleId = systemRolePermission.getRoleId();
         if(roleId == null){
             return fail("请指定角色id!");
         }
@@ -125,7 +125,7 @@ public class SystemPermissionController extends BaseController {
             return fail("指定角色不存在!");
         }
         startPage();
-        List<SystemRolePermission> systemRolePermissions = systemRolePermissionService.selectByRoleId(roleId);
+        List<SystemRolePermission> systemRolePermissions = systemRolePermissionService.selectList(systemRolePermission);
         return page(systemRolePermissions);
     }
 
