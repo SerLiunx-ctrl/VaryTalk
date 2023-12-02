@@ -128,16 +128,6 @@ public class SystemAutoConfigurer {
          */
         private String userCache = mainPrefix +  "user_cache:";
 
-        /**
-         * #方法/属性缓存, 用于鉴权、日志记录
-         */
-        private String joinPointCache = mainPrefix + "join_point_cache:";
-
-        /**
-         * 权限节点缓存
-         */
-        private String permissionsCache = mainPrefix + "permissions_cache";
-
         public String getMainPrefix() {
             return mainPrefix;
         }
@@ -154,14 +144,6 @@ public class SystemAutoConfigurer {
             this.onlineUsers = this.mainPrefix + onlineUsers;
         }
 
-        public String getJoinPointCache() {
-            return joinPointCache;
-        }
-
-        public void setJoinPointCache(String joinPointCache) {
-            this.joinPointCache = this.mainPrefix + joinPointCache;
-        }
-
         public String getUserCache() {
             return userCache;
         }
@@ -169,40 +151,14 @@ public class SystemAutoConfigurer {
         public void setUserCache(String userCache) {
             this.userCache = this.mainPrefix + userCache;
         }
-
-        public String getPermissionsCache() {
-            return permissionsCache;
-        }
-
-        public void setPermissionsCache(String permissionsCache) {
-            this.permissionsCache = this.mainPrefix + permissionsCache;
-        }
     }
 
     public static class RedisTtl{
 
         /**
-         * #方法/属性缓存, 用于鉴权、日志记录(存活时间)
-         */
-        private Integer joinPointCache = 24;
-
-        /**
          * 用户信息缓存, 用于鉴权、避免频繁查询数据库
          */
         private Integer userCache = 6;
-
-        /**
-         * 权限节点缓存
-         */
-        private Integer permissionsCache = 1;
-
-        public Integer getJoinPointCache() {
-            return joinPointCache;
-        }
-
-        public void setJoinPointCache(Integer joinPointCache) {
-            this.joinPointCache = joinPointCache;
-        }
 
         public Integer getUserCache() {
             return userCache;
@@ -210,14 +166,6 @@ public class SystemAutoConfigurer {
 
         public void setUserCache(Integer userCache) {
             this.userCache = userCache;
-        }
-
-        public Integer getPermissionsCache() {
-            return permissionsCache;
-        }
-
-        public void setPermissionsCache(Integer permissionsCache) {
-            this.permissionsCache = permissionsCache;
         }
     }
 
