@@ -15,8 +15,7 @@
         <module>varytalk-bootstrap</module>
         <module>varytalk-module-system</module>
         <module>varytalk-module-common</module>
-<!--        暂时禁用安全模块-->
-<!--        <module>varytalk-module-security</module>-->
+        <module>varytalk-module-security</module>
         <module>varytalk-module-console</module>
         <module>varytalk-module-forum</module>
         <module>varytalk-module-httpclient</module>

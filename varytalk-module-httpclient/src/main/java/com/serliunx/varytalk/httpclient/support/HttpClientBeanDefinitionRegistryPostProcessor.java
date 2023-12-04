@@ -62,9 +62,6 @@ public final class HttpClientBeanDefinitionRegistryPostProcessor implements Bean
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        for (String beanDefinitionName : registry.getBeanDefinitionNames()) {
-            System.out.println(beanDefinitionName);
-        }
         ClassPathClientScanner scanner = new ClassPathClientScanner(registry);
         scanner.addIncludeFilter(interfaceWithAnnotationTypeFilter);
         String basePackage = environment.getProperty("talk-system.http-client.base-package");
