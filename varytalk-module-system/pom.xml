@@ -13,6 +13,13 @@
     <artifactId>varytalk-module-system</artifactId>
 
     <dependencies>
+<!--        API实现-->
+        <dependency>
+            <groupId>com.serliunx.varytalk</groupId>
+            <artifactId>varytalk-api-system</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+<!--        模块依赖-->
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-module-common</artifactId>
@@ -29,6 +36,7 @@
             <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-module-security</artifactId>
         </dependency>
+<!--        其它依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

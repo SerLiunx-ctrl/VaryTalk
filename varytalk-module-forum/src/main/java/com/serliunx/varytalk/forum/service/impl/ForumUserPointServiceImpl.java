@@ -1,13 +1,13 @@
 package com.serliunx.varytalk.forum.service.impl;
 
+import com.serliunx.varytalk.api.system.entity.User;
+import com.serliunx.varytalk.api.system.user.SystemUserApi;
 import com.serliunx.varytalk.common.exception.ServiceException;
 import com.serliunx.varytalk.forum.entity.ForumPoint;
 import com.serliunx.varytalk.forum.entity.ForumUserPoint;
 import com.serliunx.varytalk.forum.mapper.ForumUserPointMapper;
 import com.serliunx.varytalk.forum.service.ForumPointService;
 import com.serliunx.varytalk.forum.service.ForumUserPointService;
-import com.serliunx.varytalk.system.entity.SystemUser;
-import com.serliunx.varytalk.system.service.SystemUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,18 +21,18 @@ public class ForumUserPointServiceImpl implements ForumUserPointService {
 
     private final ForumUserPointMapper forumUserPointMapper;
     private final ForumPointService forumPointService;
-    private final SystemUserService systemUserService;
+    private final SystemUserApi systemUserApi;
 
     public ForumUserPointServiceImpl(ForumUserPointMapper forumUserPointMapper,
                                      ForumPointService forumPointService,
-                                     SystemUserService systemUserService) {
+                                     SystemUserApi systemUserApi) {
         this.forumUserPointMapper = forumUserPointMapper;
         this.forumPointService = forumPointService;
-        this.systemUserService = systemUserService;
+        this.systemUserApi = systemUserApi;
     }
 
     @Override
-    public void modify(ForumUserPoint forumUserPoint, ForumPoint forumPoint, SystemUser systemUser) {
+    public void modify(ForumUserPoint forumUserPoint, ForumPoint forumPoint, User user) {
         ForumUserPoint entity = forumUserPointMapper.select(forumUserPoint.getPointId(), forumUserPoint.getUserId());
         //不存在则新建
         if(entity == null){
@@ -56,11 +56,11 @@ public class ForumUserPointServiceImpl implements ForumUserPointService {
         if(forumPoint == null){
             throw new ServiceException("不存在该积分项!", 400);
         }
-        SystemUser systemUser = systemUserService.selectUserByIdFlatted(forumUserPoint.getUserId());
-        if(systemUser == null){
+        User user = systemUserApi.selectUserByIdFlatted(forumUserPoint.getUserId());
+        if(user == null){
             throw new ServiceException("该用户不存在!", 400);
         }
-        modify(forumUserPoint, forumPoint, systemUser);
+        modify(forumUserPoint, forumPoint, user);
     }
 
     @Override

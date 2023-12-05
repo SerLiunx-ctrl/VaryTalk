@@ -1,5 +1,7 @@
 package com.serliunx.varytalk.forum.controller;
 
+import com.serliunx.varytalk.api.system.entity.User;
+import com.serliunx.varytalk.api.system.user.SystemUserApi;
 import com.serliunx.varytalk.common.annotation.Logger;
 import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
@@ -8,8 +10,6 @@ import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.common.validation.forum.ForumGroupAddGroup;
 import com.serliunx.varytalk.forum.entity.ForumGroup;
 import com.serliunx.varytalk.forum.service.ForumGroupService;
-import com.serliunx.varytalk.system.entity.SystemUser;
-import com.serliunx.varytalk.system.service.SystemUserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +24,11 @@ import java.util.List;
 public class ForumGroupController extends BaseController {
 
     private final ForumGroupService forumGroupService;
-    private final SystemUserService systemUserService;
+    private final SystemUserApi systemUserApi;
 
-    public ForumGroupController(ForumGroupService forumGroupService,
-                                SystemUserService systemUserService) {
+    public ForumGroupController(ForumGroupService forumGroupService, SystemUserApi systemUserApi) {
         this.forumGroupService = forumGroupService;
-        this.systemUserService = systemUserService;
+        this.systemUserApi = systemUserApi;
     }
 
     /**
@@ -43,8 +42,8 @@ public class ForumGroupController extends BaseController {
         if(forumGroup.getOwnerId() == null){
             forumGroup.setOwnerId(SecurityUtils.getUserId());
         }else{
-            SystemUser systemUser = systemUserService.selectUserByIdFlatted(forumGroup.getOwnerId());
-            if(systemUser == null){
+            User user = systemUserApi.selectUserByIdFlatted(forumGroup.getOwnerId());
+            if(user == null){
                 return fail("不存在指定用户, 请换一个用户试试!");
             }
         }

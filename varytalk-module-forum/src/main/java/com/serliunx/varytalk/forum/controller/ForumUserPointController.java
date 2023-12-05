@@ -1,5 +1,7 @@
 package com.serliunx.varytalk.forum.controller;
 
+import com.serliunx.varytalk.api.system.entity.User;
+import com.serliunx.varytalk.api.system.user.SystemUserApi;
 import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
@@ -7,8 +9,6 @@ import com.serliunx.varytalk.forum.entity.ForumPoint;
 import com.serliunx.varytalk.forum.entity.ForumUserPoint;
 import com.serliunx.varytalk.forum.service.ForumPointService;
 import com.serliunx.varytalk.forum.service.ForumUserPointService;
-import com.serliunx.varytalk.system.entity.SystemUser;
-import com.serliunx.varytalk.system.service.SystemUserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,14 +28,14 @@ public class ForumUserPointController extends BaseController {
 
     private final ForumUserPointService forumUserPointService;
     private final ForumPointService forumPointService;
-    private final SystemUserService systemUserService;
+    private final SystemUserApi systemUserApi;
 
     public ForumUserPointController(ForumUserPointService forumUserPointService,
                                     ForumPointService forumPointService,
-                                    SystemUserService systemUserService) {
+                                    SystemUserApi systemUserApi) {
         this.forumUserPointService = forumUserPointService;
         this.forumPointService = forumPointService;
-        this.systemUserService = systemUserService;
+        this.systemUserApi = systemUserApi;
     }
 
     @PutMapping("modify")
@@ -45,18 +45,18 @@ public class ForumUserPointController extends BaseController {
         if(forumPoint == null){
             return fail("不存在该积分项!");
         }
-        SystemUser systemUser = systemUserService.selectUserByIdFlatted(forumUserPoint.getUserId());
-        if(systemUser == null){
+        User user = systemUserApi.selectUserByIdFlatted(forumUserPoint.getUserId());
+        if(user == null){
             return fail("该用户不存在!");
         }
-        forumUserPointService.modify(forumUserPoint, forumPoint, systemUser);
+        forumUserPointService.modify(forumUserPoint, forumPoint, user);
         return success();
     }
 
     @GetMapping("user-owned")
     public Result userOwned(Long userId){
-        SystemUser systemUser = systemUserService.selectUserByIdFlatted(userId);
-        if(systemUser == null){
+        User user = systemUserApi.selectUserByIdFlatted(userId);
+        if(user == null){
             return fail("该用户不存在!");
         }
         List<ForumUserPoint> forumUserPoints = forumUserPointService.selectByUser(userId);

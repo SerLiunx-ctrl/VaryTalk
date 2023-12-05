@@ -13,13 +13,19 @@
     <artifactId>varytalk-module-forum</artifactId>
 
     <dependencies>
+<!--        模块依赖-->
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-module-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-system</artifactId>
+            <artifactId>varytalk-module-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.serliunx.varytalk</groupId>
+            <artifactId>varytalk-api-system</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

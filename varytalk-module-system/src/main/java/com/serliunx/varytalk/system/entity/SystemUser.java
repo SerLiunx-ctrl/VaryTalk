@@ -2,6 +2,8 @@ package com.serliunx.varytalk.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.serliunx.varytalk.api.system.entity.Role;
+import com.serliunx.varytalk.api.system.entity.User;
 import com.serliunx.varytalk.common.base.BaseEntity;
 import com.serliunx.varytalk.common.jsonserializer.SensitiveFieldSerializer;
 import com.serliunx.varytalk.common.validation.system.SystemUserInsertGroup;
@@ -15,10 +17,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-@Getter
-@Setter
+
 @JsonPropertyOrder({"id", "username", "password", "phoneNumber", "email", "nickName", "sex", "roleId", "role"})
-public class SystemUser extends BaseEntity {
+public class SystemUser extends BaseEntity implements User {
 
     @NotNull(message = "用户ID不能为空!", groups = SystemUserRoleUpdateGroup.class)
     private Long id;
@@ -50,5 +51,95 @@ public class SystemUser extends BaseEntity {
     @NotNull(message = "角色ID不能为空!", groups = SystemUserRoleUpdateGroup.class)
     private Long roleId;
 
-    private SystemRole role;
+    private Role role;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    @Override
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String getNickName() {
+        return nickName;
+    }
+
+    @Override
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    @Override
+    public String getSex() {
+        return sex;
+    }
+
+    @Override
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    @Override
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    @Override
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    @Override
+    public Role getRole() {
+        return role;
+    }
+
+    @Override
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

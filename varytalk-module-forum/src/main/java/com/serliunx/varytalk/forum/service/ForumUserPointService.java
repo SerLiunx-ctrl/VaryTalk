@@ -1,8 +1,8 @@
 package com.serliunx.varytalk.forum.service;
 
+import com.serliunx.varytalk.api.system.entity.User;
 import com.serliunx.varytalk.forum.entity.ForumPoint;
 import com.serliunx.varytalk.forum.entity.ForumUserPoint;
-import com.serliunx.varytalk.system.entity.SystemUser;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ForumUserPointService {
 
-    void modify(ForumUserPoint forumUserPoint, ForumPoint forumPoint, SystemUser systemUser);
+    void modify(ForumUserPoint forumUserPoint, ForumPoint forumPoint, User user);
 
     void modify(ForumUserPoint forumUserPoint);
 
