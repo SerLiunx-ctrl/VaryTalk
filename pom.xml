@@ -21,6 +21,7 @@
         <module>varytalk-module-httpclient</module>
         <module>varytalk-module-schedule</module>
         <module>varytalk-module-cache</module>
+        <module>varytalk-framework</module>
     </modules>
 
     <properties>
@@ -36,42 +37,48 @@
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-common</artifactId>
-                <version>${vversion}</version>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-console</artifactId>
-                <version>${vversion}</version>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-system</artifactId>
-                <version>${vversion}</version>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-security</artifactId>
-                <version>${vversion}</version>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-forum</artifactId>
-                <version>${vversion}</version>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-httpclient</artifactId>
-                <version>${vversion}</version>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-schedule</artifactId>
-                <version>${vversion}</version>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-cache</artifactId>
-                <version>${vversion}</version>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-framework</artifactId>
+                <version>1.0.0</version>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>io.github.openfeign</groupId>

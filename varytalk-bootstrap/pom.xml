@@ -46,6 +46,11 @@
             <artifactId>varytalk-module-security</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.serliunx.varytalk</groupId>
+            <artifactId>varytalk-framework</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
