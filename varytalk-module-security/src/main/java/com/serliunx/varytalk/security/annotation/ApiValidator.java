@@ -1,5 +1,6 @@
-package com.serliunx.varytalk.httpclient.annotation;
+package com.serliunx.varytalk.security.annotation;
 
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.ElementType;
@@ -8,23 +9,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 定义HTTP客户端的注解
- * <li> 注解必须使用在接口上, 否则无法生效.
+ * 校验器注解, 标注该注解将校验器注入Spring容器
  * @author SerLiunx
  * @since 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Component
-public @interface Client {
+public @interface ApiValidator {
 
-    /**
-     * Bean的名称
-     */
+    @AliasFor(annotation = Component.class)
     String value() default "";
-
-    /**
-     * 该客户端的接口路径
-     */
-    String url();
 }
