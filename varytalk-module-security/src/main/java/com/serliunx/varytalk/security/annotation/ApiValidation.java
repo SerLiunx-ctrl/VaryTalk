@@ -1,36 +1,33 @@
-package com.serliunx.varytalk.security.support;
+package com.serliunx.varytalk.security.annotation;
 
 import com.serliunx.varytalk.security.constant.ValidationType;
 import com.serliunx.varytalk.security.constant.ValidationValueType;
 import com.serliunx.varytalk.security.validator.Validator;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
+import org.springframework.stereotype.Component;
+
+import java.lang.annotation.*;
 
 /**
- * 接口校验数据上下文
+ * 接口校验器(用于鉴权等操作)
  * @author SerLiunx
  * @since 1.0
  */
-@Getter
-@Accessors(chain = true)
-@ToString
-@AllArgsConstructor
-public class ValidationContext {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface ApiValidation {
 
     /**
-     * 当校验器类型为{@link ValidationType}时生效
+     * 当校验器类型为{@link ValidationType#VALUE}时生效
      * <li> 通过指定 {@link ValidationValueType} 来选择匹配的方式
      * <li> 默认支持: 全值匹配、SPEL、正则表达式等..
      */
-    private String value;
+    String value() default "";
 
     /**
      * 校验器类型
      * @see ValidationType
      */
-    private ValidationType type;
+    ValidationType type() default ValidationType.VALUE;
 
     /**
      * 当校验器类型为{@link ValidationType}时生效
@@ -39,17 +36,17 @@ public class ValidationContext {
      * 等价于{@link String#equals(Object)}
      * @see ValidationValueType
      */
-    private ValidationValueType valueType;
+    ValidationValueType valueType() default ValidationValueType.NORMAL;
 
     /**
      * 手动指定校验器
      * <li> 在校验器为独立模式时生效
-     * <li> 校验器链中永远为null值
      */
-    private Validator validator;
+    Class<? extends Validator> validator() default Validator.class;
 
     /**
      * 校验器分组
+     * <li> 校验器感兴趣的分组才会处理
      */
-    private Class<?>[] groups;
+    Class<?>[] group() default {};
 }

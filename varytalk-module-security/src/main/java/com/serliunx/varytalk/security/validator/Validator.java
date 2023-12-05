@@ -21,6 +21,20 @@ public interface Validator extends Order, Comparable<Validator>{
     boolean preValidate(ValidationContext validationContext);
 
     /**
+     * 校验器的分组
+     * <li> 当校验器为独立验证器时将不会有任何效果
+     */
+    Class<?> group();
+
+    /**
+     * 校验器验证未通过时的提示语
+     * @return 提示语
+     */
+    default String message(){
+        return "校验器验证未通过!";
+    }
+
+    /**
      * 是否需要将该验证器加入到校验器链中
      * <li> 如果校验器属于独立校验器, 请重写该方法并返回false
      * <li> 为重写该方法则默认校验器需要加入到校验器链中

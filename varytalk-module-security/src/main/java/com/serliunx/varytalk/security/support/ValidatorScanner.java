@@ -1,7 +1,6 @@
 package com.serliunx.varytalk.security.support;
 
 import com.serliunx.varytalk.security.validator.Validator;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -13,7 +12,10 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.serliunx.varytalk.security.support.ValidationChainBuilder.VALIDATORS;
+
 /**
+ * 校验器扫描
  * @author SerLiunx
  * @since 1.0
  */
@@ -36,13 +38,14 @@ public class ValidatorScanner implements ApplicationContextAware, InitializingBe
 
         //对验证器bean进行排序并初始化
         //为链化的校验器需要独立处理、不在此处加载
-        ValidationChainBuilder.VALIDATORS = matchedBeans.values()
+        VALIDATORS = matchedBeans.values()
                 .stream()
                 .sorted()
                 .filter(Validator::toChain)
                 .peek(s ->
-                        log.debug("成功载入验证器 -> {}", s.getClass())
+                        log.debug("成功载入校验器 -> {}", s.getClass())
                 )
                 .collect(Collectors.toCollection(LinkedList::new));
+        log.info("成功载入 {} 个校验器!", VALIDATORS.size());
     }
 }
