@@ -56,25 +56,11 @@ CREATE TABLE IF NOT EXISTS `forum_group` (
   PRIMARY KEY (`id`),
   KEY `fk_ownerid_userid` (`owner_id`),
   CONSTRAINT `fk_ownerid_userid` FOREIGN KEY (`owner_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
 -- 正在导出表  vary_talk.forum_group 的数据：~1 rows (大约)
 INSERT INTO `forum_group` (`id`, `owner_id`, `group_score`, `group_tag`, `group_name`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES
-	(1, 1, 0, 'su_group', '管理员组', 'root', '2023-11-17 23:50:50', NULL, NULL, NULL);
-
--- 导出  表 vary_talk.forum_group_roles 结构
-CREATE TABLE IF NOT EXISTS `forum_group_roles` (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '群组角色id',
-  `role_name` varchar(10) NOT NULL COMMENT '角色名',
-  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '' COMMENT '创建者',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '' COMMENT '更新者',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '' COMMENT '备注',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='定义群组中的角色信息, 与系统内的sys_role区分开.';
-
--- 正在导出表  vary_talk.forum_group_roles 的数据：~0 rows (大约)
+	(2, 1, NULL, 'default', '默认群组', 'root', '2023-11-18 19:20:35', NULL, NULL, '一个保留群组，暂时还没有任何用处。');
 
 -- 导出  表 vary_talk.forum_point 结构
 CREATE TABLE IF NOT EXISTS `forum_point` (
@@ -133,6 +119,22 @@ CREATE TABLE IF NOT EXISTS `forum_tag` (
 INSERT INTO `forum_tag` (`id`, `tag_name`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES
 	(1, '节日', 'root', '2023-11-17 22:22:34', NULL, NULL, '一个标签而已'),
 	(2, '游戏', 'root', '2023-11-17 22:45:12', NULL, NULL, NULL);
+
+-- 导出  表 vary_talk.forum_user_group 结构
+CREATE TABLE IF NOT EXISTS `forum_user_group` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '关系id',
+  `user_id` bigint NOT NULL COMMENT '用户id',
+  `group_id` bigint NOT NULL COMMENT '群组id',
+  `group_role_id` bigint NOT NULL COMMENT '在该群组内的角色id',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='用户和群组的关系表。一个用户可以加入多个群组，一个群组内有多个用户。';
+
+-- 正在导出表  vary_talk.forum_user_group 的数据：~0 rows (大约)
 
 -- 导出  表 vary_talk.forum_user_points 结构
 CREATE TABLE IF NOT EXISTS `forum_user_points` (
@@ -195,12 +197,16 @@ CREATE TABLE IF NOT EXISTS `sys_file` (
   `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`),
   KEY `FK_sys_file_sys_user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  vary_talk.sys_file 的数据：~2 rows (大约)
+-- 正在导出表  vary_talk.sys_file 的数据：~4 rows (大约)
 INSERT INTO `sys_file` (`id`, `user_id`, `original_name`, `name`, `path`, `file_size`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES
 	(11, 1, '68679473.jpg', '8db0e507-0308-4131-afba-68c39b954806.jpg', 'D:\\vary_talk\\upload_files\\2023\\11\\18\\8db0e507-0308-4131-afba-68c39b954806.jpg', 3453, NULL, '2023-11-18 14:13:19', NULL, NULL, NULL),
-	(12, 1, '68679473.jpg', '0d867cef-40db-473e-834f-34adcc96cdcd.jpg', 'D:\\vary_talk\\upload_files\\2023\\11\\18\\0d867cef-40db-473e-834f-34adcc96cdcd.jpg', 3453, NULL, '2023-11-18 14:14:58', NULL, NULL, NULL);
+	(12, 1, '68679473.jpg', '0d867cef-40db-473e-834f-34adcc96cdcd.jpg', 'D:\\vary_talk\\upload_files\\2023\\11\\18\\0d867cef-40db-473e-834f-34adcc96cdcd.jpg', 3453, NULL, '2023-11-18 14:14:58', NULL, NULL, NULL),
+	(13, 1, '简历_张文求.pdf', '5986b301-7b68-41af-b465-ce9858c83c55.pdf', 'D:\\vary_talk\\upload_files\\2023\\11\\18\\5986b301-7b68-41af-b465-ce9858c83c55.pdf', 154921, NULL, '2023-11-18 20:30:57', NULL, NULL, NULL),
+	(14, 1, '简历_张文求.pdf', '83bd2291-1b49-496b-9ed0-325b4f54e23e.pdf', 'D:\\vary_talk\\upload_files\\2023\\11\\18\\83bd2291-1b49-496b-9ed0-325b4f54e23e.pdf', 154921, 'root', '2023-11-18 20:32:38', NULL, NULL, NULL),
+	(15, 1, '简历_张文求.pdf', '8807e9a5-7905-4aa0-8f4b-a14b10bdac7c.pdf', 'D:\\vary_talk\\upload_files\\2023\\11\\23\\8807e9a5-7905-4aa0-8f4b-a14b10bdac7c.pdf', 154921, 'root', '2023-11-23 22:55:54', NULL, NULL, NULL),
+	(16, 1, '简历_张文求.pdf', '13dfd1fb-2fb3-440e-aeec-38798c8402a4.pdf', 'D:\\vary_talk\\upload_files\\2023\\12\\01\\13dfd1fb-2fb3-440e-aeec-38798c8402a4.pdf', 154921, 'root', '2023-12-01 17:55:09', NULL, NULL, NULL);
 
 -- 导出  表 vary_talk.sys_log 结构
 CREATE TABLE IF NOT EXISTS `sys_log` (
@@ -214,9 +220,9 @@ CREATE TABLE IF NOT EXISTS `sys_log` (
   PRIMARY KEY (`id`),
   KEY `fk_user_id` (`user_id`),
   CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  vary_talk.sys_log 的数据：~78 rows (大约)
+-- 正在导出表  vary_talk.sys_log 的数据：~68 rows (大约)
 INSERT INTO `sys_log` (`id`, `user_id`, `ip_address`, `api_path`, `op_name`, `op_context`, `op_time`) VALUES
 	(1, 1, '127.0.0.1', '/api/role/list', '角色接口', '获取角色列表', '2023-09-18 09:02:25'),
 	(2, 1, '127.0.0.1', '/api/role/list', '角色接口', '获取角色列表', '2023-09-18 09:09:08'),
@@ -295,7 +301,22 @@ INSERT INTO `sys_log` (`id`, `user_id`, `ip_address`, `api_path`, `op_name`, `op
 	(75, 1, '127.0.0.1', '/dev-api/file/upload', '文件管理', '用户上传文件 状态信息: 操作成功!', '2023-11-18 14:02:39'),
 	(76, 1, '127.0.0.1', '/dev-api/file/upload', '文件管理', '用户上传文件 状态信息: 操作成功!', '2023-11-18 14:11:39'),
 	(77, 1, '127.0.0.1', '/dev-api/file/upload', '文件管理', '用户上传文件 状态信息: 操作成功!', '2023-11-18 14:13:19'),
-	(78, 1, '127.0.0.1', '/dev-api/file/upload', '文件管理', '用户上传文件 状态信息: 操作成功!', '2023-11-18 14:14:58');
+	(78, 1, '127.0.0.1', '/dev-api/file/upload', '文件管理', '用户上传文件 状态信息: 操作成功!', '2023-11-18 14:14:58'),
+	(79, 1, '127.0.0.1', '/dev-api/forum-group/add', '论坛群组接口', '添加一个新的群组 状态信息: 一个用户只允许创建一个群组!', '2023-11-18 19:19:11'),
+	(80, 1, '127.0.0.1', '/dev-api/forum-group/add', '论坛群组接口', '添加一个新的群组 状态信息: 一个用户只允许创建一个群组!', '2023-11-18 19:19:59'),
+	(81, 1, '127.0.0.1', '/dev-api/forum-group/add', '论坛群组接口', '添加一个新的群组 状态信息: 一个用户只允许创建一个群组!', '2023-11-18 19:20:01'),
+	(82, 1, '127.0.0.1', '/dev-api/forum-group/add', '论坛群组接口', '添加一个新的群组 状态信息: 一个用户只允许创建一个群组!', '2023-11-18 19:20:01'),
+	(83, 1, '127.0.0.1', '/dev-api/forum-group/add', '论坛群组接口', '添加一个新的群组 状态信息: 一个用户只允许创建一个群组!', '2023-11-18 19:20:02'),
+	(84, 1, '127.0.0.1', '/dev-api/forum-group/add', '论坛群组接口', '添加一个新的群组 状态信息: 操作成功!', '2023-11-18 19:20:36'),
+	(85, 1, '127.0.0.1', '/dev-api/file/upload', '文件管理', '用户上传文件 状态信息: 操作成功!', '2023-11-18 20:30:57'),
+	(86, 1, '127.0.0.1', '/dev-api/file/upload', '文件管理', '用户上传文件 状态信息: 操作成功!', '2023-11-18 20:32:39'),
+	(87, 1, '127.0.0.1', '/dev-api/file/upload', '文件管理', '用户上传文件 状态信息: 操作成功!', '2023-11-23 22:55:54'),
+	(88, 1, '127.0.0.1', '/dev-api/forum-group/add', '论坛群组接口', '添加一个新的群组 状态信息: 一个用户只允许创建一个群组!', '2023-11-23 23:07:12'),
+	(89, 1, '127.0.0.1', '/dev-api/forum-group/add', '论坛群组接口', '添加一个新的群组 状态信息: 一个用户只允许创建一个群组!', '2023-11-23 23:07:13'),
+	(90, 1, '127.0.0.1', '/dev-api/file/upload', '文件管理', '用户上传文件 状态信息: 操作成功!', '2023-12-01 17:55:10'),
+	(91, 1, '127.0.0.1', '/dev-api/forum-group/add', '论坛群组接口', '添加一个新的群组 状态信息: 一个用户只允许创建一个群组!', '2023-12-01 19:58:56'),
+	(92, 1, '127.0.0.1', '/dev-api/permission/give-user', '权限接口', '给用户添加权限 状态信息: 操作成功!', '2023-12-02 12:38:24'),
+	(93, 1, '127.0.0.1', '/dev-api/permission/give-user', '权限接口', '给用户添加权限 状态信息: 操作成功!', '2023-12-02 12:39:56');
 
 -- 导出  表 vary_talk.sys_permission 结构
 CREATE TABLE IF NOT EXISTS `sys_permission` (
@@ -412,11 +433,11 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   PRIMARY KEY (`id`),
   KEY `fk_role_id` (`role_id`),
   CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  vary_talk.sys_user 的数据：~10 rows (大约)
+-- 正在导出表  vary_talk.sys_user 的数据：~11 rows (大约)
 INSERT INTO `sys_user` (`id`, `username`, `password`, `phone_number`, `email`, `nick_name`, `role_id`, `sex_id`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES
-	(1, 'root', 'f038c592dd1f449f83ab8387dbe2f176', '15105953171', '17689543@qq.com', '张三', 1, 4, 'system', '2023-09-15 22:47:27', 'root', '2023-09-26 11:28:51', NULL),
+	(1, 'root', 'f038c592dd1f449f83ab8387dbe2f176', '15105953171', '17689543@qq.com', '张三', 1, 1, 'system', '2023-09-15 22:47:27', 'root', '2023-12-02 22:38:26', NULL),
 	(2, 'serliunx', '107c91e86f679aaaf81bf2e4e6e93137', '17689674149', 'serliunx@yeah.net', 'SerLiunx', 2, 1, 'root', '2023-09-15 22:48:00', NULL, NULL, NULL),
 	(4, 'jack', 'd583667ba83397298563a0cff25af133', NULL, NULL, NULL, 2, 1, 'root', '2023-09-15 23:16:50', NULL, NULL, NULL),
 	(5, 'notch', 'f038c592dd1f449f83ab8387dbe2f176', '1665546213', '1656564@qq.com', NULL, 2, 1, 'root', '2023-09-16 11:32:44', NULL, NULL, NULL),
@@ -426,7 +447,8 @@ INSERT INTO `sys_user` (`id`, `username`, `password`, `phone_number`, `email`, `
 	(9, 'hzds', '107c91e86f679aaaf81bf2e4e6e93137', NULL, NULL, NULL, 2, 1, NULL, '2023-10-21 20:51:14', NULL, NULL, NULL),
 	(10, '12345', '827ccb0eea8a706c4c34a16891f84e7b', NULL, NULL, NULL, 2, 1, NULL, '2023-10-25 11:15:52', NULL, NULL, NULL),
 	(11, 'hzdasd', '107c91e86f679aaaf81bf2e4e6e93137', NULL, NULL, NULL, 2, 1, NULL, '2023-10-25 15:47:58', NULL, NULL, NULL),
-	(12, 'superhero', '107c91e86f679aaaf81bf2e4e6e93137', NULL, NULL, NULL, 2, 1, NULL, '2023-11-08 15:20:16', NULL, NULL, NULL);
+	(12, 'superhero', '107c91e86f679aaaf81bf2e4e6e93137', NULL, NULL, NULL, 2, 1, NULL, '2023-11-08 15:20:16', NULL, NULL, NULL),
+	(13, 'superheros', '3c59dc048e8850243be8079a5c74d079', NULL, NULL, NULL, 2, 1, NULL, '2023-12-05 19:13:48', NULL, NULL, NULL);
 
 -- 导出  表 vary_talk.sys_user_permission 结构
 CREATE TABLE IF NOT EXISTS `sys_user_permission` (
@@ -439,16 +461,18 @@ CREATE TABLE IF NOT EXISTS `sys_user_permission` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  vary_talk.sys_user_permission 的数据：~5 rows (大约)
+-- 正在导出表  vary_talk.sys_user_permission 的数据：~8 rows (大约)
 INSERT INTO `sys_user_permission` (`id`, `user_id`, `permission_id`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES
 	(1, 2, 1, 'root', '2023-09-16 13:51:03', NULL, NULL, NULL),
 	(2, 2, 2, 'root', '2023-09-16 17:35:30', NULL, NULL, NULL),
 	(3, 2, 3, 'root', '2023-09-16 17:35:41', NULL, NULL, NULL),
 	(4, 2, 7, 'root', '2023-09-16 18:34:34', NULL, NULL, NULL),
 	(5, 1, 8, 'root', '2023-09-16 18:41:52', NULL, NULL, NULL),
-	(7, 1, 32, 'root', '2023-11-06 10:50:50', NULL, NULL, NULL);
+	(7, 1, 32, 'root', '2023-11-06 10:50:50', NULL, NULL, NULL),
+	(8, 1, 31, 'root', '2023-12-02 12:38:24', NULL, NULL, NULL),
+	(9, 2, 31, 'root', '2023-12-02 12:39:55', NULL, NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
