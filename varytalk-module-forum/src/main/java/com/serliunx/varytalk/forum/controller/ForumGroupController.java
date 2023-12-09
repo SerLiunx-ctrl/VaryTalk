@@ -42,7 +42,7 @@ public class ForumGroupController extends BaseController {
         if(forumGroup.getOwnerId() == null){
             forumGroup.setOwnerId(SecurityUtils.getUserId());
         }else{
-            User user = systemUserApi.selectUserByIdFlatted(forumGroup.getOwnerId());
+            User user = systemUserApi.getUserByIdFlatted(forumGroup.getOwnerId());
             if(user == null){
                 return fail("不存在指定用户, 请换一个用户试试!");
             }

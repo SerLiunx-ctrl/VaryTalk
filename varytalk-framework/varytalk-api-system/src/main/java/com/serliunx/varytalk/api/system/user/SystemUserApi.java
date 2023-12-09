@@ -12,5 +12,12 @@ public interface SystemUserApi {
     /**
      * 根据id选择用户, 不包含角色等附加信息
      */
-    User selectUserByIdFlatted(Long id);
+    User getUserByIdFlatted(Long id);
+
+    /**
+     * 根据id选择用户
+     * @param id 用户id
+     * @return 用户
+     */
+    User getUserById(Long id);
 }

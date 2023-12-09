@@ -20,7 +20,12 @@ public class SystemUserApiImpl implements SystemUserApi {
     }
 
     @Override
-    public SystemUser selectUserByIdFlatted(Long id) {
+    public SystemUser getUserByIdFlatted(Long id) {
         return systemUserService.selectUserByIdFlatted(id);
+    }
+
+    @Override
+    public SystemUser getUserById(Long id) {
+        return systemUserService.selectUserById(id);
     }
 }

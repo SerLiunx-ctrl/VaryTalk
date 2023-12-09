@@ -45,7 +45,7 @@ public class ForumUserPointController extends BaseController {
         if(forumPoint == null){
             return fail("不存在该积分项!");
         }
-        User user = systemUserApi.selectUserByIdFlatted(forumUserPoint.getUserId());
+        User user = systemUserApi.getUserByIdFlatted(forumUserPoint.getUserId());
         if(user == null){
             return fail("该用户不存在!");
         }
@@ -55,7 +55,7 @@ public class ForumUserPointController extends BaseController {
 
     @GetMapping("user-owned")
     public Result userOwned(Long userId){
-        User user = systemUserApi.selectUserByIdFlatted(userId);
+        User user = systemUserApi.getUserByIdFlatted(userId);
         if(user == null){
             return fail("该用户不存在!");
         }
