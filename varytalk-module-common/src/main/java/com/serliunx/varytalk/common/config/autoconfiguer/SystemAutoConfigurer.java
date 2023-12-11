@@ -2,12 +2,14 @@ package com.serliunx.varytalk.common.config.autoconfiguer;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+@SuppressWarnings("all")
 @ConfigurationProperties("talk-system")
 public class SystemAutoConfigurer {
 
     private RedisPrefix redisPrefix = new RedisPrefix();
     private FileInfo fileInfo = new FileInfo();
     private RedisTtl redisTtl = new RedisTtl();
+    private HttpClient httpClient = new HttpClient();
 
     /**
      * token密钥
@@ -111,6 +113,14 @@ public class SystemAutoConfigurer {
         this.redisTtl = redisTtl;
     }
 
+    public HttpClient getHttpClient() {
+        return httpClient;
+    }
+
+    public void setHttpClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
     public static class RedisPrefix{
 
         /**
@@ -182,6 +192,19 @@ public class SystemAutoConfigurer {
 
         public void setUploadPath(String uploadPath) {
             this.uploadPath = uploadPath;
+        }
+    }
+
+    public static class HttpClient{
+
+        private String basePackage = "com.serliunx.varytalk";
+
+        public String getBasePackage() {
+            return basePackage;
+        }
+
+        public void setBasePackage(String basePackage) {
+            this.basePackage = basePackage;
         }
     }
 }

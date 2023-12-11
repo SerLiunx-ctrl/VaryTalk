@@ -20,7 +20,13 @@
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-cache</artifactId>
+            <artifactId>varytalk-cache</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.serliunx.varytalk</groupId>
+            <artifactId>varytalk-security</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>

@@ -1,7 +1,9 @@
 package com.serliunx.varytalk.system.api;
 
+import com.serliunx.varytalk.api.system.entity.User;
 import com.serliunx.varytalk.api.system.user.SystemUserApi;
 import com.serliunx.varytalk.system.entity.SystemUser;
+import com.serliunx.varytalk.system.service.PermissionService;
 import com.serliunx.varytalk.system.service.SystemUserService;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +16,12 @@ import org.springframework.stereotype.Component;
 public class SystemUserApiImpl implements SystemUserApi {
 
     private final SystemUserService systemUserService;
+    private final PermissionService permissionService;
 
-    public SystemUserApiImpl(SystemUserService systemUserService) {
+    public SystemUserApiImpl(SystemUserService systemUserService,
+                             PermissionService permissionService) {
         this.systemUserService = systemUserService;
+        this.permissionService = permissionService;
     }
 
     @Override
@@ -27,5 +32,14 @@ public class SystemUserApiImpl implements SystemUserApi {
     @Override
     public SystemUser getUserById(Long id) {
         return systemUserService.selectUserById(id);
+    }
+
+    @Override
+    public boolean hasPermission(Long userId, String permission) {
+        SystemUser systemUser = systemUserService.selectUserByIdFlatted(userId);
+        if(systemUser == null){
+            return false;
+        }
+        return permissionService.hasPermission(systemUser, permission);
     }
 }

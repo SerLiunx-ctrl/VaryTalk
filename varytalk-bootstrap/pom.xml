@@ -31,19 +31,12 @@
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-httpclient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-module-schedule</artifactId>
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-security</artifactId>
+            <artifactId>varytalk-api</artifactId>
+            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>

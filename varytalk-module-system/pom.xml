@@ -26,15 +26,17 @@
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-httpclient</artifactId>
+            <artifactId>varytalk-module-schedule</artifactId>
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-cache</artifactId>
+            <artifactId>varytalk-framework</artifactId>
+            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-security</artifactId>
+            <artifactId>varytalk-security</artifactId>
+            <version>1.0.0</version>
         </dependency>
 <!--        其它依赖-->
         <dependency>

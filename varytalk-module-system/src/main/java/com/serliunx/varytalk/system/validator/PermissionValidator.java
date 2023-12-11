@@ -1,14 +1,14 @@
 package com.serliunx.varytalk.system.validator;
 
 import com.serliunx.varytalk.common.util.SecurityUtils;
-import com.serliunx.varytalk.security.annotation.ApiValidator;
-import com.serliunx.varytalk.security.constant.ValidationType;
-import com.serliunx.varytalk.security.support.ValidationContext;
-import com.serliunx.varytalk.security.validator.Validator;
+import com.serliunx.varytalk.framework.security.annotation.ApiValidator;
+import com.serliunx.varytalk.framework.security.constant.ValidationType;
+import com.serliunx.varytalk.framework.security.support.ValidationContext;
+import com.serliunx.varytalk.framework.security.validator.Validator;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.PermissionService;
 import com.serliunx.varytalk.system.service.SystemUserService;
-import com.serliunx.varytalk.system.validator.group.PermissionGroup;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -51,6 +51,6 @@ public class PermissionValidator implements Validator {
 
     @Override
     public String message() {
-        return "权限校验未通过!";
+        return "你无权这样做!";
     }
 }

@@ -1,0 +1,24 @@
+package com.serliunx.varytalk.common.constants;
+
+/**
+ * redis keys
+ * @author SerLiunx
+ * @since 1.0
+ */
+public interface RedisKeyConstants {
+
+    /**
+     * 接口速率限制使用的key(分离模式)
+     * <li> {prefix} - key的通用前缀, 从配置文件获取配置文件
+     * <li> {ip_without_delimiter} - 没有小数点(.)的ip地址
+     * <li> {uri} - 请求路径
+     */
+    String REDIS_KEY_RATE_LIMITER_SEPARATELY = "{prefix}:rate_limiter:{ip_without_delimiter}:{uri}";
+
+    /**
+     * 接口速率限制使用的key(共用模式)
+     * <li> {prefix} - key的通用前缀, 从配置文件获取配置文件
+     * <li> {uri} - 请求路径
+     */
+    String REDIS_KEY_RATE_LIMITER_ALL = "{prefix}:rate_limiter:{uri}";
+}

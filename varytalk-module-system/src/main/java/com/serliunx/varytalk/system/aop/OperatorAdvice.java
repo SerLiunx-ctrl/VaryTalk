@@ -38,7 +38,7 @@ public class OperatorAdvice {
         this.systemAutoConfigurer = systemAutoConfigurer;
     }
 
-    @Before("com.serliunx.varytalk.common.aop.PointCutDefinition.operatorPoint()")
+    @Before("@annotation(com.serliunx.varytalk.common.annotation.SetOperator)")
     public void dataOperator(JoinPoint joinPoint){
         try {
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();

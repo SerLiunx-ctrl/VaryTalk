@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.forum.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.serliunx.varytalk.cache.annotation.TagValue;
+import com.serliunx.varytalk.framework.cache.annotation.TagValue;
 import com.serliunx.varytalk.common.base.BaseEntity;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

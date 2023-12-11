@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.system.service.impl;
 
+import com.serliunx.varytalk.framework.cache.annotation.Cache;
 import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.common.base.LoginUser;
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
@@ -44,6 +45,7 @@ public class SystemUserServiceImpl implements SystemUserService {
     }
 
     @Override
+    @Cache
     public SystemUser selectUserByIdFlatted(Long id) {
         return systemUserMapper.selectUserByIdFlatted(id);
     }

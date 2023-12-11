@@ -1,9 +1,9 @@
 package com.serliunx.varytalk.forum.service.impl;
 
-import com.serliunx.varytalk.cache.annotation.Cache;
-import com.serliunx.varytalk.cache.annotation.CacheRefresh;
-import com.serliunx.varytalk.cache.annotation.TagEntity;
-import com.serliunx.varytalk.cache.annotation.TagValue;
+import com.serliunx.varytalk.framework.cache.annotation.Cache;
+import com.serliunx.varytalk.framework.cache.annotation.CacheRefresh;
+import com.serliunx.varytalk.framework.cache.annotation.TagEntity;
+import com.serliunx.varytalk.framework.cache.annotation.TagValue;
 import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.forum.entity.ForumSection;
 import com.serliunx.varytalk.forum.mapper.ForumSectionMapper;

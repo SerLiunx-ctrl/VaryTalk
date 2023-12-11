@@ -15,13 +15,11 @@
         <module>varytalk-bootstrap</module>
         <module>varytalk-module-system</module>
         <module>varytalk-module-common</module>
-        <module>varytalk-module-security</module>
         <module>varytalk-module-console</module>
         <module>varytalk-module-forum</module>
-        <module>varytalk-module-httpclient</module>
         <module>varytalk-module-schedule</module>
-        <module>varytalk-module-cache</module>
         <module>varytalk-framework</module>
+        <module>varytalk-api</module>
     </modules>
 
     <properties>
@@ -54,6 +52,11 @@
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-module-schedule</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-console</artifactId>
                 <version>1.0.0</version>
             </dependency>
@@ -64,32 +67,18 @@
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
-                <artifactId>varytalk-module-security</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-forum</artifactId>
                 <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
-                <artifactId>varytalk-module-httpclient</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.serliunx.varytalk</groupId>
-                <artifactId>varytalk-module-schedule</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.serliunx.varytalk</groupId>
-                <artifactId>varytalk-module-cache</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-framework</artifactId>
+                <version>1.0.0</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-api</artifactId>
                 <version>1.0.0</version>
                 <type>pom</type>
             </dependency>

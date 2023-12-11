@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>com.serliunx.varytalk</groupId>
         <artifactId>VaryTalk</artifactId>
@@ -10,17 +11,22 @@
     </parent>
 
     <packaging>jar</packaging>
-
     <artifactId>varytalk-module-schedule</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-common</artifactId>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-httpclient</artifactId>
+            <artifactId>varytalk-cache</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.serliunx.varytalk</groupId>
+            <artifactId>varytalk-httpclient</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

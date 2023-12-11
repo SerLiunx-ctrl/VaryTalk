@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class PointCutDefinition {
 
-    @Pointcut("@annotation(com.serliunx.varytalk.common.annotation.SetOperator)")
-    public void operatorPoint(){}
-
     @Pointcut("@annotation(com.serliunx.varytalk.common.annotation.RequiredPermission) || " +
             "@annotation(com.serliunx.varytalk.common.annotation.RequiredRole)")
     public void permissionPoint(){}

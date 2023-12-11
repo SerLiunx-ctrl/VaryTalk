@@ -27,34 +27,29 @@ public class LoggerAdvice {
     }
 
     @Around("com.serliunx.varytalk.common.aop.PointCutDefinition.logPoint()")
-    public Object apiLogger(ProceedingJoinPoint joinPoint){
-        Object result;
-        try {
-            result = joinPoint.proceed();
-            if(result instanceof Result resp){
-                MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-                Logger annotation = methodSignature.getMethod().getAnnotation(Logger.class);
-                if(annotation == null){
-                    return result;
-                }
-                String ip = ServletUtils.getIp();
-                String requestURI = ServletUtils.getRequestURI();
-                Long userId = SecurityUtils.getUserId();
-                String opName = annotation.opName();
-                String opContext = annotation.value() + " 状态信息: " + resp.getMessage();
-                final SystemLog systemLog = SystemLog.getBuilder()
-                        .setApiPath(requestURI)
-                        .setOpContext(opContext)
-                        .setOpName(opName)
-                        .setUserId(userId)
-                        .setIpAddress(ip)
-                        .now().build();
-                if(annotation.saveToSql()){
-                    syncTaskExecutor.submit(() -> systemLogService.insertLog(systemLog));
-                }
+    public Object apiLogger(ProceedingJoinPoint joinPoint) throws Throwable {
+        Object result = joinPoint.proceed();
+        if(result instanceof Result resp){
+            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            Logger annotation = methodSignature.getMethod().getAnnotation(Logger.class);
+            if(annotation == null){
+                return result;
             }
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
+            String ip = ServletUtils.getIp();
+            String requestURI = ServletUtils.getRequestURI();
+            Long userId = SecurityUtils.getUserId();
+            String opName = annotation.opName();
+            String opContext = annotation.value() + " 状态信息: " + resp.getMessage();
+            final SystemLog systemLog = SystemLog.getBuilder()
+                    .setApiPath(requestURI)
+                    .setOpContext(opContext)
+                    .setOpName(opName)
+                    .setUserId(userId)
+                    .setIpAddress(ip)
+                    .now().build();
+            if(annotation.saveToSql()){
+                syncTaskExecutor.submit(() -> systemLogService.insertLog(systemLog));
+            }
         }
         return result;
     }

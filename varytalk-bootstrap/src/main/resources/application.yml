@@ -31,7 +31,7 @@ talk-system:
   #Http客户端相关配置
   http-client:
     #客户端组件扫描包路径
-    base-package: com.serliunx.varytalk.httpclient
+    base-package: com.serliunx.varytalk
 #服务器相关设置
 server:
   error:

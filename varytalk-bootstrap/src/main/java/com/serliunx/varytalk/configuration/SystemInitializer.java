@@ -1,8 +1,8 @@
 package com.serliunx.varytalk.configuration;
 
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
-import com.serliunx.varytalk.httpclient.entity.github.Contributor;
-import com.serliunx.varytalk.httpclient.service.GithubRepositoryService;
+import com.serliunx.varytalk.schedule.entity.github.Contributor;
+import com.serliunx.varytalk.schedule.service.GithubRepositoryService;
 import com.serliunx.varytalk.system.entity.SystemPermission;
 import com.serliunx.varytalk.system.service.SystemPermissionService;
 import lombok.extern.slf4j.Slf4j;

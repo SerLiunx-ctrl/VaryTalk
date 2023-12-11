@@ -3,13 +3,14 @@ package com.serliunx.varytalk.forum.controller;
 import com.serliunx.varytalk.api.system.entity.User;
 import com.serliunx.varytalk.api.system.user.SystemUserApi;
 import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.common.validation.forum.ForumGroupAddGroup;
 import com.serliunx.varytalk.forum.entity.ForumGroup;
 import com.serliunx.varytalk.forum.service.ForumGroupService;
+import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class ForumGroupController extends BaseController {
      * <p>请与创建群组的接口区分开
      */
     @PostMapping("add")
-    @RequiredPermission("forum.group.add")
+    @ApiValidation(value = "forum.group.add", group = PermissionGroup.class)
     @Logger(opName = "论坛群组接口", value = "添加一个新的群组")
     public Result add(@RequestBody @Validated(ForumGroupAddGroup.class) ForumGroup forumGroup){
         if(forumGroup.getOwnerId() == null){
@@ -67,13 +68,13 @@ public class ForumGroupController extends BaseController {
      * 编辑群组信息(管理端), 请与更新群组信息的接口区分开.
      */
     @PutMapping("edit")
-    @RequiredPermission("forum.group.edit")
+    @ApiValidation(value = "forum.group.edit", group = PermissionGroup.class)
     public Result edit(@RequestBody ForumGroup forumGroup){
         return success();
     }
 
     @GetMapping("list")
-    @RequiredPermission("forum.group.list")
+    @ApiValidation(value = "forum.group.list", group = PermissionGroup.class)
     public Result list(ForumGroup forumGroup){
         startPage();
         List<ForumGroup> forumGroups = forumGroupService.selectList(forumGroup);

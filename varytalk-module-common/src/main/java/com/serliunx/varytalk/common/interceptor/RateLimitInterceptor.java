@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.common.interceptor;
 
 import com.serliunx.varytalk.common.annotation.RateLimiter;
+import com.serliunx.varytalk.common.constants.RedisKeyConstants;
 import com.serliunx.varytalk.common.exception.ServiceException;
 import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.common.util.ServletUtils;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
+
+import static com.serliunx.varytalk.common.util.StringUtils.applyPlaceholders;
 
 /**
  * 访问速率控制
@@ -52,9 +55,11 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
         //根据限制类型生成不同的key
         if(methodLimiter.type().equals(RateLimiter.LimitType.SEPARATELY)){
-            key = keyPrefix + LIMITER_PREFIX + ":" + ip.replace(".", "") + ":" + uri;
+            key = applyPlaceholders(RedisKeyConstants.REDIS_KEY_RATE_LIMITER_SEPARATELY, keyPrefix,
+                    ip.replace(".", ""), uri);
         }else {
             key = keyPrefix + LIMITER_PREFIX + ":" + uri;
+            key = applyPlaceholders(RedisKeyConstants.REDIS_KEY_RATE_LIMITER_ALL, keyPrefix, uri);
         }
 
         Integer count = redisUtils.get(key, Integer.class);
