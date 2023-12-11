@@ -1,9 +1,10 @@
 package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
+import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import com.serliunx.varytalk.system.entity.*;
 import com.serliunx.varytalk.system.service.*;
 import org.springframework.validation.annotation.Validated;
@@ -41,7 +42,7 @@ public class SystemPermissionController extends BaseController {
      * @return 结果
      */
     @PostMapping("add")
-    @RequiredPermission("system.permission.add")
+    @ApiValidation(value = "system.permission.add", group = PermissionGroup.class)
     @Logger(opName = "权限接口", value = "添加一个新的权限节点")
     public Result add(@RequestBody @Validated SystemPermission systemPermission){
         if(systemPermissionService.selectByValue(systemPermission.getValue()) != null){
@@ -55,7 +56,7 @@ public class SystemPermissionController extends BaseController {
     }
 
     @PostMapping("give-user")
-    @RequiredPermission("system.permission.give.user")
+    @ApiValidation(value = "system.permission.give.user", group = PermissionGroup.class)
     @Logger(opName = "权限接口", value = "给用户添加权限")
     public Result give(@Validated SystemUserPermission systemUserPermission){
         SystemUser systemUser = systemUserService.selectUserByIdFlatted(systemUserPermission.getUserId());
@@ -76,7 +77,7 @@ public class SystemPermissionController extends BaseController {
     }
 
     @PostMapping("give-role")
-    @RequiredPermission("system.permission.give.role")
+    @ApiValidation(value = "system.permission.give.role", group = PermissionGroup.class)
     @Logger(opName = "权限接口", value = "给角色添加权限")
     public Result giveRole(@Validated SystemRolePermission systemRolePermission){
         SystemRole systemRole = systemRoleService.selectById(systemRolePermission.getRoleId());
@@ -97,7 +98,7 @@ public class SystemPermissionController extends BaseController {
     }
 
     @GetMapping("user-permissions")
-    @RequiredPermission("system.permission.get.users")
+    @ApiValidation(value = "system.permission.get.users", group = PermissionGroup.class)
     public Result getUserPermissions(SystemUserPermission systemUserPermission){
         Long userId = systemUserPermission.getUserId();
 
@@ -114,7 +115,7 @@ public class SystemPermissionController extends BaseController {
     }
 
     @GetMapping("role-permissions")
-    @RequiredPermission("system.permission.get.roles")
+    @ApiValidation(value = "system.permission.get.roles", group = PermissionGroup.class)
     public Result getRolePermissions(SystemRolePermission systemRolePermission){
         Long roleId = systemRolePermission.getRoleId();
         if(roleId == null){
@@ -135,7 +136,7 @@ public class SystemPermissionController extends BaseController {
      * @return 节点列表
      */
     @GetMapping("list")
-    @RequiredPermission("system.permission.list")
+    @ApiValidation(value = "system.permission.list", group = PermissionGroup.class)
     public Result list(SystemPermission systemPermission){
         startPage();
         List<SystemPermission> systemPermissions = systemPermissionService.selectList(systemPermission);

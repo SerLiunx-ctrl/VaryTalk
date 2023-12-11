@@ -1,9 +1,10 @@
 package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
+import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import com.serliunx.varytalk.system.entity.SystemRole;
 import com.serliunx.varytalk.system.service.SystemRoleService;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +23,7 @@ public class SystemRoleController extends BaseController {
     }
 
     @GetMapping("list")
-    @RequiredPermission("system.role.list")
+    @ApiValidation(value = "system.role.list", group = PermissionGroup.class)
     public Result list(SystemRole systemRole){
         startPage();
         List<SystemRole> systemRoles = systemRoleService.selectList(systemRole);
@@ -30,7 +31,7 @@ public class SystemRoleController extends BaseController {
     }
 
     @PostMapping("add")
-    @RequiredPermission("system.role.add")
+    @ApiValidation(value = "system.role.add", group = PermissionGroup.class)
     @Logger(opName = "角色接口", value = "添加一个新的角色")
     public Result add(@RequestBody @Validated SystemRole systemRole){
         if (systemRoleService.selectByName(systemRole.getRoleName()) != null) {

@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 /**
  * 忽略token鉴权.
  * <p>
- * 禁止和 {@link RequiredPermission} 及{@link RequiredRole} 同时使用!
  * @author SerLiunx
  * @since 1.0
  */

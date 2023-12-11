@@ -1,12 +1,13 @@
 package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.CountResult;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.common.validation.system.SystemUserRoleUpdateGroup;
+import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import com.serliunx.varytalk.system.entity.SystemRole;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.event.UserUpdateEvent;
@@ -35,7 +36,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("list")
-    @RequiredPermission("system.user.list")
+    @ApiValidation(value = "system.user.list", group = PermissionGroup.class)
     public Result list(SystemUser systemUser){
         startPage();
         List<SystemUser> systemUsers = systemUserService.selectList(systemUser);
@@ -43,7 +44,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("get/{id}")
-    @RequiredPermission("system.user.get")
+    @ApiValidation(value = "system.user.get", group = PermissionGroup.class)
     public Result getUserById(@PathVariable Long id){
         if(id == null || id < 0){
            return fail("id有误, 请重试.");
@@ -52,7 +53,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PostMapping("add")
-    @RequiredPermission("system.user.add")
+    @ApiValidation(value = "system.user.add", group = PermissionGroup.class)
     @Logger(opName = "用户接口", value = "添加一个用户")
     public Result add(@RequestBody @Validated SystemUser systemUser){
         String result = systemUserService.checkUserInformation(systemUser);
@@ -83,7 +84,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PutMapping("bind-role")
-    @RequiredPermission("system.user.bind.role")
+    @ApiValidation(value = "system.user.bind.role", group = PermissionGroup.class)
     @Logger(opName = "用户接口", value = "修改用户的角色")
     public Result bindRole(@Validated(SystemUserRoleUpdateGroup.class) SystemUser systemUser){
         SystemUser systemUserFound = systemUserService.selectUserById(systemUser.getId());
@@ -100,7 +101,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("online")
-    @RequiredPermission("system.user.online.detail")
+    @ApiValidation(value = "system.user.online.detail", group = PermissionGroup.class)
     public Result getOnline(){
         return CountResult.success(systemUserService.getOnlineUser());
     }

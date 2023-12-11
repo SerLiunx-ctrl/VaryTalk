@@ -1,9 +1,9 @@
 package com.serliunx.varytalk.system.validator;
 
 import com.serliunx.varytalk.framework.security.annotation.ApiValidator;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import com.serliunx.varytalk.framework.security.support.ValidationContext;
 import com.serliunx.varytalk.framework.security.validator.Validator;
-import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 
 /**
  * 角色校验器

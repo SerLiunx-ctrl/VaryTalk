@@ -2,13 +2,14 @@ package com.serliunx.varytalk.forum.controller;
 
 import com.serliunx.varytalk.api.system.entity.User;
 import com.serliunx.varytalk.api.system.user.SystemUserApi;
-import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.forum.entity.ForumPoint;
 import com.serliunx.varytalk.forum.entity.ForumUserPoint;
 import com.serliunx.varytalk.forum.service.ForumPointService;
 import com.serliunx.varytalk.forum.service.ForumUserPointService;
+import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,7 +40,7 @@ public class ForumUserPointController extends BaseController {
     }
 
     @PutMapping("modify")
-    @RequiredPermission("forum.point.user.modify")
+    @ApiValidation(value = "forum.point.user.modify", group = PermissionGroup.class)
     public Result modify(@Validated ForumUserPoint forumUserPoint){
         ForumPoint forumPoint = forumPointService.selectById(forumUserPoint.getPointId());
         if(forumPoint == null){

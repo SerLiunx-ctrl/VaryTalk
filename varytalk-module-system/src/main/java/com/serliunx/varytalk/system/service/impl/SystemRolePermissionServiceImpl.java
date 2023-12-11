@@ -1,10 +1,10 @@
 package com.serliunx.varytalk.system.service.impl;
 
+import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.framework.cache.annotation.Cache;
 import com.serliunx.varytalk.framework.cache.annotation.CacheRefresh;
 import com.serliunx.varytalk.framework.cache.annotation.TagEntity;
 import com.serliunx.varytalk.framework.cache.annotation.TagValue;
-import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.system.entity.SystemRolePermission;
 import com.serliunx.varytalk.system.mapper.SystemRolePermissionMapper;
 import com.serliunx.varytalk.system.service.SystemRolePermissionService;

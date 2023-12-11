@@ -1,7 +1,6 @@
 package com.serliunx.varytalk.forum.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.CountResult;
 import com.serliunx.varytalk.common.result.Result;
@@ -9,6 +8,8 @@ import com.serliunx.varytalk.forum.entity.ForumCategory;
 import com.serliunx.varytalk.forum.entity.ForumSection;
 import com.serliunx.varytalk.forum.service.ForumCategoryService;
 import com.serliunx.varytalk.forum.service.ForumSectionService;
+import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class ForumSectionController extends BaseController {
     }
 
     @PostMapping("add")
-    @RequiredPermission("forum.section.add")
+    @ApiValidation(value = "forum.section.add", group = PermissionGroup.class)
     @Logger(opName = "论坛板块接口", value = "添加一个新的板块")
     public Result add(@RequestBody @Validated ForumSection forumSection){
         ForumCategory forumCategory = forumCategoryService.selectById(forumSection.getCategoryId());
@@ -49,7 +50,7 @@ public class ForumSectionController extends BaseController {
     }
 
     @GetMapping("list")
-    @RequiredPermission("forum.section.list")
+    @ApiValidation(value = "forum.section.list", group = PermissionGroup.class)
     public Result list(ForumSection forumSection){
         startPage();
         List<ForumSection> forumSections = forumSectionService.selectList(forumSection);

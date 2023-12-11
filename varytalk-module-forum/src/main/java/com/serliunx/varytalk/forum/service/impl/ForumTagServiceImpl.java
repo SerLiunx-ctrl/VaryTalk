@@ -1,12 +1,12 @@
 package com.serliunx.varytalk.forum.service.impl;
 
-import com.serliunx.varytalk.framework.cache.annotation.Cache;
-import com.serliunx.varytalk.framework.cache.annotation.CacheRefresh;
 import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.forum.entity.ForumTag;
 import com.serliunx.varytalk.forum.entity.simple.ForumTagSimple;
 import com.serliunx.varytalk.forum.mapper.ForumTagMapper;
 import com.serliunx.varytalk.forum.service.ForumTagService;
+import com.serliunx.varytalk.framework.cache.annotation.Cache;
+import com.serliunx.varytalk.framework.cache.annotation.CacheRefresh;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

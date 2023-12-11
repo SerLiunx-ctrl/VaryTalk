@@ -1,14 +1,14 @@
 package com.serliunx.varytalk.framework.cache.processor;
 
+import com.serliunx.varytalk.common.util.AopUtils;
+import com.serliunx.varytalk.common.util.RedisUtils;
+import com.serliunx.varytalk.common.util.StringUtils;
 import com.serliunx.varytalk.framework.cache.annotation.Cache;
 import com.serliunx.varytalk.framework.cache.annotation.CacheRefresh;
 import com.serliunx.varytalk.framework.cache.annotation.TagEntity;
 import com.serliunx.varytalk.framework.cache.annotation.TagValue;
 import com.serliunx.varytalk.framework.cache.support.FieldIndexHolder;
 import com.serliunx.varytalk.framework.cache.support.ValueIndexHolder;
-import com.serliunx.varytalk.common.util.AopUtils;
-import com.serliunx.varytalk.common.util.RedisUtils;
-import com.serliunx.varytalk.common.util.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

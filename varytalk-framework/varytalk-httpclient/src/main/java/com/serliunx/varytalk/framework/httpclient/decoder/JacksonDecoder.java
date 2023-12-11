@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.framework.httpclient.decoder;
 
-import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.*;
 import feign.FeignException;
 import feign.Response;
 import feign.Util;

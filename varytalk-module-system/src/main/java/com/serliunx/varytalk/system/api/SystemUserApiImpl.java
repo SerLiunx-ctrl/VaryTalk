@@ -1,6 +1,5 @@
 package com.serliunx.varytalk.system.api;
 
-import com.serliunx.varytalk.api.system.entity.User;
 import com.serliunx.varytalk.api.system.user.SystemUserApi;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.PermissionService;

@@ -26,7 +26,7 @@ public class LoggerAdvice {
         this.syncTaskExecutor = syncTaskExecutor;
     }
 
-    @Around("com.serliunx.varytalk.common.aop.PointCutDefinition.logPoint()")
+    @Around("@annotation(com.serliunx.varytalk.common.annotation.Logger)")
     public Object apiLogger(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = joinPoint.proceed();
         if(result instanceof Result resp){

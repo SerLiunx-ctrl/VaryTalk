@@ -2,9 +2,10 @@ package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
 import com.serliunx.varytalk.common.annotation.RateLimiter;
-import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
+import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import com.serliunx.varytalk.system.entity.SystemFile;
 import com.serliunx.varytalk.system.service.SystemFileService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +23,7 @@ public class SystemFileController extends BaseController {
     }
 
     @PostMapping("upload")
-    @RequiredPermission("system.file.upload")
+    @ApiValidation(value = "system.file.upload", group = PermissionGroup.class)
     @Logger(opName = "文件管理", value = "用户上传文件")
     @RateLimiter(count = 1)
     public Result upload(@RequestParam(value = "file")MultipartFile multipartFile){

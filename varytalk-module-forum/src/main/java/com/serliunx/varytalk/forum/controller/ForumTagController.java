@@ -2,12 +2,13 @@ package com.serliunx.varytalk.forum.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
 import com.serliunx.varytalk.common.annotation.PermitAll;
-import com.serliunx.varytalk.common.annotation.RequiredPermission;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.CountResult;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.forum.entity.ForumTag;
 import com.serliunx.varytalk.forum.service.ForumTagService;
+import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
+import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class ForumTagController extends BaseController {
 
     @PostMapping("add")
     @Logger(opName = "论坛标签接口", value = "添加一个新的标签")
-    @RequiredPermission("forum.tag.add")
+    @ApiValidation(value = "forum.tag.add", group = PermissionGroup.class)
     public Result add(@Validated @RequestBody ForumTag forumTag){
         ForumTag byName = forumTagService.selectByName(forumTag.getTagName());
         if(byName != null){

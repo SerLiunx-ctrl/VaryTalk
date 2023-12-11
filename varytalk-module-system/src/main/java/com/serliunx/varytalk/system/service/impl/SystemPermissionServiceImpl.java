@@ -1,8 +1,8 @@
 package com.serliunx.varytalk.system.service.impl;
 
+import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.framework.cache.annotation.Cache;
 import com.serliunx.varytalk.framework.cache.annotation.CacheRefresh;
-import com.serliunx.varytalk.common.annotation.SetOperator;
 import com.serliunx.varytalk.system.entity.SystemPermission;
 import com.serliunx.varytalk.system.mapper.SystemPermissionMapper;
 import com.serliunx.varytalk.system.service.SystemPermissionService;
