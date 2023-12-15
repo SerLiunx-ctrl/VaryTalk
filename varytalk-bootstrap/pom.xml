@@ -35,6 +35,10 @@
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
+            <artifactId>varytalk-manager-plugin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-api</artifactId>
             <type>pom</type>
         </dependency>

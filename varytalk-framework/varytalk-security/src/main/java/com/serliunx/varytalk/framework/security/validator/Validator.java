@@ -20,6 +20,7 @@ public interface Validator extends Order, Comparable<Validator>{
      */
     boolean preValidate(ValidationContext validationContext);
 
+
     /**
      * 校验器的分组
      * <li> 当校验器为独立验证器时将不会有任何效果

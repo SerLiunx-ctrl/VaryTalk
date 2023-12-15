@@ -20,6 +20,7 @@
         <module>varytalk-module-schedule</module>
         <module>varytalk-framework</module>
         <module>varytalk-api</module>
+        <module>varytalk-manager-plugin</module>
     </modules>
 
     <properties>
@@ -68,6 +69,11 @@
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-forum</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-manager-plugin</artifactId>
                 <version>1.0.0</version>
             </dependency>
             <dependency>
