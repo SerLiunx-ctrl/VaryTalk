@@ -97,9 +97,8 @@ public final class PluginLoader {
                 Constructor<?> constructor = mainClass.getConstructor();
                 VaryTalkPlugin plugin = (VaryTalkPlugin)constructor.newInstance();
                 //调用插件的onLoad方法进行必要的初始化
-                plugin.onLoad();
-
                 pluginMap.put(pluginContext.getName(), plugin);
+                plugin.onLoad();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
