@@ -7,7 +7,10 @@ import java.util.List;
 
 @Mapper
 public interface SystemFileMapper {
+
     List<SystemFile> selectList(SystemFile systemFile);
 
     Long insertFile(SystemFile systemFile);
+
+    SystemFile selectByName(String name);
 }

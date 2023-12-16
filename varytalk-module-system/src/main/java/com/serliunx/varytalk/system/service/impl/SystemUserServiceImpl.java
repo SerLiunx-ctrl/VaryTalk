@@ -8,6 +8,7 @@ import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.common.util.ServletUtils;
 import com.serliunx.varytalk.framework.cache.annotation.Cache;
+import com.serliunx.varytalk.framework.cache.annotation.TagValue;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.mapper.SystemUserMapper;
 import com.serliunx.varytalk.system.service.SystemUserService;
@@ -46,7 +47,7 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     @Cache
-    public SystemUser selectUserByIdFlatted(Long id) {
+    public SystemUser selectUserByIdFlatted(@TagValue("id") Long id) {
         return systemUserMapper.selectUserByIdFlatted(id);
     }
 

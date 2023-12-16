@@ -46,6 +46,16 @@ public class SystemLog {
     private String opContext;
 
     /**
+     * 请求体
+     */
+    private String opBody;
+
+    /**
+     * 请求参数
+     */
+    private String opParams;
+
+    /**
      * 执行的操作时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -77,6 +87,14 @@ public class SystemLog {
 
     public void setOpTime(Date opTime) {
         this.opTime = opTime;
+    }
+
+    public void setOpBody(String opBody) {
+        this.opBody = opBody;
+    }
+
+    public void setOpParams(String opParams) {
+        this.opParams = opParams;
     }
 
     public static Builder getBuilder() {
@@ -121,6 +139,16 @@ public class SystemLog {
 
         public Builder setOpContext(String opContext){
             obj.setOpContext(opContext);
+            return this;
+        }
+
+        public Builder setOpBody(String opBody){
+            obj.setOpBody(opBody);
+            return this;
+        }
+
+        public Builder setParams(String opParams){
+            obj.setOpParams(opParams);
             return this;
         }
 

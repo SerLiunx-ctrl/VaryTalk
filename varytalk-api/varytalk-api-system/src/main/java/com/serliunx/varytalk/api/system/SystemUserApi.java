@@ -1,5 +1,6 @@
-package com.serliunx.varytalk.api.system.user;
+package com.serliunx.varytalk.api.system;
 
+import com.serliunx.varytalk.api.system.entity.Permission;
 import com.serliunx.varytalk.api.system.entity.User;
 
 /**
@@ -28,4 +29,12 @@ public interface SystemUserApi {
      * @return 有该权限返回真、否则返回假
      */
     boolean hasPermission(Long userId, String permission);
+
+    /**
+     * 检查用于是否拥有指定权限
+     * @param userId 用户ID
+     * @param permission 权限节点实体
+     * @return 有该权限返回真、否则返回假
+     */
+    boolean hasPermission(Long userId, Permission permission);
 }

@@ -29,7 +29,7 @@
     </select>
 
     <insert id="insertLog" parameterType="com.serliunx.varytalk.system.entity.SystemLog">
-        insert into sys_log(id, user_id, ip_address, api_path, op_name, op_context, op_time)
-        values(null, #{userId}, #{ipAddress}, #{apiPath}, #{opName}, #{opContext}, #{opTime})
+        insert into sys_log(id, user_id, ip_address, api_path, op_name, op_context, op_body, op_params, op_time)
+        values(null, #{userId}, #{ipAddress}, #{apiPath}, #{opName}, #{opContext}, #{opBody}, #{opParams}, #{opTime})
     </insert>
 </mapper>

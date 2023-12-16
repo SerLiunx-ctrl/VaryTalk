@@ -27,6 +27,11 @@
             and sf.name like concat('%', #{name}, '%')
         </if>
     </select>
+
+    <select id="selectByName" parameterType="string" resultMap="fileResult">
+        <include refid="file"/>
+        and sf.name = #{name}
+    </select>
     
     <insert id="insertFile" parameterType="com.serliunx.varytalk.system.entity.SystemFile" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into sys_file(id, user_id, original_name, name, path, file_size, create_by, create_time, update_by, update_time, remark)

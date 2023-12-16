@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.system.aop;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.serliunx.varytalk.common.annotation.Logger;
 import com.serliunx.varytalk.common.executor.SyncTaskExecutor;
 import com.serliunx.varytalk.common.result.Result;
@@ -12,6 +13,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+
+import java.io.BufferedReader;
+import java.util.Map;
 
 @Aspect
 @Component
@@ -36,19 +41,31 @@ public class LoggerAdvice {
                 return result;
             }
             String ip = ServletUtils.getIp();
+            //构建请求体
+            ContentCachingRequestWrapper cachingRequestWrapper =
+                    new ContentCachingRequestWrapper(ServletUtils.getRequest());
+            String requestBody = new String(cachingRequestWrapper.getContentAsByteArray());
+
+            Map<String, String[]> parameterMap = ServletUtils.getRequest().getParameterMap();
+            String params = new ObjectMapper().writeValueAsString(parameterMap);
             String requestURI = ServletUtils.getRequestURI();
             Long userId = SecurityUtils.getUserId();
             String opName = annotation.opName();
             String opContext = annotation.value() + " 状态信息: " + resp.getMessage();
-            final SystemLog systemLog = SystemLog.getBuilder()
-                    .setApiPath(requestURI)
-                    .setOpContext(opContext)
-                    .setOpName(opName)
-                    .setUserId(userId)
-                    .setIpAddress(ip)
-                    .now().build();
+
             if(annotation.saveToSql()){
-                syncTaskExecutor.submit(() -> systemLogService.insertLog(systemLog));
+                syncTaskExecutor.submit(() -> {
+                    final SystemLog systemLog = SystemLog.getBuilder()
+                            .setApiPath(requestURI)
+                            .setOpContext(opContext)
+                            .setOpName(opName)
+                            .setUserId(userId)
+                            .setIpAddress(ip)
+                            .setOpBody(requestBody)
+                            .setParams(params)
+                            .now().build();
+                    systemLogService.insertLog(systemLog);
+                });
             }
         }
         return result;

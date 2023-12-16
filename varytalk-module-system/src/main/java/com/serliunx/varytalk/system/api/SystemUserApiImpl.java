@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.system.api;
 
-import com.serliunx.varytalk.api.system.user.SystemUserApi;
+import com.serliunx.varytalk.api.system.SystemUserApi;
+import com.serliunx.varytalk.api.system.entity.Permission;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.PermissionService;
 import com.serliunx.varytalk.system.service.SystemUserService;
@@ -40,5 +41,10 @@ public class SystemUserApiImpl implements SystemUserApi {
             return false;
         }
         return permissionService.hasPermission(systemUser, permission);
+    }
+
+    @Override
+    public boolean hasPermission(Long userId, Permission permission) {
+        return hasPermission(userId, permission.getValue());
     }
 }

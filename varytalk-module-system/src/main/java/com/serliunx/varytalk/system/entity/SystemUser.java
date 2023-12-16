@@ -2,6 +2,7 @@ package com.serliunx.varytalk.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.serliunx.varytalk.api.system.entity.Permission;
 import com.serliunx.varytalk.api.system.entity.Role;
 import com.serliunx.varytalk.api.system.entity.User;
 import com.serliunx.varytalk.common.base.BaseEntity;

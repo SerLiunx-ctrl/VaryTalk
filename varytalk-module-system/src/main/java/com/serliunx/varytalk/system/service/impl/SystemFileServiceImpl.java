@@ -7,10 +7,17 @@ import com.serliunx.varytalk.system.entity.SystemFile;
 import com.serliunx.varytalk.system.mapper.SystemFileMapper;
 import com.serliunx.varytalk.system.service.SystemFileService;
 import com.serliunx.varytalk.system.service.SystemUserService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +45,7 @@ public class SystemFileServiceImpl implements SystemFileService {
 
     @Override
     public SystemFile uploadFile(MultipartFile multipartFile) {
-        String name = UUID.randomUUID().toString();
+        String name = UUID.randomUUID() + "u" + SecurityUtils.getUserId() + "r" + SecurityUtils.getRoleId();
         String path = generateFullPath(systemAutoConfigurer.getFileInfo().getUploadPath())
                 .replace("/", File.separator);
         File dir = new File(path);
@@ -67,6 +74,28 @@ public class SystemFileServiceImpl implements SystemFileService {
         systemFile.setCreateBy(systemUserService.selectUserByIdFlatted(SecurityUtils.getUserId()).getUsername());
         insertFile(systemFile);
         return systemFile;
+    }
+
+    @Override
+    public void downLoadFile(String fileName, HttpServletResponse response) {
+        SystemFile systemFile = systemFileMapper.selectByName(fileName);
+        if(systemFile == null){
+            throw new ServiceException("文件信息不存在!", 400);
+        }
+        String path = systemFile.getPath();
+        File found = new File(path);
+        try {
+            BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(found));
+            response.setContentType("application/octet-stream");
+            //使用URL编码、解决文件名为中文时会出现的问题
+            String encodedFileName = URLEncoder.encode(systemFile.getOriginalName(), StandardCharsets.UTF_8);
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + encodedFileName);
+            response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+            response.setContentLengthLong(found.length());
+            response.getOutputStream().write(inputStream.readAllBytes());
+        }catch (Exception e){
+            throw new ServiceException(e.getMessage(), 400);
+        }
     }
 
     @Override

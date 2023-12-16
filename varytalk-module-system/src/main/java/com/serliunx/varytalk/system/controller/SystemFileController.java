@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.system.controller;
 
 import com.serliunx.varytalk.common.annotation.Logger;
+import com.serliunx.varytalk.common.annotation.PermitAll;
 import com.serliunx.varytalk.common.annotation.RateLimiter;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;
@@ -34,8 +35,13 @@ public class SystemFileController extends BaseController {
         return success(systemFile);
     }
 
+    /**
+     * 文件下载接口
+     */
     @GetMapping("download")
-    public void download(HttpServletResponse response){
-        
+    @PermitAll
+    @RateLimiter(count = 1)
+    public void download(HttpServletResponse response, String fileName){
+        systemFileService.downLoadFile(fileName, response);
     }
 }
