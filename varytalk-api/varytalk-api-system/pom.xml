@@ -10,8 +10,6 @@
         <version>1.0.0</version>
     </parent>
 
-    <version>${system-api.version}</version>
-
     <packaging>jar</packaging>
     <artifactId>varytalk-api-system</artifactId>
 </project>
