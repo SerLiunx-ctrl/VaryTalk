@@ -103,6 +103,7 @@
                 <artifactId>varytalk-security</artifactId>
                 <version>1.0.0</version>
             </dependency>
+<!--            内部接口实现、调用-->
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-api-system</artifactId>
@@ -111,6 +112,11 @@
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-api-forum</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-api-common</artifactId>
                 <version>1.0.0</version>
             </dependency>
 

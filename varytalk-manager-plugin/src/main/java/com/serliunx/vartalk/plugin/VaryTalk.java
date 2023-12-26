@@ -35,7 +35,7 @@ public final class VaryTalk {
      * @param author 作者名
      * @return 插件信息(不存在则返回null)
      */
-    public static Collection<VaryTalkPlugin> findPluginsByAuthor(String author){
+    public static Set<VaryTalkPlugin> findPluginsByAuthor(String author){
         return findPluginsByFilter(p -> Arrays.asList(p.getAuthor()).contains(author));
     }
 
@@ -43,11 +43,11 @@ public final class VaryTalk {
      * 获取所有已启用的插件
      * @return 所有已启用的插件
      */
-    public static Collection<VaryTalkPlugin> findPluginsEnabled(){
+    public static Set<VaryTalkPlugin> findPluginsEnabled(){
         return findPluginsByFilter(VaryTalkPlugin::isEnable);
     }
 
-    public static Collection<VaryTalkPlugin> findPluginsByFilter(Predicate<? super VaryTalkPlugin> filter){
+    public static Set<VaryTalkPlugin> findPluginsByFilter(Predicate<? super VaryTalkPlugin> filter){
         return getPlugins()
                 .stream()
                 .filter(filter)

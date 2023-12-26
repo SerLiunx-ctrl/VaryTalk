@@ -80,8 +80,7 @@ public final class PluginLoader {
             Enumeration<JarEntry> entries = file.entries();
             PluginContext pluginContext = null;
             URL[] urls = {new URL("file:" + jarFile.getPath())};
-            URLClassLoader classLoader = new URLClassLoader(new URL[]{jarFile.toURI().toURL()},
-                    this.getClass().getClassLoader());
+            URLClassLoader classLoader = new URLClassLoader(new URL[]{jarFile.toURI().toURL()});
             //加载jar包内的类
             while (entries.hasMoreElements()) {
                 JarEntry entry = entries.nextElement();
