@@ -11,5 +11,5 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>varytalk-api-system</artifactId>
+    <artifactId>varytalk-api-common</artifactId>
 </project>

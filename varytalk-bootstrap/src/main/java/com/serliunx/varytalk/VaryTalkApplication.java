@@ -25,6 +25,7 @@ public class VaryTalkApplication {
         //加载插件, 将插件加载器注册到Spring Bean容器中
         ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
         beanFactory.registerSingleton("varyTalkPluginLoader", pluginLoader);
+        pluginLoader.attachApplicationContext(applicationContext);
         pluginLoader.enable();
         //初始化
         new SystemInitializer(applicationContext).init();

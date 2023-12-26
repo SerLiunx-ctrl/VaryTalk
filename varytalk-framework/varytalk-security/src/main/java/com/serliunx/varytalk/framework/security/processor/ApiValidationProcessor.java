@@ -62,8 +62,7 @@ public class ApiValidationProcessor implements ApplicationContextAware {
         this.applicationContext = applicationContext;
     }
 
-    private void
-    processSingle(JoinPoint joinPoint, ApiValidation apiValidation){
+    private void processSingle(JoinPoint joinPoint, ApiValidation apiValidation){
         Validator validator = applicationContext.getBean(apiValidation.validator());
         if(validator.toChain()){
             String message = String.format("校验器模式冲突! %s 指定了校验器 %s, 但该校验器的模式为校验器链模式!",

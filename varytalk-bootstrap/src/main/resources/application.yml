@@ -84,7 +84,7 @@ spring:
       #数据库序号
       database: 0
       connect-timeout: 10000
-      password: 2636257370
+#      password: 2636257370
       lettuce:
         pool:
           max-wait: -1

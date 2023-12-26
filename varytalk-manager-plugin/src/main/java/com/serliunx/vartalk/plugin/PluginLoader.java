@@ -4,6 +4,7 @@ import com.serliunx.vartalk.plugin.base.VaryTalkPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -12,9 +13,7 @@ import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -27,16 +26,13 @@ public final class PluginLoader {
 
     private final Map<String , VaryTalkPlugin> pluginMap = new HashMap<>();
 
-    private static volatile PluginLoader INSTANCE;
+    private static final PluginLoader INSTANCE = new PluginLoader();
     private static final String PLUGINS_DIRECTORY = "plugins";
     private static final String PLUGIN_FILE_FULL_NAME = "plugin.yml";
 
     private PluginLoader(){}
 
-    public static synchronized PluginLoader getInstance(){
-        if(INSTANCE == null){
-            INSTANCE = new PluginLoader();
-        }
+    public static PluginLoader getInstance(){
         return INSTANCE;
     }
 
@@ -62,9 +58,19 @@ public final class PluginLoader {
     /**
      * 启用所有插件
      */
-    public void enable(){
+    public synchronized void enable(){
         pluginMap.forEach(
-                (key, value) -> value.enabled()
+                (key, value) -> value.onEnable()
+        );
+    }
+
+    /**
+     * 将系统的bean容器挂载到插件中
+     * @param applicationContext 系统bean容器
+     */
+    public synchronized void attachApplicationContext(ConfigurableApplicationContext applicationContext){
+        pluginMap.forEach(
+                (key, value) -> value.attachApplicationContext(applicationContext)
         );
     }
 
@@ -73,20 +79,32 @@ public final class PluginLoader {
         try (JarFile file = new JarFile(jarFile)) {
             Enumeration<JarEntry> entries = file.entries();
             PluginContext pluginContext = null;
+            URL[] urls = {new URL("file:" + jarFile.getPath())};
+            URLClassLoader classLoader = new URLClassLoader(new URL[]{jarFile.toURI().toURL()});
+            //加载jar包内的类
             while (entries.hasMoreElements()) {
                 JarEntry entry = entries.nextElement();
+
+                //识别插件主类
                 if (entry.getName().equals(PLUGIN_FILE_FULL_NAME)) {
                     Yaml yaml = new Yaml();
                     InputStream inputStream = file.getInputStream(entry);
                     pluginContext = yaml.loadAs(inputStream, PluginContext.class);
-                    break;
+                }
+                if (entry.getName().endsWith(".class")) {
+                    String className = entry.getName().replace("/", ".").replace(".class",
+                            "");
+                    try {
+                        // 加载类
+                        Class<?> clazz = classLoader.loadClass(className);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             if(pluginContext == null){
                 return;
             }
-            URL[] urls = {new URL("file:" + jarFile.getPath())};
-            URLClassLoader classLoader = new URLClassLoader(urls);
             try {
                 Class<?> mainClass = classLoader.loadClass(pluginContext.getMain());
                 Class<VaryTalkPlugin> clazz = VaryTalkPlugin.class;
@@ -98,6 +116,10 @@ public final class PluginLoader {
                 VaryTalkPlugin plugin = (VaryTalkPlugin)constructor.newInstance();
                 //调用插件的onLoad方法进行必要的初始化
                 pluginMap.put(pluginContext.getName(), plugin);
+                plugin.setMain(pluginContext.main);
+                plugin.setName(pluginContext.name);
+                plugin.setAuthor(new String[]{"test"});
+                plugin.setVersion(pluginContext.getVersion());
                 plugin.onLoad();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -107,6 +129,14 @@ public final class PluginLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 获取所有被系统成功识别并成功加载的插件
+     * @return 所有已加载的插件
+     */
+    public Set<VaryTalkPlugin> getPlugins(){
+        return new HashSet<>(pluginMap.values());
     }
 
     @Getter
