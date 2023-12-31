@@ -1,8 +1,10 @@
 package com.serliunx.varytalk.system.controller;
 
+import com.serliunx.varytalk.common.annotation.PermitAll;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.base.LoginUser;
 import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
+import com.serliunx.varytalk.common.exception.ServiceException;
 import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.common.util.JwtUtils;
 import com.serliunx.varytalk.common.util.RedisUtils;
@@ -10,6 +12,8 @@ import com.serliunx.varytalk.common.util.SecurityUtils;
 import com.serliunx.varytalk.common.validation.system.SystemUserRegisterGroup;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.entity.query.ChangePasswordQuery;
+import com.serliunx.varytalk.system.entity.resp.CaptchaCode;
+import com.serliunx.varytalk.system.service.CaptchaService;
 import com.serliunx.varytalk.system.service.SystemUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.validation.annotation.Validated;
@@ -21,21 +25,29 @@ public class AuthController extends BaseController {
 
     private final SystemUserService systemUserService;
     private final SystemAutoConfigurer systemAutoConfigurer;
+    private final CaptchaService captchaService;
     private final JwtUtils jwtUtils;
     private final RedisUtils redisUtils;
 
     public AuthController(SystemUserService systemUserService,
                           SystemAutoConfigurer systemAutoConfigurer,
-                          JwtUtils jwtUtils,
+                          CaptchaService captchaService, JwtUtils jwtUtils,
                           RedisUtils redisUtils) {
         this.systemUserService = systemUserService;
         this.systemAutoConfigurer = systemAutoConfigurer;
+        this.captchaService = captchaService;
         this.jwtUtils = jwtUtils;
         this.redisUtils = redisUtils;
     }
 
     @PostMapping("login")
-    public Result login(@RequestBody @Validated LoginUser user){
+    public Result login(@RequestBody @Validated LoginUser user, HttpServletRequest request){
+        String sessionId = request.getSession().getId();
+        String code = captchaService.getCode(sessionId);
+        String captcha = user.getCaptcha();
+        if(code == null || code.isEmpty() || !code.equals(captcha)){
+            throw new ServiceException("验证码错误!", 400);
+        }
         SystemUser userFound = systemUserService.selectUserByUsername(user.getUsername());
         if(userFound == null){
             return fail("该用户不存在!");
@@ -49,6 +61,7 @@ public class AuthController extends BaseController {
         user.setPassword(passWord);
         user.setToken(token);
         user.setId(userFound.getId());
+        captchaService.deleteCode(sessionId);
         return systemUserService.loginUser(user);
     }
 
@@ -85,5 +98,15 @@ public class AuthController extends BaseController {
             return fail("操作失败, 用户未登录!");
         }
         return success(redisUtils.delete(key), "注销成功!");
+    }
+
+    @PermitAll
+    @GetMapping("captcha")
+    public Result captcha(HttpServletRequest request){
+        String sessionId = request.getSession().getId();
+        CaptchaCode captchaCode = new CaptchaCode();
+        captchaCode.setSessionId(sessionId);
+        captchaCode.setCaptchaCode(captchaService.generateCode(sessionId));
+        return success(captchaCode, "成功获取验证码!");
     }
 }
