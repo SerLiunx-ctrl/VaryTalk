@@ -40,4 +40,18 @@ public class SystemRoleController extends BaseController {
         systemRoleService.insertRole(systemRole);
         return success(systemRole.getId());
     }
+
+    @PutMapping("update")
+    @ApiValidation(value = "system.role.update", group = PermissionGroup.class)
+    @Logger(opName = "角色接口", value = "更新角色信息")
+    public Result update(@RequestBody SystemRole role){
+        return success();
+    }
+
+    @DeleteMapping("delete")
+    @ApiValidation(value = "system.role.delete", group = PermissionGroup.class)
+    @Logger(opName = "角色接口", value = "删除角色信息")
+    public Result delete(Long roleId){
+        return success();
+    }
 }

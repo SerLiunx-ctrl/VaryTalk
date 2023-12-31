@@ -38,7 +38,7 @@ public interface Validator extends Order, Comparable<Validator>{
     /**
      * 是否需要将该验证器加入到校验器链中
      * <li> 如果校验器属于独立校验器, 请重写该方法并返回false
-     * <li> 为重写该方法则默认校验器需要加入到校验器链中
+     * <li> 未重写该方法则默认校验器需要加入到校验器链中
      * <li> 如果指定了校验器, 但对应的校验器非独立模式则会抛出异常
      */
     default boolean toChain(){

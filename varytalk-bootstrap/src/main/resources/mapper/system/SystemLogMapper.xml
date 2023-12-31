@@ -11,12 +11,18 @@
         <result property="apiPath" column="api_path"/>
         <result property="opName" column="op_name"/>
         <result property="opContext" column="op_context"/>
+        <result property="opParams" column="op_params"/>
+        <result property="opBody" column="op_body"/>
         <result property="opTime" column="op_time"/>
     </resultMap>
 
     <sql id="log">
-        select sl.id, sl.user_id, sl.ip_address, su.username as username, sl.api_path, sl.op_name, sl.op_context, sl.op_time from sys_log sl
-        left join sys_user su on sl.user_id = su.id where sl.id > 0
+        select
+            sl.id, sl.user_id, sl.ip_address, su.username as username, sl.api_path, sl.op_name, sl.op_context, sl.op_time, sl.op_params, sl.op_body
+        from
+            sys_log sl left join sys_user su on sl.user_id = su.id
+        where
+            sl.id > 0
     </sql>
 
     <select id="selectList" parameterType="com.serliunx.varytalk.system.entity.SystemLog" resultMap="logResult">
