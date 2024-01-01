@@ -34,6 +34,12 @@ public class LoginUser {
     private String password;
 
     /**
+     * 验证码
+     */
+    @NotEmpty(message = "验证码不能为空!")
+    private String captcha;
+
+    /**
      * 登录ip
      */
     private String loginIp;

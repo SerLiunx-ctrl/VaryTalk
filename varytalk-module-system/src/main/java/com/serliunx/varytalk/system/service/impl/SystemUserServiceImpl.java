@@ -106,7 +106,8 @@ public class SystemUserServiceImpl implements SystemUserService {
         user.setLoginIp(ServletUtils.getIp());
         user.setClient(ServletUtils.getAgent());
         user.setLoginTime(new Date());
-        this.redisUtils.put(systemAutoConfigurer.getRedisPrefix().getOnlineUsers() + user.getUsername(), user,
+        this.redisUtils.put(systemAutoConfigurer.getRedisPrefix().getMainPrefix() + systemAutoConfigurer
+                        .getRedisPrefix().getOnlineUsers() + user.getUsername(), user,
                 systemAutoConfigurer.getTokenExpireHour() * 3600);
         //设置缓存
         return Result.success(user);
@@ -141,7 +142,8 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     public Set<LoginUser> getOnlineUser() {
-        Set<String> keys = redisUtils.keys(systemAutoConfigurer.getRedisPrefix().getOnlineUsers() + "*");
+        Set<String> keys = redisUtils.keys(systemAutoConfigurer.getRedisPrefix().getMainPrefix() +
+                systemAutoConfigurer.getRedisPrefix().getOnlineUsers() + "*");
         Set<LoginUser> users = new HashSet<>();
         for (String key : keys) {
             users.add((LoginUser) redisUtils.get(key));

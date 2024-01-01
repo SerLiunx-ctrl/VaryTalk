@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.forum.controller;
 
-import com.serliunx.varytalk.api.system.entity.User;
 import com.serliunx.varytalk.api.system.SystemUserApi;
+import com.serliunx.varytalk.api.system.entity.User;
 import com.serliunx.varytalk.common.annotation.Logger;
 import com.serliunx.varytalk.common.base.BaseController;
 import com.serliunx.varytalk.common.result.Result;

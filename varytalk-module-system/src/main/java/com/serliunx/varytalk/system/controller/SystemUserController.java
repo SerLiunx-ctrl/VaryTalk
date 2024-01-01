@@ -10,10 +10,8 @@ import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
 import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import com.serliunx.varytalk.system.entity.SystemRole;
 import com.serliunx.varytalk.system.entity.SystemUser;
-import com.serliunx.varytalk.system.event.UserUpdateEvent;
 import com.serliunx.varytalk.system.service.SystemRoleService;
 import com.serliunx.varytalk.system.service.SystemUserService;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,14 +23,11 @@ public class SystemUserController extends BaseController {
 
     private final SystemUserService systemUserService;
     private final SystemRoleService systemRoleService;
-    private final ApplicationEventPublisher publisher;
 
     public SystemUserController(SystemUserService systemUserService,
-                                SystemRoleService systemRoleService,
-                                ApplicationEventPublisher publisher) {
+                                SystemRoleService systemRoleService) {
         this.systemUserService = systemUserService;
         this.systemRoleService = systemRoleService;
-        this.publisher = publisher;
     }
 
     @GetMapping("list")
@@ -96,7 +91,6 @@ public class SystemUserController extends BaseController {
             return fail("未找到该角色!");
         }
         systemUserService.updateRole(systemUser);
-        publisher.publishEvent(new UserUpdateEvent(systemUserFound));
         return success();
     }
 

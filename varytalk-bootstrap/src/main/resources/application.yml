@@ -32,6 +32,14 @@ talk-system:
   http-client:
     #客户端组件扫描包路径
     base-package: com.serliunx.varytalk
+  #验证码设置
+  captcha:
+    #验证码字符
+    characters: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+    #验证码有效期
+    time: 300
+    #验证码强度
+    length: 4
 #服务器相关设置
 server:
   error:

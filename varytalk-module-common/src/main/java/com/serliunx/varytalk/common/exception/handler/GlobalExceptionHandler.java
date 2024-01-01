@@ -92,6 +92,7 @@ public class GlobalExceptionHandler {
      * @return 结果
      */
     @ExceptionHandler(RuntimeException.class)
+    @SuppressWarnings("all")
     public Result doDefaultException(RuntimeException e){
         logger.error("发生异常-> {}: {}", e.getClass().getName(), e.getMessage());
         e.printStackTrace();

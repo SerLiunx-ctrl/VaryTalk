@@ -15,11 +15,9 @@ public interface Validator extends Order, Comparable<Validator>{
      * @param validationContext 验证上下文
      * @return 验证通过返回真、否则返回假.
      * <li> 未通过时将不会继续执行剩下的校验器(如果校验器模式为执行链模式)
-     * <li> 当校验器为独立验证器时返回值将不会有任何效果
      * @see ValidationContext
      */
     boolean preValidate(ValidationContext validationContext);
-
 
     /**
      * 校验器的分组
@@ -38,7 +36,7 @@ public interface Validator extends Order, Comparable<Validator>{
     /**
      * 是否需要将该验证器加入到校验器链中
      * <li> 如果校验器属于独立校验器, 请重写该方法并返回false
-     * <li> 为重写该方法则默认校验器需要加入到校验器链中
+     * <li> 未重写该方法则默认校验器需要加入到校验器链中
      * <li> 如果指定了校验器, 但对应的校验器非独立模式则会抛出异常
      */
     default boolean toChain(){

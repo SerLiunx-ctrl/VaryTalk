@@ -62,29 +62,28 @@ public class GlobalInterceptor implements HandlerInterceptor {
         }
 
         Long userId = jwtUtils.getUserId(token);
-        LoginUser loginUser = (LoginUser) redisUtils.get(systemAutoConfigurer.getRedisPrefix().getOnlineUsers() +
-                jwtUtils.getUsername(token));
+        LoginUser loginUser = (LoginUser) redisUtils.get(systemAutoConfigurer.getRedisPrefix().getMainPrefix() +
+                systemAutoConfigurer.getRedisPrefix().getOnlineUsers() + jwtUtils.getUsername(token));
         if(loginUser == null || !loginUser.getToken().equals(token)){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             throw new ServiceException("token已失效, 请重新登录!", 401);
         }
-        SystemUser cachedUser = (SystemUser)redisUtils.get(systemAutoConfigurer.getRedisPrefix().getUserCache()
-                + loginUser.getUsername());
+        SystemUser cachedUser = (SystemUser)redisUtils.get(systemAutoConfigurer.getRedisPrefix().getMainPrefix() +
+                systemAutoConfigurer.getRedisPrefix().getUserCache() + loginUser.getUsername());
         SystemUser systemUser = cachedUser == null ? systemUserService.selectUserById(userId) : cachedUser;
         if(systemUser == null){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             throw new ServiceException("token验证失败, 用户不存在!", 401);
         }
         //将用户信息放到redis缓存中
-        redisUtils.put(systemAutoConfigurer.getRedisPrefix().getUserCache() + systemUser.getUsername(),
-                systemUser, systemAutoConfigurer.getRedisTtl().getUserCache(), TimeUnit.HOURS);
-
+        redisUtils.put(systemAutoConfigurer.getRedisPrefix().getMainPrefix() + systemAutoConfigurer.getRedisPrefix()
+                        .getUserCache() + systemUser.getUsername(), systemUser, systemAutoConfigurer.getRedisTtl()
+                .getUserCache(), TimeUnit.HOURS);
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
         map.put("username", systemUser.getUsername());
         map.put("roleId", systemUser.getRoleId());
         SecurityUtils.setUserInfo(map);
-
         return true;
     }
 
