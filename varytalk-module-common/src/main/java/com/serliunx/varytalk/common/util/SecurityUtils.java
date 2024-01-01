@@ -42,7 +42,7 @@ public class SecurityUtils {
      * @return 用户名
      */
     public static String getUsername(){
-        return (String)infoMap.get().get("username");
+        return infoMap.get().get("username").toString();
     }
 
     /**

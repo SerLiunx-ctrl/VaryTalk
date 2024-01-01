@@ -3,7 +3,6 @@ package com.serliunx.varytalk.system.service.impl;
 import com.serliunx.varytalk.common.constants.RedisKeyConstants;
 import com.serliunx.varytalk.common.util.RedisUtils;
 import com.serliunx.varytalk.common.util.StringUtils;
-import com.serliunx.varytalk.framework.cache.annotation.Cache;
 import com.serliunx.varytalk.system.service.CaptchaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

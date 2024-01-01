@@ -92,7 +92,7 @@ public class AuthController extends BaseController {
     @PostMapping("logout")
     public Result logout(HttpServletRequest request){
         String token = request.getHeader(systemAutoConfigurer.getAuthHeader());
-        String key = systemAutoConfigurer.getRedisPrefix().getOnlineUsers() + jwtUtils.getUsername(token);
+        String key = systemAutoConfigurer.getRedisPrefix().getMainPrefix() + systemAutoConfigurer.getRedisPrefix().getOnlineUsers() + jwtUtils.getUsername(token);
         LoginUser loginUser = redisUtils.get(key, LoginUser.class);
         if(loginUser == null){
             return fail("操作失败, 用户未登录!");

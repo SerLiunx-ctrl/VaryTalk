@@ -6,7 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@SuppressWarnings("all")
 @ConfigurationProperties("talk-system")
 public class SystemAutoConfigurer {
 
@@ -49,7 +48,6 @@ public class SystemAutoConfigurer {
     @Setter
     @Getter
     public static class RedisPrefix{
-
         /**
          * redis主键
          */
@@ -58,18 +56,17 @@ public class SystemAutoConfigurer {
         /**
          * 当前在线用户, 最终为 mainPrefix+onlineUsers 如: vary_talk:user_online:
          */
-        private String onlineUsers = mainPrefix + "user_online:";
+        private String onlineUsers = "user_online:";
 
         /**
          * 用户信息缓存, 用于鉴权、避免频繁查询数据库
          */
-        private String userCache = mainPrefix +  "user_cache:";
+        private String userCache = "user_cache:";
     }
 
     @Setter
     @Getter
     public static class RedisTtl{
-
         /**
          * 用户信息缓存, 用于鉴权、避免频繁查询数据库
          */
@@ -79,7 +76,6 @@ public class SystemAutoConfigurer {
     @Setter
     @Getter
     public static class FileInfo{
-
         /**
          * 文件上传路径
          */
@@ -89,7 +85,6 @@ public class SystemAutoConfigurer {
     @Setter
     @Getter
     public static class HttpClient{
-
         /**
          * Http客户端扫描路径
          */
@@ -99,7 +94,6 @@ public class SystemAutoConfigurer {
     @Setter
     @Getter
     public static class Captcha{
-
         /**
          * 验证码字符
          */
