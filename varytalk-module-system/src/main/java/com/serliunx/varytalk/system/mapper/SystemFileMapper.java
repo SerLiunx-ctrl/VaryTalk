@@ -13,4 +13,6 @@ public interface SystemFileMapper {
     Long insertFile(SystemFile systemFile);
 
     SystemFile selectByName(String name);
+
+    void updateCount(Long id);
 }

@@ -60,7 +60,16 @@ public final class PluginLoader {
      */
     public synchronized void enable(){
         pluginMap.forEach(
-                (key, value) -> value.onEnable()
+                (key, value) -> {
+                    try {
+                        value.onEnable();
+                        log.info("{} 已启用.", key);
+                    }catch (Exception e){
+                        value.disable();
+                        value.onDisable();
+                        throw new RuntimeException(e.getMessage());
+                    }
+                }
         );
     }
 

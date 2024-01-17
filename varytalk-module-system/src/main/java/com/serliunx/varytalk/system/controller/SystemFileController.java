@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("file")
 public class SystemFileController extends BaseController {
@@ -21,6 +23,14 @@ public class SystemFileController extends BaseController {
 
     public SystemFileController(SystemFileService systemFileService) {
         this.systemFileService = systemFileService;
+    }
+
+    @GetMapping("list")
+    @ApiValidation(value = "system.file.list", group = PermissionGroup.class)
+    public Result list(SystemFile systemFile){
+        startPage();
+        List<SystemFile> systemFiles = systemFileService.selectList(systemFile);
+        return page(systemFiles);
     }
 
     @PostMapping("upload")
@@ -42,6 +52,6 @@ public class SystemFileController extends BaseController {
     @PermitAll
     @RateLimiter(count = 1)
     public void download(HttpServletResponse response, String fileName){
-        systemFileService.downLoadFile(fileName, response);
+        systemFileService.downloadFile(fileName, response);
     }
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonPropertyOrder({"id", "userId", "originalName", "name", "path", "fileSize"})
+@JsonPropertyOrder({"id", "userId", "originalName", "name", "path", "fileSize", "downloadCount"})
 public class SystemFile extends BaseEntity {
 
     private Long id;
@@ -16,4 +16,5 @@ public class SystemFile extends BaseEntity {
     private String name;
     private String path;
     private Long fileSize;
+    private Long downloadCount;
 }

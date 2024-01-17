@@ -10,6 +10,7 @@
         <result property="name" column="name"/>
         <result property="path" column="path"/>
         <result property="fileSize" column="file_size"/>
+        <result property="downloadCount" column="download_count"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -20,7 +21,7 @@
     <sql id="file">
         select * from sys_file sf where id > 0
     </sql>
-    
+
     <select id="selectList" parameterType="com.serliunx.varytalk.system.entity.SystemFile" resultMap="fileResult">
         <include refid="file"/>
         <if test="name != null and name != ''">
@@ -37,4 +38,8 @@
         insert into sys_file(id, user_id, original_name, name, path, file_size, create_by, create_time, update_by, update_time, remark)
         values(null, #{userId}, #{originalName}, #{name}, #{path}, #{fileSize}, #{createBy}, sysdate(), null, null, #{remark})
     </insert>
+
+    <update id="updateCount" parameterType="long">
+        update sys_file set download_count = download_count + 1 where id = #{id}
+    </update>
 </mapper>

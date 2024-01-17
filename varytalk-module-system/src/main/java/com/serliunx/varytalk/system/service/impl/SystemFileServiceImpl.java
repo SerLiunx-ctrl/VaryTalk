@@ -77,7 +77,7 @@ public class SystemFileServiceImpl implements SystemFileService {
     }
 
     @Override
-    public void downLoadFile(String fileName, HttpServletResponse response) {
+    public void downloadFile(String fileName, HttpServletResponse response) {
         SystemFile systemFile = systemFileMapper.selectByName(fileName);
         if(systemFile == null){
             throw new ServiceException("文件信息不存在!", 400);
@@ -93,6 +93,7 @@ public class SystemFileServiceImpl implements SystemFileService {
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
             response.setContentLengthLong(found.length());
             response.getOutputStream().write(inputStream.readAllBytes());
+            systemFileMapper.updateCount(systemFile.getId());
         }catch (Exception e){
             throw new ServiceException(e.getMessage(), 400);
         }

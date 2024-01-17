@@ -12,7 +12,7 @@ public interface SystemFileService {
 
     SystemFile uploadFile(MultipartFile multipartFile);
 
-    void downLoadFile(String fileName, HttpServletResponse response);
+    void downloadFile(String fileName, HttpServletResponse response);
 
     Long insertFile(SystemFile systemFile);
 }
