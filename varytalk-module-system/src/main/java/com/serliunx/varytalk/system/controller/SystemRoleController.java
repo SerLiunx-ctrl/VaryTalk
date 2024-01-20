@@ -1,8 +1,8 @@
 package com.serliunx.varytalk.system.controller;
 
-import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.base.BaseController;
-import com.serliunx.varytalk.common.result.Result;
+import com.serliunx.varytalk.framework.core.annotation.Logger;
+import com.serliunx.varytalk.framework.core.entity.base.BaseController;
+import com.serliunx.varytalk.framework.core.entity.result.Result;
 import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
 import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import com.serliunx.varytalk.system.entity.SystemRole;

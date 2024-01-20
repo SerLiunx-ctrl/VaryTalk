@@ -2,7 +2,7 @@ package com.serliunx.varytalk.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.serliunx.varytalk.api.system.entity.Permission;
-import com.serliunx.varytalk.common.base.BaseEntity;
+import com.serliunx.varytalk.framework.core.entity.base.BaseEntity;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 

@@ -1,6 +1,6 @@
 package com.serliunx.varytalk.framework.security.support;
 
-import com.serliunx.varytalk.common.exception.ServiceException;
+import com.serliunx.varytalk.framework.core.exception.ServiceException;
 import com.serliunx.varytalk.framework.security.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
 

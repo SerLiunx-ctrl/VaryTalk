@@ -2,7 +2,7 @@ package com.serliunx.varytalk.forum.service.impl;
 
 import com.serliunx.varytalk.api.system.SystemUserApi;
 import com.serliunx.varytalk.api.system.entity.User;
-import com.serliunx.varytalk.common.exception.ServiceException;
+import com.serliunx.varytalk.framework.core.exception.ServiceException;
 import com.serliunx.varytalk.forum.entity.ForumPoint;
 import com.serliunx.varytalk.forum.entity.ForumUserPoint;
 import com.serliunx.varytalk.forum.mapper.ForumUserPointMapper;

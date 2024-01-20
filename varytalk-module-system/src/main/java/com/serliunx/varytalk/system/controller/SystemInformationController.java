@@ -1,10 +1,10 @@
 package com.serliunx.varytalk.system.controller;
 
-import com.serliunx.varytalk.common.annotation.PermitAll;
-import com.serliunx.varytalk.common.base.BaseController;
-import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
-import com.serliunx.varytalk.common.result.CountResult;
-import com.serliunx.varytalk.common.result.Result;
+import com.serliunx.varytalk.framework.core.annotation.PermitAll;
+import com.serliunx.varytalk.framework.core.config.SystemAutoConfigurer;
+import com.serliunx.varytalk.framework.core.entity.base.BaseController;
+import com.serliunx.varytalk.framework.core.entity.result.CountResult;
+import com.serliunx.varytalk.framework.core.entity.result.Result;
 import com.serliunx.varytalk.schedule.service.BaiduMapWeatherService;
 import com.serliunx.varytalk.schedule.service.GithubRepositoryService;
 import com.serliunx.varytalk.system.service.SystemInformationService;

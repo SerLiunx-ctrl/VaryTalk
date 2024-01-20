@@ -1,6 +1,7 @@
 package com.serliunx.varytalk.forum.enums;
 
-import com.serliunx.varytalk.common.exception.ServiceException;
+
+import com.serliunx.varytalk.framework.core.exception.ServiceException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package com.serliunx.varytalk.framework.security.processor;
 
-import com.serliunx.varytalk.common.exception.ServiceException;
+import com.serliunx.varytalk.framework.core.exception.ServiceException;
 import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
 import com.serliunx.varytalk.framework.security.annotation.ApiValidations;
 import com.serliunx.varytalk.framework.security.exception.ModeException;

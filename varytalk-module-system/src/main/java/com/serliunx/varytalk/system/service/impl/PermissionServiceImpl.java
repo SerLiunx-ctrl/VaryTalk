@@ -1,6 +1,6 @@
 package com.serliunx.varytalk.system.service.impl;
 
-import com.serliunx.varytalk.common.exception.PermissionNotFoundException;
+import com.serliunx.varytalk.framework.core.exception.PermissionNotFoundException;
 import com.serliunx.varytalk.system.entity.SystemPermission;
 import com.serliunx.varytalk.system.entity.SystemRolePermission;
 import com.serliunx.varytalk.system.entity.SystemUser;

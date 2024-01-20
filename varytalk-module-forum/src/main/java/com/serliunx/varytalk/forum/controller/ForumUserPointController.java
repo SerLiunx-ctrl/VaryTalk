@@ -2,8 +2,8 @@ package com.serliunx.varytalk.forum.controller;
 
 import com.serliunx.varytalk.api.system.SystemUserApi;
 import com.serliunx.varytalk.api.system.entity.User;
-import com.serliunx.varytalk.common.base.BaseController;
-import com.serliunx.varytalk.common.result.Result;
+import com.serliunx.varytalk.framework.core.entity.base.BaseController;
+import com.serliunx.varytalk.framework.core.entity.result.Result;
 import com.serliunx.varytalk.forum.entity.ForumPoint;
 import com.serliunx.varytalk.forum.entity.ForumUserPoint;
 import com.serliunx.varytalk.forum.service.ForumPointService;

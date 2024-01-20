@@ -21,10 +21,6 @@
 <!--        模块依赖-->
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-module-schedule</artifactId>
         </dependency>
         <dependency>
@@ -35,6 +31,10 @@
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.serliunx.varytalk</groupId>
+            <artifactId>varytalk-core</artifactId>
         </dependency>
 <!--        其它依赖-->
         <dependency>

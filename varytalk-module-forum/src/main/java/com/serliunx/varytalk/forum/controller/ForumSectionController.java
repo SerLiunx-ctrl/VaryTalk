@@ -1,13 +1,13 @@
 package com.serliunx.varytalk.forum.controller;
 
-import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.base.BaseController;
-import com.serliunx.varytalk.common.result.CountResult;
-import com.serliunx.varytalk.common.result.Result;
 import com.serliunx.varytalk.forum.entity.ForumCategory;
 import com.serliunx.varytalk.forum.entity.ForumSection;
 import com.serliunx.varytalk.forum.service.ForumCategoryService;
 import com.serliunx.varytalk.forum.service.ForumSectionService;
+import com.serliunx.varytalk.framework.core.annotation.Logger;
+import com.serliunx.varytalk.framework.core.entity.base.BaseController;
+import com.serliunx.varytalk.framework.core.entity.result.CountResult;
+import com.serliunx.varytalk.framework.core.entity.result.Result;
 import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
 import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
 import org.springframework.validation.annotation.Validated;

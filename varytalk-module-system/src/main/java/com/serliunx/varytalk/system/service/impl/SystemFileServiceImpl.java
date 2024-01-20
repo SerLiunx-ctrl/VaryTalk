@@ -1,8 +1,8 @@
 package com.serliunx.varytalk.system.service.impl;
 
-import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
-import com.serliunx.varytalk.common.exception.ServiceException;
-import com.serliunx.varytalk.common.util.SecurityUtils;
+import com.serliunx.varytalk.framework.core.config.SystemAutoConfigurer;
+import com.serliunx.varytalk.framework.core.exception.ServiceException;
+import com.serliunx.varytalk.framework.core.tool.SecurityUtils;
 import com.serliunx.varytalk.system.entity.SystemFile;
 import com.serliunx.varytalk.system.mapper.SystemFileMapper;
 import com.serliunx.varytalk.system.service.SystemFileService;

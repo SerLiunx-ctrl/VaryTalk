@@ -1,14 +1,14 @@
 package com.serliunx.varytalk.system.service.impl;
 
-import com.serliunx.varytalk.common.annotation.SetOperator;
-import com.serliunx.varytalk.common.base.LoginUser;
-import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
-import com.serliunx.varytalk.common.result.Result;
-import com.serliunx.varytalk.common.util.RedisUtils;
-import com.serliunx.varytalk.common.util.SecurityUtils;
-import com.serliunx.varytalk.common.util.ServletUtils;
 import com.serliunx.varytalk.framework.cache.annotation.Cache;
 import com.serliunx.varytalk.framework.cache.annotation.TagValue;
+import com.serliunx.varytalk.framework.core.annotation.SetOperator;
+import com.serliunx.varytalk.framework.core.config.SystemAutoConfigurer;
+import com.serliunx.varytalk.framework.core.entity.base.LoginUser;
+import com.serliunx.varytalk.framework.core.entity.result.Result;
+import com.serliunx.varytalk.framework.core.tool.RedisUtils;
+import com.serliunx.varytalk.framework.core.tool.SecurityUtils;
+import com.serliunx.varytalk.framework.core.tool.ServletUtils;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.mapper.SystemUserMapper;
 import com.serliunx.varytalk.system.service.SystemUserService;

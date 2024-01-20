@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.system.config;
 
-import com.serliunx.varytalk.common.interceptor.LogInterceptor;
-import com.serliunx.varytalk.common.interceptor.RateLimitInterceptor;
+import com.serliunx.varytalk.framework.core.interceptor.LogInterceptor;
+import com.serliunx.varytalk.framework.core.interceptor.RateLimitInterceptor;
 import com.serliunx.varytalk.system.interceptor.GlobalInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

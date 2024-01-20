@@ -1,8 +1,8 @@
 package com.serliunx.varytalk.system.aop;
 
-import com.serliunx.varytalk.common.annotation.SetOperator;
-import com.serliunx.varytalk.common.util.AopUtils;
-import com.serliunx.varytalk.common.util.SecurityUtils;
+import com.serliunx.varytalk.framework.core.annotation.SetOperator;
+import com.serliunx.varytalk.framework.core.tool.AopUtils;
+import com.serliunx.varytalk.framework.core.tool.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -21,7 +21,7 @@ public class OperatorAdvice {
 
     private final Map<String, Field> fieldMap = new HashMap<>();
 
-    @Before("@annotation(com.serliunx.varytalk.common.annotation.SetOperator)")
+    @Before("@annotation(com.serliunx.varytalk.framework.core.annotation.SetOperator)")
     public void dataOperator(JoinPoint joinPoint){
         try {
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();

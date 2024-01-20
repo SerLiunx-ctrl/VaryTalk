@@ -1,6 +1,6 @@
 package com.serliunx.varytalk.configuration;
 
-import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
+import com.serliunx.varytalk.framework.core.config.SystemAutoConfigurer;
 import com.serliunx.varytalk.schedule.entity.github.Contributor;
 import com.serliunx.varytalk.schedule.service.GithubRepositoryService;
 import com.serliunx.varytalk.system.entity.SystemPermission;
