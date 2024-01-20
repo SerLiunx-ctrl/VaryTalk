@@ -1,6 +1,6 @@
 package com.serliunx.varytalk.system.service.impl;
 
-import com.serliunx.varytalk.common.annotation.SetOperator;
+import com.serliunx.varytalk.framework.core.annotation.SetOperator;
 import com.serliunx.varytalk.system.entity.SystemRole;
 import com.serliunx.varytalk.system.mapper.SystemRoleMapper;
 import com.serliunx.varytalk.system.service.SystemRoleService;

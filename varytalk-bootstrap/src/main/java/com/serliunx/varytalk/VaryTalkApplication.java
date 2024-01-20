@@ -1,8 +1,8 @@
 package com.serliunx.varytalk;
 
 import com.serliunx.vartalk.plugin.PluginLoader;
-import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
 import com.serliunx.varytalk.configuration.SystemInitializer;
+import com.serliunx.varytalk.framework.core.config.SystemAutoConfigurer;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

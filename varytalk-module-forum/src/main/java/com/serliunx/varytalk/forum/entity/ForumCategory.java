@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.forum.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.serliunx.varytalk.common.base.BaseEntity;
+import com.serliunx.varytalk.framework.core.entity.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 

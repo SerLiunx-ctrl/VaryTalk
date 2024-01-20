@@ -1,7 +1,7 @@
 package com.serliunx.varytalk.system.service;
 
-import com.serliunx.varytalk.common.base.LoginUser;
-import com.serliunx.varytalk.common.result.Result;
+import com.serliunx.varytalk.framework.core.entity.base.LoginUser;
+import com.serliunx.varytalk.framework.core.entity.result.Result;
 import com.serliunx.varytalk.system.entity.SystemUser;
 
 import java.util.List;

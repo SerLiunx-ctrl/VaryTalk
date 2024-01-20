@@ -1,12 +1,12 @@
 package com.serliunx.varytalk.system.interceptor;
 
-import com.serliunx.varytalk.common.annotation.PermitAll;
-import com.serliunx.varytalk.common.base.LoginUser;
-import com.serliunx.varytalk.common.config.autoconfiguer.SystemAutoConfigurer;
-import com.serliunx.varytalk.common.exception.ServiceException;
-import com.serliunx.varytalk.common.util.JwtUtils;
-import com.serliunx.varytalk.common.util.RedisUtils;
-import com.serliunx.varytalk.common.util.SecurityUtils;
+import com.serliunx.varytalk.framework.core.annotation.PermitAll;
+import com.serliunx.varytalk.framework.core.config.SystemAutoConfigurer;
+import com.serliunx.varytalk.framework.core.entity.base.LoginUser;
+import com.serliunx.varytalk.framework.core.exception.ServiceException;
+import com.serliunx.varytalk.framework.core.tool.JwtUtils;
+import com.serliunx.varytalk.framework.core.tool.RedisUtils;
+import com.serliunx.varytalk.framework.core.tool.SecurityUtils;
 import com.serliunx.varytalk.system.entity.SystemUser;
 import com.serliunx.varytalk.system.service.SystemUserService;
 import jakarta.servlet.http.HttpServletRequest;

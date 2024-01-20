@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-module-common</artifactId>
+            <artifactId>varytalk-core</artifactId>
         </dependency>
     </dependencies>
 </project>

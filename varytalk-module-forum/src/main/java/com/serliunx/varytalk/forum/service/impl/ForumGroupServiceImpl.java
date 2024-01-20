@@ -1,6 +1,6 @@
 package com.serliunx.varytalk.forum.service.impl;
 
-import com.serliunx.varytalk.common.annotation.SetOperator;
+import com.serliunx.varytalk.framework.core.annotation.SetOperator;
 import com.serliunx.varytalk.forum.entity.ForumGroup;
 import com.serliunx.varytalk.forum.mapper.ForumGroupMapper;
 import com.serliunx.varytalk.forum.service.ForumGroupService;

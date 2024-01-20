@@ -2,11 +2,11 @@ package com.serliunx.varytalk.system.aop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.serliunx.varytalk.common.annotation.Logger;
-import com.serliunx.varytalk.common.executor.SyncTaskExecutor;
-import com.serliunx.varytalk.common.result.Result;
-import com.serliunx.varytalk.common.util.SecurityUtils;
-import com.serliunx.varytalk.common.util.ServletUtils;
+import com.serliunx.varytalk.framework.core.annotation.Logger;
+import com.serliunx.varytalk.framework.core.entity.result.Result;
+import com.serliunx.varytalk.framework.core.executor.AsyncTaskExecutor;
+import com.serliunx.varytalk.framework.core.tool.SecurityUtils;
+import com.serliunx.varytalk.framework.core.tool.ServletUtils;
 import com.serliunx.varytalk.system.aop.entity.ContextBody;
 import com.serliunx.varytalk.system.entity.SystemLog;
 import com.serliunx.varytalk.system.service.SystemLogService;
@@ -25,15 +25,15 @@ import java.util.Map;
 public class LoggerAdvice {
 
     private final SystemLogService systemLogService;
-    private final SyncTaskExecutor syncTaskExecutor;
+    private final AsyncTaskExecutor asyncTaskExecutor;
 
     public LoggerAdvice(SystemLogService systemLogService,
-                        SyncTaskExecutor syncTaskExecutor) {
+                        AsyncTaskExecutor asyncTaskExecutor) {
         this.systemLogService = systemLogService;
-        this.syncTaskExecutor = syncTaskExecutor;
+        this.asyncTaskExecutor = asyncTaskExecutor;
     }
 
-    @Around("@annotation(com.serliunx.varytalk.common.annotation.Logger)")
+    @Around("@annotation(com.serliunx.varytalk.framework.core.annotation.Logger)")
     public Object apiLogger(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = joinPoint.proceed();
         if(result instanceof Result resp){
@@ -51,7 +51,7 @@ public class LoggerAdvice {
             String opContext = annotation.value() + " 状态信息: " + resp.getMessage();
 
             if(annotation.saveToSql()){
-                syncTaskExecutor.submit(() -> {
+                asyncTaskExecutor.submit(() -> {
                     Object[] args = joinPoint.getArgs();
                     Object arg = null;
                     if(args.length > 0){

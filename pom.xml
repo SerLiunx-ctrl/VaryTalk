@@ -14,7 +14,6 @@
     <modules>
         <module>varytalk-bootstrap</module>
         <module>varytalk-module-system</module>
-        <module>varytalk-module-common</module>
         <module>varytalk-module-console</module>
         <module>varytalk-module-forum</module>
         <module>varytalk-module-schedule</module>
@@ -48,11 +47,6 @@
 <!--            模块引用-->
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
-                <artifactId>varytalk-module-common</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-module-schedule</artifactId>
                 <version>1.0.0</version>
             </dependency>
@@ -82,6 +76,7 @@
                 <version>1.0.0</version>
                 <type>pom</type>
             </dependency>
+<!--            framework-->
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-api</artifactId>
@@ -101,6 +96,11 @@
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>
                 <artifactId>varytalk-security</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-core</artifactId>
                 <version>1.0.0</version>
             </dependency>
 <!--            内部接口实现、调用-->

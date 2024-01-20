@@ -1,6 +1,6 @@
 package com.serliunx.varytalk.system.validator;
 
-import com.serliunx.varytalk.common.util.SecurityUtils;
+import com.serliunx.varytalk.framework.core.tool.SecurityUtils;
 import com.serliunx.varytalk.framework.security.annotation.ApiValidator;
 import com.serliunx.varytalk.framework.security.constant.ValidationType;
 import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
