@@ -36,7 +36,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     }
 
     @Override
-    public String generateCode(String sessionId){
+    public String generateCode(String uuid){
         StringBuilder captchaBuilder = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
@@ -44,21 +44,21 @@ public class CaptchaServiceImpl implements CaptchaService {
             captchaBuilder.append(characters.charAt(index));
         }
         String captcha = captchaBuilder.toString();
-        redisUtils.put(StringUtils.applyPlaceholders(RedisKeyConstants.REDIS_KEY_LOGIN_CAPTCHA, keyPrefix, sessionId),
+        redisUtils.put(StringUtils.applyPlaceholders(RedisKeyConstants.REDIS_KEY_LOGIN_CAPTCHA, keyPrefix, uuid),
                 captcha, (long) time, TimeUnit.SECONDS);
-        log.debug("为客户端: {} 生成了新的验证码 -> {}", sessionId, captcha);
+        log.debug("为客户端: {} 生成了新的验证码 -> {}", uuid, captcha);
         return captcha;
     }
 
     @Override
-    public String getCode(String sessionId){
+    public String getCode(String uuid){
         return (String)redisUtils.get(StringUtils.applyPlaceholders(RedisKeyConstants.REDIS_KEY_LOGIN_CAPTCHA,
-                keyPrefix, sessionId));
+                keyPrefix, uuid));
     }
 
     @Override
-    public void deleteCode(String sessionId){
+    public void deleteCode(String uuid){
         redisUtils.delete(StringUtils.applyPlaceholders(RedisKeyConstants.REDIS_KEY_LOGIN_CAPTCHA,
-                keyPrefix, sessionId));
+                keyPrefix, uuid));
     }
 }

@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * 日志记录注解
+ * <li> 如果你对AOP的应用和限制不够了解，建议只在Controller的方法使用该接口.
  * @author SerLiunx
  * @since 1.0
  */

@@ -31,7 +31,7 @@ public class SystemUser extends BaseEntity implements User {
 
     @NotNull(message = "账户密码不能为空!", groups = SystemUserInsertGroup.class)
     @NotNull(message = "必须输入你要注册的密码!", groups = SystemUserRegisterGroup.class)
-    @Length(min = 8, max = 20, message = "密码长度必须不符合要求!", groups = SystemUserInsertGroup.class)
+    @Length(min = 8, max = 20, message = "密码长度必须不符合要求!", groups = {SystemUserInsertGroup.class, SystemUserRegisterGroup.class})
     @JsonSerialize(using = SensitiveFieldSerializer.class)
     private String password;
 

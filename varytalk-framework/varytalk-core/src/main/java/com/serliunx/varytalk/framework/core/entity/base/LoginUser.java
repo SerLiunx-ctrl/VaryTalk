@@ -59,4 +59,9 @@ public class LoginUser {
      * 登录token
      */
     private String token;
+
+    /**
+     * 登录信息UUID
+     */
+    private String uuid;
 }
