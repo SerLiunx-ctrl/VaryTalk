@@ -15,10 +15,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.serliunx.varytalk</groupId>
             <artifactId>varytalk-cache</artifactId>
         </dependency>
