@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,8 +39,8 @@ public class CacheProcessor {
     private static final Set<Class<?>> PRIMITIVE_CLASSES = new HashSet<>();
     private static final String REFRESH_TAG = "REFRESH";
     private static final String TAG_VALUE = "VERSION OF THIS DATA IS OUT OF DATE!";
-    private final Map<Method, FieldIndexHolder> entityFields = new HashMap<>(32);
-    private final Map<Method, ValueIndexHolder> valueFields = new HashMap<>(32);
+    private final Map<Method, FieldIndexHolder> entityFieldsCache = new ConcurrentHashMap<>(32);
+    private final Map<Method, ValueIndexHolder> valueFieldsCache = new ConcurrentHashMap<>(32);
 
     /**
      * 缓存key前缀
@@ -106,7 +107,7 @@ public class CacheProcessor {
         Cache cache = method.getAnnotation(Cache.class);
         try{
             String cacheKey = cache.value();
-            int time = cache.time();
+            long time = cache.time();
             TimeUnit timeUnit = cache.timeUnit();
             String key = cacheKey.isEmpty() ? generateKey(joinPoint, signature) : cacheKey;
             String tag = null;
@@ -181,20 +182,27 @@ public class CacheProcessor {
         return false;
     }
 
+    private String findTagInCache(Object[] args, Method method){
+        //检查内存中字段的缓存
+        FieldIndexHolder fieldIndexHolder = entityFieldsCache.get(method);
+        if(fieldIndexHolder != null){
+            return fieldIndexHolder.getTagValue().value() + KEY_DELIMITER + args[fieldIndexHolder.getIndex()].toString();
+        }
+        ValueIndexHolder valueIndexHolder = valueFieldsCache.get(method);
+        if(valueIndexHolder != null){
+            return valueIndexHolder.getTagValue().value() + KEY_DELIMITER + args[valueIndexHolder.getIndex()].toString();
+        }
+        return null;
+    }
+
     /**
      * 根据方法参数生成键值中的tag，用于区分同一个方法的缓存。如不同用户的全部关注用户
      */
     private String gennerateTag(Object[] args, Method method){
-        //检查内存中字段的缓存
-        FieldIndexHolder fieldIndexHolder = entityFields.get(method);
-        if(fieldIndexHolder != null){
-            return fieldIndexHolder.getTagValue().value() + KEY_DELIMITER + args[fieldIndexHolder.getIndex()].toString();
+        String tagInCache = findTagInCache(args, method);
+        if(tagInCache != null){
+            return tagInCache;
         }
-        ValueIndexHolder valueIndexHolder = valueFields.get(method);
-        if(valueIndexHolder != null){
-            return valueIndexHolder.getTagValue().value() + KEY_DELIMITER + args[valueIndexHolder.getIndex()].toString();
-        }
-
         Parameter[] parameters = method.getParameters();
         TagValue tagValue = null;
         TagEntity tagEntity = null;
@@ -218,7 +226,7 @@ public class CacheProcessor {
                     ValueIndexHolder holder = new ValueIndexHolder()
                             .setTagValue(tagValue)
                             .setIndex(index);
-                    valueFields.put(method, holder);
+                    valueFieldsCache.put(method, holder);
                     return tagValue.value() + KEY_DELIMITER + args[index].toString();
                 }catch (Exception e){
                     throw new RuntimeException(e.getMessage());
@@ -259,7 +267,7 @@ public class CacheProcessor {
                         .setField(fieldMatched)
                         .setIndex(index)
                         .setTagValue(entityTagValue);
-                entityFields.put(method, holder);
+                entityFieldsCache.put(method, holder);
                 Object data = fieldMatched.get(args[index]);
                 return data != null ? (entityTagValue.value() + KEY_DELIMITER + data.toString()) : null;
             }catch (Exception e){

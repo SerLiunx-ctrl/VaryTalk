@@ -48,6 +48,10 @@
             <artifactId>varytalk-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.serliunx.varytalk</groupId>
+            <artifactId>varytalk-logging</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
