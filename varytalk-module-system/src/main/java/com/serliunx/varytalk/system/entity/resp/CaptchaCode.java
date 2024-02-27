@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CaptchaCode {
-    private String sessionId;
+    private String uuid;
     private String captchaCode;
 }

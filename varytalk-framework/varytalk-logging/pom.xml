@@ -3,24 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.serliunx.varytalk</groupId>
-        <artifactId>VaryTalk</artifactId>
+        <artifactId>varytalk-framework</artifactId>
         <version>1.0.0</version>
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>varytalk-module-schedule</artifactId>
+    <artifactId>varytalk-logging</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-cache</artifactId>
+            <artifactId>varytalk-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.serliunx.varytalk</groupId>
-            <artifactId>varytalk-httpclient</artifactId>
+            <artifactId>varytalk-api-system</artifactId>
         </dependency>
     </dependencies>
 </project>

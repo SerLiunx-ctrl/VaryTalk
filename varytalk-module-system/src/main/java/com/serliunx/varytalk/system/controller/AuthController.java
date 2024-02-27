@@ -19,6 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("auth")
 public class AuthController extends BaseController {
@@ -41,12 +43,15 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("login")
-    public Result login(@RequestBody @Validated LoginUser user, HttpServletRequest request){
-        String sessionId = request.getSession().getId();
-        String code = captchaService.getCode(sessionId);
+    public Result login(@RequestBody @Validated LoginUser user){
+        String uuid = user.getUuid();
+        if(uuid == null || uuid.isEmpty()){
+            return fail("验证码错误!");
+        }
+        String code = captchaService.getCode(uuid);
         String captcha = user.getCaptcha();
         if(code == null || code.isEmpty() || !code.equals(captcha)){
-            throw new ServiceException("验证码错误!", 400);
+            return fail("验证码错误!");
         }
         SystemUser userFound = systemUserService.selectUserByUsername(user.getUsername());
         if(userFound == null){
@@ -61,7 +66,7 @@ public class AuthController extends BaseController {
         user.setPassword(passWord);
         user.setToken(token);
         user.setId(userFound.getId());
-        captchaService.deleteCode(sessionId);
+        captchaService.deleteCode(uuid);
         return systemUserService.loginUser(user);
     }
 
@@ -92,7 +97,8 @@ public class AuthController extends BaseController {
     @PostMapping("logout")
     public Result logout(HttpServletRequest request){
         String token = request.getHeader(systemAutoConfigurer.getAuthHeader());
-        String key = systemAutoConfigurer.getRedisPrefix().getMainPrefix() + systemAutoConfigurer.getRedisPrefix().getOnlineUsers() + jwtUtils.getUsername(token);
+        String key = systemAutoConfigurer.getRedisPrefix().getMainPrefix() + systemAutoConfigurer.getRedisPrefix()
+                .getOnlineUsers() + jwtUtils.getUsername(token);
         LoginUser loginUser = redisUtils.get(key, LoginUser.class);
         if(loginUser == null){
             return fail("操作失败, 用户未登录!");
@@ -102,11 +108,11 @@ public class AuthController extends BaseController {
 
     @PermitAll
     @GetMapping("captcha")
-    public Result captcha(HttpServletRequest request){
-        String sessionId = request.getSession().getId();
+    public Result captcha(){
+        String uuid = UUID.randomUUID().toString();
         CaptchaCode captchaCode = new CaptchaCode();
-        captchaCode.setSessionId(sessionId);
-        captchaCode.setCaptchaCode(captchaService.generateCode(sessionId));
+        captchaCode.setUuid(uuid);
+        captchaCode.setCaptchaCode(captchaService.generateCode(uuid));
         return success(captchaCode, "成功获取验证码!");
     }
 }

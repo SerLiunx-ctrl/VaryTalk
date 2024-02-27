@@ -25,7 +25,7 @@ public interface RedisKeyConstants {
     /**
      * 登录验证码存储
      * <li> {prefix} - key的通用前缀, 从配置文件获取配置文件
-     * <li> {session_id} - Session ID
+     * <li> {uuid} - UUID
      */
-    String REDIS_KEY_LOGIN_CAPTCHA = "{prefix}captcha_info:{session_id}";
+    String REDIS_KEY_LOGIN_CAPTCHA = "{prefix}captcha_info:{uuid}";
 }

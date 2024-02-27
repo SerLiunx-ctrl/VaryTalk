@@ -103,6 +103,11 @@
                 <artifactId>varytalk-core</artifactId>
                 <version>1.0.0</version>
             </dependency>
+            <dependency>
+                <groupId>com.serliunx.varytalk</groupId>
+                <artifactId>varytalk-logging</artifactId>
+                <version>1.0.0</version>
+            </dependency>
 <!--            内部接口实现、调用-->
             <dependency>
                 <groupId>com.serliunx.varytalk</groupId>

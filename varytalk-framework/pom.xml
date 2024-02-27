@@ -18,5 +18,6 @@
         <module>varytalk-security</module>
         <module>varytalk-httpclient</module>
         <module>varytalk-core</module>
+        <module>varytalk-logging</module>
     </modules>
 </project>

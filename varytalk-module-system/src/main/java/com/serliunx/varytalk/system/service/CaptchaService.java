@@ -6,23 +6,24 @@ package com.serliunx.varytalk.system.service;
  * @since 1.0
  */
 public interface CaptchaService {
+
     /**
      * 生成新的验证码
-     * @param sessionId Session ID
+     * @param uuid Session ID
      * @return 验证码
      */
-    String generateCode(String sessionId);
+    String generateCode(String uuid);
 
     /**
      * 获取验证码
-     * @param sessionId Session ID
+     * @param uuid Session ID
      * @return 验证码
      */
-    String getCode(String sessionId);
+    String getCode(String uuid);
 
     /**
      * 删除验证码
-     * @param sessionId Session ID
+     * @param uuid UUID
      */
-    void deleteCode(String sessionId);
+    void deleteCode(String uuid);
 }
