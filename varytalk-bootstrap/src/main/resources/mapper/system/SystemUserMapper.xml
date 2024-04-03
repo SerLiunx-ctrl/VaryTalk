@@ -20,7 +20,7 @@
                      select="role"/>
     </resultMap>
 
-    <resultMap id="userResultFlatted" type="SystemUser">
+    <resultMap id="userResultFlatted" type="com.serliunx.varytalk.system.entity.SystemUser">
         <result property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>

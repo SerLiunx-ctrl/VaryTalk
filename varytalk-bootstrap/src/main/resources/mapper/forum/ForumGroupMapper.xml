@@ -22,7 +22,7 @@
               fg.update_by, fg.update_time, fg.remark from forum_group fg left join sys_user su on fg.owner_id = su.id where fg.id > 0
     </sql>
 
-    <select id="selectList" parameterType="ForumGroup" resultMap="forumGroupResult">
+    <select id="selectList" parameterType="com.serliunx.varytalk.forum.entity.ForumGroup" resultMap="forumGroupResult">
         <include refid="forumGroup"/>
         <if test="ownerName != null and ownerName != ''">
             and su.username like concat('%', #{ownerName}, '%')
@@ -55,7 +55,7 @@
         and fg.group_tag = #{groupTag}
     </select>
 
-    <insert id="insertForumGroup" parameterType="ForumGroup"
+    <insert id="insertForumGroup" parameterType="com.serliunx.varytalk.forum.entity.ForumGroup"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into forum_group(id, owner_id, group_score, group_tag, group_name, create_by, create_time, update_by,
         update_time, remark) values(null, #{ownerId}, #{groupScore}, #{groupTag}, #{groupName}, #{createBy}, sysdate(),

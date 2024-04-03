@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.forum.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.serliunx.varytalk.framework.core.annotation.SetOperator;
 import com.serliunx.varytalk.forum.entity.ForumSection;
 import com.serliunx.varytalk.forum.mapper.ForumSectionMapper;
@@ -28,7 +29,7 @@ public class ForumSectionServiceImpl implements ForumSectionService {
 
     @Override
     public List<ForumSection> selectList(ForumSection forumSection) {
-        return forumSectionMapper.selectList(forumSection);
+        return forumSectionMapper.selecSectiontList(forumSection);
     }
 
     @Override
@@ -47,5 +48,13 @@ public class ForumSectionServiceImpl implements ForumSectionService {
     @Cache(time = 1, timeUnit = TimeUnit.DAYS)
     public List<ForumSection> selectByCategoryId(@TagValue("categoryId") Long categoryId) {
         return forumSectionMapper.selectByCategoryId(categoryId);
+    }
+
+    @Override
+    @Cache
+    public List<ForumSection> selectByCategoryIds(List<Long> categoryIds) {
+        return forumSectionMapper.selectList(new LambdaQueryWrapper<>(ForumSection.class)
+                .in(ForumSection::getCategoryId, categoryIds)
+        );
     }
 }

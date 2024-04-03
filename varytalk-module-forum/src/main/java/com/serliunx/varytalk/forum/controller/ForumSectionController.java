@@ -5,6 +5,7 @@ import com.serliunx.varytalk.forum.entity.ForumSection;
 import com.serliunx.varytalk.forum.service.ForumCategoryService;
 import com.serliunx.varytalk.forum.service.ForumSectionService;
 import com.serliunx.varytalk.framework.core.annotation.Logger;
+import com.serliunx.varytalk.framework.core.annotation.PermitAll;
 import com.serliunx.varytalk.framework.core.entity.base.BaseController;
 import com.serliunx.varytalk.framework.core.entity.result.CountResult;
 import com.serliunx.varytalk.framework.core.entity.result.Result;
@@ -57,6 +58,7 @@ public class ForumSectionController extends BaseController {
         return page(forumSections);
     }
 
+    @PermitAll
     @GetMapping("get-by-category/{id}")
     public Result getByCategory(@PathVariable("id") Long id){
         return CountResult.success(forumSectionService.selectByCategoryId(id));

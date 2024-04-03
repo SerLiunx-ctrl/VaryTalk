@@ -12,6 +12,8 @@ public interface ForumCategoryService {
 
     List<ForumCategory> selectList(ForumCategory forumCategory);
 
+    List<ForumCategory> selectSimpleList();
+
     ForumCategory selectByName(String categoryName);
 
     ForumCategory selectById(Long id);

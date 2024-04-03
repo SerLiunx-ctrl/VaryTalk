@@ -132,7 +132,7 @@ public class AopUtils {
         Class<?> pointClass = target.getClass();
         //切入点方法名
         String pointName = joinPoint.getSignature().getName();
-        Class<?>[] argClasses = AopUtils.getClassArray(joinPoint.getArgs());
+        Class<?>[] argClasses = getClassArray(joinPoint.getArgs());
         try {
             return pointClass.getMethod(pointName, argClasses);
         } catch (NoSuchMethodException e) {

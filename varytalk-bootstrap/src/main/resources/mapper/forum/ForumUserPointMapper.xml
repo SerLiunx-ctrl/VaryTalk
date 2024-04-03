@@ -23,13 +23,13 @@
         and user_id = #{userId} and point_id = #{pointId} limit 1
     </select>
 
-    <insert id="insert" parameterType="ForumUserPoint"
+    <insert id="insert" parameterType="com.serliunx.varytalk.forum.entity.ForumUserPoint"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into forum_user_points(id, user_id, point_id, points, create_by, create_time, update_by, update_time, remark)
         values(null, #{userId}, #{pointId}, #{points}, #{createBy}, sysdate(), null, null, #{remark})
     </insert>
 
-    <update id="update" parameterType="ForumUserPoint">
+    <update id="update" parameterType="com.serliunx.varytalk.forum.entity.ForumUserPoint">
         update forum_user_points set points = #{points}, update_time = sysdate() where user_id = #{userId} and point_id = #{pointId}
     </update>
 

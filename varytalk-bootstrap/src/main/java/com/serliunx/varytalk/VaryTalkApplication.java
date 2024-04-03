@@ -3,6 +3,7 @@ package com.serliunx.varytalk;
 import com.serliunx.vartalk.plugin.PluginLoader;
 import com.serliunx.varytalk.configuration.SystemInitializer;
 import com.serliunx.varytalk.framework.core.config.SystemAutoConfigurer;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @author SerLiunx
  * @since 1.0
  */
+@MapperScan("com.serliunx.varytalk.*.mapper")
 @SpringBootApplication(scanBasePackages = {"com.serliunx.varytalk"})
 @EnableConfigurationProperties({SystemAutoConfigurer.class})
 public class VaryTalkApplication {

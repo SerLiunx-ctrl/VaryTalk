@@ -20,7 +20,7 @@
                fp.remark from forum_point fp where id > 0
     </sql>
 
-    <select id="selectList" parameterType="ForumPoint" resultMap="forumPointResult">
+    <select id="selectList" parameterType="com.serliunx.varytalk.forum.entity.ForumPoint" resultMap="forumPointResult">
         <include refid="forumPoint"/>
         <if test="pointName != null and pointName != ''">
             and fp.point_name like concat('%', #{pointName}, '%')
@@ -35,7 +35,7 @@
         and fp.point_tag = #{pointTag}
     </select>
 
-    <insert id="insertForumPoint" parameterType="ForumPoint"
+    <insert id="insertForumPoint" parameterType="com.serliunx.varytalk.forum.entity.ForumPoint"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into forum_point(id, point_tag, point_name, is_system, create_by, create_time, update_by, update_time, remark)
         values(null, #{pointTag}, #{pointName}, #{isSystem}, #{createBy}, sysdate(), null, null, #{remark})

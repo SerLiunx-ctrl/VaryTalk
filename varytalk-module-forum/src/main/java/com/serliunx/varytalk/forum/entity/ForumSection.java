@@ -1,5 +1,9 @@
 package com.serliunx.varytalk.forum.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.serliunx.varytalk.framework.core.entity.base.BaseEntity;
 import com.serliunx.varytalk.framework.cache.annotation.TagValue;
@@ -15,12 +19,14 @@ import org.hibernate.validator.constraints.Length;
  */
 @Getter
 @Setter
+@TableName("forum_section")
 @JsonPropertyOrder({"id", "categoryId", "sectionName", "categoryName"})
 public class ForumSection extends BaseEntity {
 
     /**
      * 板块id
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -33,6 +39,7 @@ public class ForumSection extends BaseEntity {
     /**
      * 所属分区名称
      */
+    @TableField(exist = false)
     private String categoryName;
 
     /**

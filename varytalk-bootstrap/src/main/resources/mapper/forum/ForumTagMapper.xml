@@ -22,7 +22,7 @@
         select * from forum_tag where id > 0
     </sql>
 
-    <select id="selectList" parameterType="ForumTag" resultMap="forumTagResult">
+    <select id="selectList" parameterType="com.serliunx.varytalk.forum.entity.ForumTag" resultMap="forumTagResult">
         <include refid="forumTag"/>
         <if test="tagName != null and tagName != ''">
             and tag_name like concat('%', #{tagName}, '%')
@@ -33,7 +33,7 @@
         select id, tag_name from forum_tag;
     </select>
 
-    <insert id="insertForumTag" parameterType="ForumTag"
+    <insert id="insertForumTag" parameterType="com.serliunx.varytalk.forum.entity.ForumTag"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into forum_tag(id, tag_name,create_by, create_time, update_by, update_time, remark)
         values(null, #{tagName}, #{createBy}, sysdate(), null, null, #{remark})

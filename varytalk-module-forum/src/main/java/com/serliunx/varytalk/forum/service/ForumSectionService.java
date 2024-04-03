@@ -9,6 +9,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface ForumSectionService {
+
     List<ForumSection> selectList(ForumSection forumSection);
 
     void insertForumSection(ForumSection forumSection);
@@ -16,4 +17,6 @@ public interface ForumSectionService {
     ForumSection selectByName(String sectionName);
 
     List<ForumSection> selectByCategoryId(Long categoryId);
+
+    List<ForumSection> selectByCategoryIds(List<Long> categoryIds);
 }

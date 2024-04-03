@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.forum.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.serliunx.varytalk.forum.entity.ForumSection;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,9 +11,9 @@ import java.util.List;
  * @since 1.0
  */
 @Mapper
-public interface ForumSectionMapper {
+public interface ForumSectionMapper extends BaseMapper<ForumSection> {
 
-    List<ForumSection> selectList(ForumSection forumSection);
+    List<ForumSection> selecSectiontList(ForumSection forumSection);
 
     void insertForumSection(ForumSection forumSection);
 

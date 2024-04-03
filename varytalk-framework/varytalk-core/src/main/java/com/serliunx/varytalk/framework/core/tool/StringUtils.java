@@ -1,5 +1,6 @@
 package com.serliunx.varytalk.framework.core.tool;
 
+import java.beans.Introspector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,7 +11,27 @@ import java.util.regex.Pattern;
  */
 public final class StringUtils {
 
-    private StringUtils(){}
+    private StringUtils(){throw new UnsupportedOperationException();}
+
+    /**
+     * 根据属性名生成 setter 方法名
+     * @param propertyName 属性名
+     * @return 对应的 setter 方法名
+     */
+    public static String generateSetterMethodName(String propertyName) {
+        String capitalizedPropertyName = capitalizeFirstLetter(propertyName);
+        return "set" + capitalizedPropertyName;
+    }
+
+    /**
+     * 根据属性名生成 getter 方法名
+     * @param propertyName 属性名
+     * @return 对应的 getter 方法名
+     */
+    public static String generateGetterMethodName(String propertyName) {
+        String capitalizedPropertyName = capitalizeFirstLetter(propertyName);
+        return "get" + capitalizedPropertyName;
+    }
 
     /**
      * 驼峰命名法转下划线(首字母小写)
@@ -53,5 +74,10 @@ public final class StringUtils {
             return key;
         }
         return key.substring(left, right + 1);
+    }
+
+    // 将属性名的首字母大写
+    private static String capitalizeFirstLetter(String propertyName) {
+        return Introspector.decapitalize(propertyName.substring(0, 1)) + propertyName.substring(1);
     }
 }

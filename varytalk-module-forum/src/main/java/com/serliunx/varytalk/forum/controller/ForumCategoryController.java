@@ -1,15 +1,23 @@
 package com.serliunx.varytalk.forum.controller;
 
 import com.serliunx.varytalk.forum.entity.ForumCategory;
+import com.serliunx.varytalk.forum.entity.ForumSection;
+import com.serliunx.varytalk.forum.entity.simple.ForumCategorySimple;
 import com.serliunx.varytalk.forum.service.ForumCategoryService;
+import com.serliunx.varytalk.forum.service.ForumSectionService;
 import com.serliunx.varytalk.framework.core.annotation.Logger;
+import com.serliunx.varytalk.framework.core.annotation.PermitAll;
 import com.serliunx.varytalk.framework.core.entity.base.BaseController;
 import com.serliunx.varytalk.framework.core.entity.result.Result;
+import com.serliunx.varytalk.framework.core.tool.BeanUtils;
 import com.serliunx.varytalk.framework.security.annotation.ApiValidation;
 import com.serliunx.varytalk.framework.security.group.defaultgroup.PermissionGroup;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 论坛分区控制器
@@ -20,11 +28,10 @@ import java.util.List;
 @RequestMapping("forum-category")
 public class ForumCategoryController extends BaseController {
 
-    private final ForumCategoryService forumCategoryService;
-
-    public ForumCategoryController(ForumCategoryService forumCategoryService) {
-        this.forumCategoryService = forumCategoryService;
-    }
+    @Resource
+    private ForumCategoryService forumCategoryService;
+    @Resource
+    private ForumSectionService forumSectionService;
 
     @GetMapping("list")
     @ApiValidation(value = "forum.category.list.detail", group = PermissionGroup.class)
@@ -44,5 +51,19 @@ public class ForumCategoryController extends BaseController {
         }
         forumCategoryService.insertForumCategory(forumCategory);
         return success(forumCategory.getId());
+    }
+
+    @PermitAll
+    @GetMapping("list-simple")
+    public Result listSimple(){
+        List<ForumCategorySimple> result = BeanUtils.toBean(forumCategoryService.selectSimpleList(),
+                ForumCategorySimple.class);
+        List<Long> categoryIds = result.stream()
+                .map(ForumCategorySimple::getId)
+                .toList();
+        Map<Long, List<ForumSection>> forumSectionMap = forumSectionService.selectByCategoryIds(categoryIds).stream()
+                .collect(Collectors.groupingBy(ForumSection::getCategoryId));
+        result.forEach(r -> r.setForumSections(forumSectionMap.get(r.getId())));
+        return success(result);
     }
 }

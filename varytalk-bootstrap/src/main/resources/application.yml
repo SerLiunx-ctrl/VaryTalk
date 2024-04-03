@@ -115,7 +115,9 @@ mybatis:
     use-actual-param-name: true
     #开启: 下划线命名<->驼峰命名
     map-underscore-to-camel-case: true
-
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
 #日志设置
 logging:
   pattern:

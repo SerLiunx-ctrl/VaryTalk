@@ -19,12 +19,16 @@
                fc.remark from forum_category fc where id > 0
     </sql>
 
-    <select id="selectList" parameterType="ForumCategory" resultMap="forumCategoryResult">
+    <select id="selectList" parameterType="com.serliunx.varytalk.forum.entity.ForumCategory" resultMap="forumCategoryResult">
         <include refid="forumCategory"/>
         <if test="categoryName != null and categoryName != ''">
             and fc.category_name like concat('%', #{categoryName}, '%')
         </if>
         order by fc.display_order
+    </select>
+
+    <select id="selectSimpleList" resultMap="forumCategoryResult">
+        select fc.id, fc.category_name, fc.display_order from forum_category fc where id > 0 order by fc.display_order
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="forumCategoryResult">
@@ -37,7 +41,7 @@
         and fc.id = #{id}
     </select>
 
-    <insert id="insertForumCategory" parameterType="ForumCategory"
+    <insert id="insertForumCategory" parameterType="com.serliunx.varytalk.forum.entity.ForumCategory"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into forum_category(id, category_name, display_order, create_by, create_time, update_by, update_time, remark)
         values(null, #{categoryName}, #{displayOrder}, #{createBy}, sysdate(), null, null, #{remark})
