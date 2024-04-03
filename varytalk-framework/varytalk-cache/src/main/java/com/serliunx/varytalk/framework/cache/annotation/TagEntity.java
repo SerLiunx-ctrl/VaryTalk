@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 缓存键标签实体, 与{@link TagValue} 配合
  * @author SerLiunx
  * @since 1.0
  */
@@ -13,4 +14,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 public @interface TagEntity {
 
+    String[] ignore() default {};
 }

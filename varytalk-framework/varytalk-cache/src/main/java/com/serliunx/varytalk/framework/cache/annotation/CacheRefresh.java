@@ -28,6 +28,6 @@ public @interface CacheRefresh {
     /**
      * 获取缓存的方法名
      */
-    String method() default "";
+    String[] method() default "";
 
 }

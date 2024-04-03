@@ -34,13 +34,13 @@ public class ForumSectionServiceImpl implements ForumSectionService {
 
     @Override
     @SetOperator(ForumSection.class)
-    @CacheRefresh(method = "selectByCategoryId")
-    public void insertForumSection(@TagEntity ForumSection forumSection) {
+    @CacheRefresh(method = {"selectByCategoryId", "selectByCategoryIds"})
+    public void insertForumSection(@TagEntity(ignore = {"selectByCategoryIds"}) ForumSection forumSection) {
         forumSectionMapper.insertForumSection(forumSection);
     }
 
     @Override
-    public ForumSection selectByName(String sectionName) {
+    public ForumSection selectByName(@TagValue("sectionName") String sectionName) {
         return forumSectionMapper.selectByName(sectionName);
     }
 

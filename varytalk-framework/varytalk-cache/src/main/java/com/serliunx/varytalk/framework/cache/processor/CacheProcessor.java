@@ -77,22 +77,28 @@ public class CacheProcessor {
         CacheRefresh cacheRefresh = method.getAnnotation(CacheRefresh.class);
         try{
             String cacheKey = cacheRefresh.value();
-            String key = cacheKey.isEmpty() ? generateKey(joinPoint, cacheRefresh.method()) : cacheKey;
-            String tag = null;
-            if(hasTag(method)){
-                tag = gennerateTag(joinPoint.getArgs(), method);
+            String[] methods = cacheRefresh.method();
+            for (String keys : methods) {
+                String key = cacheKey.isEmpty() ? generateKey(joinPoint, keys) : cacheKey;
+                String tag = null;
+
+                if(!isIgnored(method, keys)){
+                    if(hasTag(method)){
+                        tag = gennerateTag(joinPoint.getArgs(), method);
+                    }
+                }
+                //匹配到了tag, 代表着该方法需要使用tag区别不同数据
+                if(tag != null){
+                    key = new StringBuilder(key).append(KEY_DELIMITER).append(tag).toString();
+                }
+                //检测缓存中是否存在该键值, 没有该键值不会放置更新标记
+                if(redisUtils.get(key) == null){
+                    continue;
+                }
+                key = key + KEY_DELIMITER + REFRESH_TAG;
+                //放置更新标记
+                redisUtils.put(key, TAG_VALUE);
             }
-            //匹配到了tag, 代表着该方法需要使用tag区别不同数据
-            if(tag != null){
-                key = new StringBuilder(key).append(KEY_DELIMITER).append(tag).toString();
-            }
-            //检测缓存中是否存在该键值, 没有该键值不会放置更新标记
-            if(redisUtils.get(key) == null){
-                return joinPoint.proceed();
-            }
-            key = key + KEY_DELIMITER + REFRESH_TAG;
-            //放置更新标记
-            redisUtils.put(key, TAG_VALUE);
             return joinPoint.proceed();
         }catch (Throwable t){
             t.printStackTrace();
@@ -180,6 +186,22 @@ public class CacheProcessor {
             }
         }
         return false;
+    }
+
+    private boolean isIgnored(Method method, String methodName){
+        Parameter[] parameters = method.getParameters();
+        boolean isIgnored = false;
+        for (Parameter parameter : parameters) {
+            TagEntity tagEntity = parameter.getAnnotation(TagEntity.class);
+            TagValue tagValue = parameter.getAnnotation(TagValue.class);
+            if(tagEntity != null){
+                String[] ignore = tagEntity.ignore();
+                if(methodName.contains(methodName)){
+                    return true;
+                }
+            }
+        }
+        return isIgnored;
     }
 
     private String findTagInCache(Object[] args, Method method){
