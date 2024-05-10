@@ -196,6 +196,9 @@ public class CacheProcessor {
             TagValue tagValue = parameter.getAnnotation(TagValue.class);
             if(tagEntity != null){
                 String[] ignore = tagEntity.ignore();
+                if(ignore.length < 1){
+                    return false;
+                }
                 if(methodName.contains(methodName)){
                     return true;
                 }

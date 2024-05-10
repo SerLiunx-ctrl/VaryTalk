@@ -5,11 +5,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 @SuppressWarnings("all")
+@ConditionalOnProperty(name = "talk-system.api-log", havingValue = "true")
 public class LogInterceptor implements HandlerInterceptor {
 
     private final Logger logger;

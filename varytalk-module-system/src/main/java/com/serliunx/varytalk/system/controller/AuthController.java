@@ -50,7 +50,7 @@ public class AuthController extends BaseController {
         }
         String code = captchaService.getCode(uuid);
         String captcha = user.getCaptcha();
-        if(code == null || code.isEmpty() || !code.equals(captcha)){
+        if(code == null || code.isEmpty() || !code.equalsIgnoreCase(captcha)){
             return fail("验证码错误!");
         }
         SystemUser userFound = systemUserService.selectUserByUsername(user.getUsername());

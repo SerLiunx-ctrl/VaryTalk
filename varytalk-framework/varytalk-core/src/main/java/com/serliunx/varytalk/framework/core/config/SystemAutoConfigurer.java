@@ -45,6 +45,11 @@ public class SystemAutoConfigurer {
      */
     private String baiduAk;
 
+    /**
+     * 是否记录API接口日志(目前进记录访问耗时)
+     */
+    private Boolean apiLog;
+
     @Setter
     @Getter
     public static class RedisPrefix{
